@@ -307,19 +307,22 @@ $('btn-tip').addEventListener('click', openTip);
 buildTipSheet();
 
 // ── 단어 로드 ──
+const FALLBACK = [
+  { id:'b001', arabic:'مَرْحَبًا', transliteration:'mar·ha·ban', pronunciation_ko:'마르하반', meaning_ko:'안녕하세요', category:'기초 단어', hint_len:7, hint_start:'م' },
+  { id:'b002', arabic:'شُكْرًا', transliteration:'shuk·ran', pronunciation_ko:'슈크란', meaning_ko:'감사합니다', category:'기초 단어', hint_len:6, hint_start:'ش' },
+  { id:'b003', arabic:'نَعَم', transliteration:'na·am', pronunciation_ko:'나암', meaning_ko:'네', category:'기초 단어', hint_len:4, hint_start:'ن' },
+  { id:'b004', arabic:'لَا', transliteration:'laa', pronunciation_ko:'라', meaning_ko:'아니요', category:'기초 단어', hint_len:2, hint_start:'ل' },
+  { id:'b005', arabic:'مَاء', transliteration:"maa'", pronunciation_ko:'마', meaning_ko:'물', category:'기초 단어', hint_len:3, hint_start:'م' },
+];
+
+// 즉시 fallback으로 화면 구성 (fetch 완료 전에도 카테고리 화면이 동작하도록)
+allWords = FALLBACK;
+buildCategoryScreen();
+
 fetch('words.json')
   .then(r => r.json())
   .then(data => {
     allWords = data;
     buildCategoryScreen();
   })
-  .catch(() => {
-    allWords = [
-      { id:'b001', arabic:'مَرْحَبًا', transliteration:'mar·ha·ban', pronunciation_ko:'마르하반', meaning_ko:'안녕하세요', category:'기초 단어', hint_len:7, hint_start:'م' },
-      { id:'b002', arabic:'شُكْرًا', transliteration:'shuk·ran', pronunciation_ko:'슈크란', meaning_ko:'감사합니다', category:'기초 단어', hint_len:6, hint_start:'ش' },
-      { id:'b003', arabic:'نَعَم', transliteration:'na·am', pronunciation_ko:'나암', meaning_ko:'네', category:'기초 단어', hint_len:4, hint_start:'ن' },
-      { id:'b004', arabic:'لَا', transliteration:'laa', pronunciation_ko:'라', meaning_ko:'아니요', category:'기초 단어', hint_len:2, hint_start:'ل' },
-      { id:'b005', arabic:'مَاء', transliteration:"maa'", pronunciation_ko:'마', meaning_ko:'물', category:'기초 단어', hint_len:3, hint_start:'م' },
-    ];
-    buildCategoryScreen();
-  });
+  .catch(() => { /* fallback 유지 */ });

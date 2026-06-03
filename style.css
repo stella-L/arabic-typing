@@ -161,8 +161,10 @@ body {
 /* ── CATEGORY SELECT ── */
 .cat-select-body {
   flex: 1;
+  min-height: 0;        /* flex:1 + overflow-y 조합 버그 수정 */
   padding: 0 20px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .cat-desc {
   font-size: 13px;
