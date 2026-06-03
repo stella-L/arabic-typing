@@ -31,6 +31,7 @@ function loadWord() {
   $('card-num').textContent = String(current + 1).padStart(2, '0');
   $('arabic-word').textContent = w.arabic;
   $('transliteration').textContent = w.transliteration;
+  $('pronunciation-ko').textContent = w.pronunciation_ko || '';
   $('meaning-ko').textContent = w.meaning_ko;
   $('hint-text').textContent = `힌트: ${w.hint_len}글자, ${w.hint_start}으로 시작해요`;
 
@@ -73,6 +74,7 @@ function showWrongScreen(myInput, w) {
   $('wrong-category').textContent = w.category;
   $('wrong-arabic').textContent = w.arabic;
   $('wrong-trans').textContent = w.transliteration;
+  $('wrong-pronunciation-ko').textContent = w.pronunciation_ko || '';
   $('wrong-meaning').textContent = w.meaning_ko;
   $('my-answer').textContent = myInput;
   $('correct-answer').textContent = w.arabic;
