@@ -158,6 +158,81 @@ body {
 .nav-item span { font-size: 10px; }
 .nav-item.active { color: var(--primary); }
 
+/* ── CATEGORY SELECT ── */
+.cat-select-body {
+  flex: 1;
+  padding: 0 20px;
+  overflow-y: auto;
+}
+.cat-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+.cat-all-btn {
+  width: 100%;
+  background: var(--surface2);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  color: var(--primary);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; font-weight: 700;
+  padding: 12px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: background .15s;
+}
+.cat-all-btn.selected {
+  background: var(--primary);
+  color: #fff;
+}
+.cat-chip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.cat-chip {
+  background: var(--surface);
+  border: 2px solid var(--surface2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cat-chip.selected {
+  border-color: var(--primary);
+  background: rgba(108,99,255,.15);
+}
+.cat-chip-name {
+  font-size: 13px; font-weight: 700;
+  color: var(--text);
+}
+.cat-chip.selected .cat-chip-name { color: #a89df8; }
+.cat-chip-count {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.cat-preview {
+  text-align: center;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 700;
+  padding: 10px 0 4px;
+}
+.cat-footer {
+  padding: 12px 20px calc(20px + var(--sab));
+  flex-shrink: 0;
+}
+.cat-start-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+}
+
 /* ── PRACTICE ── */
 .practice-header {
   display: flex; align-items: center; gap: 12px;

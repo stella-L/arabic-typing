@@ -1,3 +1,4 @@
+let allWords = [];
 let words = [];
 let current = 0;
 let correctCount = 0;
@@ -5,6 +6,7 @@ let wrongCount = 0;
 let streak = 0;
 let todayCount = 0;
 let answered = false;
+let selectedCategories = new Set();
 
 const $ = id => document.getElementById(id);
 
@@ -110,9 +112,78 @@ function updateHomeStats() {
   $('stat-bar').style.width = rate + '%';
 }
 
+// ── 카테고리 선택 ──
+
+function buildCategoryScreen() {
+  const counts = {};
+  allWords.forEach(w => {
+    counts[w.category] = (counts[w.category] || 0) + 1;
+  });
+
+  const grid = $('cat-chip-grid');
+  grid.innerHTML = '';
+  Object.entries(counts).forEach(([cat, cnt]) => {
+    const chip = document.createElement('div');
+    chip.className = 'cat-chip';
+    chip.dataset.cat = cat;
+    chip.innerHTML = `<div class="cat-chip-name">${cat}</div><div class="cat-chip-count">${cnt}개</div>`;
+    chip.addEventListener('click', () => toggleCategory(cat, chip));
+    grid.appendChild(chip);
+  });
+  updateCatPreview();
+}
+
+function toggleCategory(cat, chip) {
+  if (selectedCategories.has(cat)) {
+    selectedCategories.delete(cat);
+    chip.classList.remove('selected');
+  } else {
+    selectedCategories.add(cat);
+    chip.classList.add('selected');
+  }
+  syncAllBtn();
+  updateCatPreview();
+}
+
+function syncAllBtn() {
+  const allCats = [...document.querySelectorAll('.cat-chip')].map(c => c.dataset.cat);
+  const allSelected = allCats.every(c => selectedCategories.has(c));
+  $('btn-cat-all').classList.toggle('selected', allSelected);
+}
+
+function updateCatPreview() {
+  const cnt = allWords.filter(w => selectedCategories.has(w.category)).length;
+  $('cat-preview').textContent = `선택된 단어: ${cnt}개`;
+  $('btn-cat-start').disabled = cnt === 0;
+}
+
 // ── 이벤트 바인딩 ──
 
 $('btn-start').addEventListener('click', () => {
+  show('screen-category');
+});
+
+$('btn-back-cat').addEventListener('click', () => show('screen-home'));
+
+$('btn-cat-all').addEventListener('click', () => {
+  const chips = [...document.querySelectorAll('.cat-chip')];
+  const allSelected = chips.every(c => selectedCategories.has(c.dataset.cat));
+  if (allSelected) {
+    selectedCategories.clear();
+    chips.forEach(c => c.classList.remove('selected'));
+    $('btn-cat-all').classList.remove('selected');
+  } else {
+    chips.forEach(c => {
+      selectedCategories.add(c.dataset.cat);
+      c.classList.add('selected');
+    });
+    $('btn-cat-all').classList.add('selected');
+  }
+  updateCatPreview();
+});
+
+$('btn-cat-start').addEventListener('click', () => {
+  words = allWords.filter(w => selectedCategories.has(w.category));
   current = 0; correctCount = 0; wrongCount = 0; streak = 0;
   show('screen-practice');
   loadWord();
@@ -238,13 +309,17 @@ buildTipSheet();
 // ── 단어 로드 ──
 fetch('words.json')
   .then(r => r.json())
-  .then(data => { words = data; })
+  .then(data => {
+    allWords = data;
+    buildCategoryScreen();
+  })
   .catch(() => {
-    words = [
-      { id:'b001', arabic:'مَرْحَبًا', transliteration:'mar·ha·ban', meaning_ko:'안녕하세요', category:'기초 단어', hint_len:7, hint_start:'م' },
-      { id:'b002', arabic:'شُكْرًا', transliteration:'shuk·ran', meaning_ko:'감사합니다', category:'기초 단어', hint_len:6, hint_start:'ش' },
-      { id:'b003', arabic:'نَعَم', transliteration:'na·am', meaning_ko:'네', category:'기초 단어', hint_len:4, hint_start:'ن' },
-      { id:'b004', arabic:'لَا', transliteration:'laa', meaning_ko:'아니요', category:'기초 단어', hint_len:2, hint_start:'ل' },
-      { id:'b005', arabic:'مَاء', transliteration:"maa'", meaning_ko:'물', category:'기초 단어', hint_len:3, hint_start:'م' },
+    allWords = [
+      { id:'b001', arabic:'مَرْحَبًا', transliteration:'mar·ha·ban', pronunciation_ko:'마르하반', meaning_ko:'안녕하세요', category:'기초 단어', hint_len:7, hint_start:'م' },
+      { id:'b002', arabic:'شُكْرًا', transliteration:'shuk·ran', pronunciation_ko:'슈크란', meaning_ko:'감사합니다', category:'기초 단어', hint_len:6, hint_start:'ش' },
+      { id:'b003', arabic:'نَعَم', transliteration:'na·am', pronunciation_ko:'나암', meaning_ko:'네', category:'기초 단어', hint_len:4, hint_start:'ن' },
+      { id:'b004', arabic:'لَا', transliteration:'laa', pronunciation_ko:'라', meaning_ko:'아니요', category:'기초 단어', hint_len:2, hint_start:'ل' },
+      { id:'b005', arabic:'مَاء', transliteration:"maa'", pronunciation_ko:'마', meaning_ko:'물', category:'기초 단어', hint_len:3, hint_start:'م' },
     ];
+    buildCategoryScreen();
   });
