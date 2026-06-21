@@ -67,7 +67,7 @@ body {
   background: var(--primary);
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Noto Naskh Arabic', serif;
   font-size: 22px; color: #fff;
 }
 .app-name { font-size: 20px; font-weight: 700; }
@@ -296,7 +296,7 @@ body {
 .wrong-x { color: var(--error); font-size: 18px; font-weight: 700; }
 
 .arabic-word {
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Noto Naskh Arabic', serif;
   /* 작은 화면에서 폰트 넘침 방지 */
   font-size: clamp(36px, 12vw, 52px);
   font-weight: 700;
@@ -351,7 +351,7 @@ body {
   border: 2px solid var(--surface2);
   border-radius: 12px;
   padding: 14px 16px;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Noto Naskh Arabic', serif;
   /* 16px 미만이면 모바일 Safari가 자동 줌 → 26px 유지 */
   font-size: 26px; color: var(--text);
   text-align: right;
@@ -389,7 +389,7 @@ body {
 .correct-feedback { background: var(--success); color: #fff; }
 .feedback-left { font-size: 14px; font-weight: 700; }
 .feedback-right { text-align: right; }
-.feedback-word { font-family: 'Cairo', sans-serif; font-size: 16px; }
+.feedback-word { font-family: 'Noto Naskh Arabic', serif; font-size: 16px; }
 .feedback-score { font-size: 12px; font-weight: 700; margin-top: 2px; }
 
 .action-row {
@@ -437,7 +437,7 @@ body {
 .compare-tag.my { background: rgba(239,68,68,.2); color: var(--error); }
 .compare-tag.correct { background: rgba(34,197,94,.2); color: var(--success); }
 .compare-word {
-  flex: 1; font-family: 'Cairo', sans-serif;
+  flex: 1; font-family: 'Noto Naskh Arabic', serif;
   font-size: 20px; text-align: right;
 }
 .compare-icon { font-size: 16px; }
@@ -591,7 +591,7 @@ body {
 .tip-key.cat-long  { border-color: rgba(58,191,122,.4); background: rgba(42,138,90,.18); }
 .tip-key.cat-emph  { border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.1); }
 .tip-key.cat-special { background: #2c3050; }
-.tip-key .tk-ar { font-family: 'Cairo', sans-serif; font-size: 16px; display: block; line-height: 1.3; }
+.tip-key .tk-ar { font-family: 'Noto Naskh Arabic', serif; font-size: 16px; display: block; line-height: 1.3; }
 .tip-key .tk-ko { font-size: 7px; color: #8888aa; display: block; line-height: 1.2; margin-top: 1px; }
 .tip-key-del {
   flex: 1; max-width: 34px; background: #2c3050;
@@ -647,7 +647,7 @@ body {
 .tip-h-key.purple { background: #7c5cbf; }
 .tip-h-key.gray   { background: #3a3a5a; }
 .tip-h-key.selected { box-shadow: 0 0 0 2px #fff, 0 2px 0 rgba(0,0,0,.4); }
-.tip-h-key .thk-ar { font-family: 'Cairo', sans-serif; font-size: 20px; display: block; color: #fff; line-height: 1.2; }
+.tip-h-key .thk-ar { font-family: 'Noto Naskh Arabic', serif; font-size: 20px; display: block; color: #fff; line-height: 1.2; }
 .tip-h-key .thk-ko { font-size: 9px; color: rgba(255,255,255,.85); display: block; margin-top: 3px; }
 .tip-h-key .thk-sub{ font-size: 8px; color: rgba(255,255,255,.55); display: block; }
 
