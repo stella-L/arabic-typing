@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>아랍어 암기 카드</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+:root{
+  --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;
+  --primary:#6c63ff;--success:#22c55e;--error:#ef4444;
+  --text:#f0f0f5;--dim:#8888aa;--accent:#f59e0b;
+  --r:16px;
+  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow:hidden}
+body{display:flex;justify-content:center}
+
+.screen{display:none;flex-direction:column;width:100%;max-width:430px;height:100%;height:-webkit-fill-available;overflow-y:auto}
+.screen.on{display:flex}
+
+/* HOME */
+.home-hero{padding:max(56px,calc(var(--sat)+20px)) 20px 20px;text-align:center}
+.home-hero h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.home-hero p{color:var(--dim);font-size:13px;line-height:1.6}
+.badge{display:inline-block;background:var(--primary);color:#fff;font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-top:10px}
+.sec{padding:0 20px 20px}
+.sec-lbl{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.tog{display:flex;background:var(--surface);border-radius:12px;padding:4px;gap:4px}
+.tog-btn{flex:1;background:transparent;border:none;color:var(--dim);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:11px 8px;border-radius:9px;transition:all .2s}
+.tog-btn.on{background:var(--primary);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--surface);border:2px solid transparent;color:var(--dim);font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;padding:7px 13px;border-radius:20px;transition:all .2s}
+.chip.on{border-color:var(--primary);color:var(--primary);background:rgba(108,99,255,.1)}
+.start-sec{padding:0 20px;margin-top:auto;padding-bottom:calc(28px + var(--sab))}
+.sel-info{text-align:center;color:var(--dim);font-size:13px;margin-bottom:10px}
+.btn-main{width:100%;background:var(--primary);color:#fff;border:none;font-family:'Noto Sans KR',sans-serif;font-size:16px;font-weight:700;padding:18px;border-radius:var(--r);transition:opacity .2s}
+.btn-main:active{opacity:.8}
+.btn-main:disabled{opacity:.35;cursor:not-allowed}
+
+/* STUDY */
+.study-hdr{display:flex;align-items:center;justify-content:space-between;padding:max(52px,calc(var(--sat)+12px)) 20px 10px}
+.btn-ico{background:var(--surface2);border:none;color:var(--text);font-size:18px;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.mode-badge{background:var(--surface2);color:var(--dim);font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px}
+.prog-sec{padding:0 20px 14px}
+.prog-bar{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .4s ease}
+.prog-stats{display:flex;justify-content:space-between;font-size:12px;color:var(--dim)}
+.g{color:var(--success);font-weight:700}.r{color:var(--error);font-weight:700}
+.card-sec{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px 12px}
+.cat-tag{font-size:11px;font-weight:700;color:var(--dim);background:var(--surface2);padding:4px 12px;border-radius:20px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.05em}
+.card{width:100%;background:var(--surface);border-radius:24px;padding:32px 24px 28px;display:flex;flex-direction:column;align-items:center;min-height:220px;justify-content:center}
+.ar{font-family:'Amiri',serif;font-size:52px;direction:rtl;text-align:center;line-height:1.4;margin-bottom:8px}
+.ar.sm{font-size:36px;margin-bottom:6px}
+.pronun{font-size:15px;color:var(--accent);font-weight:700;margin-bottom:14px;text-align:center}
+.pronun.sm{font-size:13px;margin-bottom:10px}
+.speak-btn{display:flex;align-items:center;gap:6px;background:var(--surface2);border:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:600;padding:9px 18px;border-radius:20px;transition:background .2s}
+.speak-btn:active{background:var(--primary)}
+.divider{width:40px;height:2px;background:var(--surface2);border-radius:1px;margin:16px auto 14px}
+.meaning{font-size:26px;font-weight:700;line-height:1.4;text-align:center}
+.meaning-front{font-size:28px;font-weight:700;text-align:center;line-height:1.5}
+.act-sec{padding:0 20px calc(32px + var(--sab))}
+.btn-reveal{width:100%;background:var(--surface2);border:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:16px;font-weight:700;padding:18px;border-radius:var(--r);transition:background .2s}
+.btn-reveal:active{background:var(--primary)}
+.ans-row{display:none;gap:12px;margin-top:0}
+.ans-row.show{display:flex}
+.btn-wrong,.btn-know{flex:1;border:none;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;padding:18px 12px;border-radius:var(--r);transition:opacity .2s}
+.btn-wrong:active,.btn-know:active{opacity:.75}
+.btn-wrong{background:rgba(239,68,68,.15);color:var(--error)}
+.btn-know{background:rgba(34,197,94,.15);color:var(--success)}
+
+/* COMPLETE */
+.comp-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:max(56px,calc(var(--sat)+20px)) 20px calc(40px + var(--sab));text-align:center}
+.trophy{font-size:64px;margin-bottom:18px}
+.comp-title{font-size:24px;font-weight:700;margin-bottom:8px}
+.comp-sub{color:var(--dim);font-size:14px;line-height:1.6;margin-bottom:28px;white-space:pre-line}
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:28px}
+.sc{background:var(--surface);border-radius:var(--r);padding:18px 12px;text-align:center}
+.sc.full{grid-column:span 2}
+.sc-num{font-size:30px;font-weight:700;margin-bottom:4px}
+.sc-lbl{font-size:11px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.sc-num.g{color:var(--success)}.sc-num.r{color:var(--error)}.sc-num.b{color:var(--primary)}
+.btn-sec{width:100%;background:var(--surface);color:var(--text);border:none;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;padding:16px;border-radius:var(--r);margin-top:10px}
+
+/* Animations */
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes glow{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 14px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.card-in{animation:slideIn .2s ease}
+.card-shake{animation:shake .4s ease}
+.card-glow{animation:glow .5s ease}
+.fade-up{animation:fadeUp .2s ease}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="s-home" class="screen on">
+  <div class="home-hero">
+    <h1>🃏 아랍어 암기 카드</h1>
+    <p>플래시카드로 단어를 빠르게 외우세요<br>모르는 단어는 자동으로 다시 나와요</p>
+    <span class="badge" id="total-badge">총 69개 단어</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">학습 방향</div>
+    <div class="tog">
+      <button class="tog-btn on" id="mode-ar" onclick="setMode('ar-ko')">아랍어 → 뜻</button>
+      <button class="tog-btn" id="mode-ko" onclick="setMode('ko-ar')">뜻 → 아랍어</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">카테고리</div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="start-sec">
+    <p class="sel-info" id="sel-info">69개 단어 선택됨</p>
+    <button class="btn-main" id="btn-start" onclick="startStudy()">암기 시작하기 →</button>
+  </div>
+</div>
+
+<!-- STUDY -->
+<div id="s-study" class="screen">
+  <div class="study-hdr">
+    <button class="btn-ico" onclick="goHome()">←</button>
+    <span class="mode-badge" id="mode-badge">아랍어 → 뜻</span>
+    <div style="width:40px"></div>
+  </div>
+  <div class="prog-sec">
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+    <div class="prog-stats">
+      <span>남은 카드 <strong id="remaining">0</strong>장</span>
+      <span><span class="g" id="s-know">0</span> 알아 &nbsp; <span class="r" id="s-wrong">0</span> 몰라</span>
+    </div>
+  </div>
+  <div class="card-sec">
+    <div class="cat-tag" id="card-cat">카테고리</div>
+    <div class="card" id="card"></div>
+  </div>
+  <div class="act-sec">
+    <button class="btn-reveal" id="btn-reveal" onclick="revealAns()">뜻 보기 👀</button>
+    <div class="ans-row" id="ans-row">
+      <button class="btn-wrong" onclick="answer(false)">😅 몰라요</button>
+      <button class="btn-know" onclick="answer(true)">✅ 알아요</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLETE -->
+<div id="s-complete" class="screen">
+  <div class="comp-body">
+    <div class="trophy" id="trophy">🎉</div>
+    <h2 class="comp-title" id="c-title">완료!</h2>
+    <p class="comp-sub" id="c-sub"></p>
+    <div class="score-grid">
+      <div class="sc"><div class="sc-num g" id="c-know">0</div><div class="sc-lbl">맞힌 카드</div></div>
+      <div class="sc"><div class="sc-num r" id="c-wrong">0</div><div class="sc-lbl">틀린 횟수</div></div>
+      <div class="sc full"><div class="sc-num b" id="c-rate">100%</div><div class="sc-lbl">첫 시도 정확도</div></div>
+    </div>
+    <button class="btn-main" onclick="retryAll()">처음부터 다시 🔁</button>
+    <button class="btn-sec" onclick="goHome()">홈으로</button>
+  </div>
+</div>
+
+<script>
+const WORDS = [
+  // 가족
+  {arabic:"أَبٌ",pronun:"아브",meaning:"아버지 / 아빠",cat:"가족"},
+  {arabic:"أُمٌّ",pronun:"움므",meaning:"어머니 / 엄마",cat:"가족"},
+  {arabic:"أَخٌ",pronun:"아흐",meaning:"형 / 형제",cat:"가족"},
+  {arabic:"أُخْتٌ",pronun:"우흐트",meaning:"누이 / 자매",cat:"가족"},
+  {arabic:"جَدٌّ",pronun:"잣드",meaning:"할아버지",cat:"가족"},
+  {arabic:"جَدَّةٌ",pronun:"잣다",meaning:"할머니",cat:"가족"},
+  // 위치
+  {arabic:"أَمَامَ",pronun:"아마마",meaning:"앞에",cat:"위치"},
+  {arabic:"خَلْفَ",pronun:"할파",meaning:"뒤에",cat:"위치"},
+  {arabic:"تَحْتَ",pronun:"타흐타",meaning:"아래에",cat:"위치"},
+  {arabic:"فَوْقَ",pronun:"파우까",meaning:"위에 (꼭대기)",cat:"위치"},
+  {arabic:"عَلَى",pronun:"알라",meaning:"위에 (on)",cat:"위치"},
+  {arabic:"بِجَانِبِ",pronun:"비자니비",meaning:"옆에",cat:"위치"},
+  // 사물
+  {arabic:"حَقِيبَةٌ",pronun:"하끼바",meaning:"가방",cat:"사물"},
+  {arabic:"قَلَمٌ",pronun:"깔람",meaning:"연필 / 펜",cat:"사물"},
+  {arabic:"كِتَابٌ",pronun:"키타브",meaning:"책",cat:"사물"},
+  {arabic:"كُوبٌ",pronun:"쿠브",meaning:"컵",cat:"사물"},
+  {arabic:"مَكْتَبٌ",pronun:"막타브",meaning:"책상 / 사무실",cat:"사물"},
+  {arabic:"اَلْغُرْفَةُ",pronun:"알 구르파",meaning:"방",cat:"사물"},
+  {arabic:"سِينَمَا",pronun:"시네마",meaning:"영화관 / 극장",cat:"사물"},
+  // 장소
+  {arabic:"بَيْتٌ",pronun:"바이트",meaning:"집",cat:"장소"},
+  {arabic:"بَغْدَادُ",pronun:"바그다드",meaning:"바그다드",cat:"장소"},
+  {arabic:"بَيْرُوتُ",pronun:"바이루트",meaning:"베이루트",cat:"장소"},
+  {arabic:"اَلْعِرَاقُ",pronun:"알 이라크",meaning:"이라크",cat:"장소"},
+  {arabic:"كُورِيَا",pronun:"쿠리야",meaning:"대한민국",cat:"장소"},
+  // 기초어휘
+  {arabic:"أَيْنَ",pronun:"아이나",meaning:"어디에",cat:"기초어휘"},
+  {arabic:"مِنْ",pronun:"민",meaning:"...로부터",cat:"기초어휘"},
+  {arabic:"كَيْفَ",pronun:"카이파",meaning:"어떻게 (의문사)",cat:"기초어휘"},
+  {arabic:"هَلْ",pronun:"할",meaning:"...입니까? (의문사)",cat:"기초어휘"},
+  {arabic:"نَعَمْ",pronun:"나암",meaning:"예 / 네",cat:"기초어휘"},
+  {arabic:"لَا",pronun:"라",meaning:"아니오",cat:"기초어휘"},
+  // 일상어휘
+  {arabic:"بِخَيْرٍ",pronun:"비하이린",meaning:"좋습니다",cat:"일상어휘"},
+  {arabic:"جَوٌّ",pronun:"자우",meaning:"날씨",cat:"일상어휘"},
+  {arabic:"حَالٌ",pronun:"할",meaning:"상태 / 상황",cat:"일상어휘"},
+  {arabic:"حَمْدٌ",pronun:"함드",meaning:"영광",cat:"일상어휘"},
+  {arabic:"خَيْرٌ",pronun:"하이르",meaning:"좋음",cat:"일상어휘"},
+  {arabic:"صَبَاحٌ",pronun:"싸바흐",meaning:"아침",cat:"일상어휘"},
+  {arabic:"لَطِيفٌ",pronun:"라띠프",meaning:"상쾌한 / 괜찮은",cat:"일상어휘"},
+  {arabic:"مَسَاءٌ",pronun:"마싸으",meaning:"오후",cat:"일상어휘"},
+  {arabic:"نُورٌ",pronun:"누르",meaning:"빛 / 밝음",cat:"일상어휘"},
+  {arabic:"اَلْيَوْمَ",pronun:"알 야우마",meaning:"오늘",cat:"일상어휘"},
+  {arabic:"لِلَّهِ",pronun:"릴라히",meaning:"알라에게",cat:"일상어휘"},
+  // 인물
+  {arabic:"حَسَنٌ",pronun:"하싼",meaning:"하산 (남자이름)",cat:"인물"},
+  {arabic:"سَمِيرَةٌ",pronun:"싸미라",meaning:"사미라 (여자이름)",cat:"인물"},
+  {arabic:"كَمَالٌ",pronun:"까말",meaning:"카말 (남자이름)",cat:"인물"},
+  {arabic:"لَيْلَى",pronun:"라일라",meaning:"라일라 (여자이름)",cat:"인물"},
+  {arabic:"طَالِبٌ",pronun:"딸리브",meaning:"학생 (남)",cat:"인물"},
+  {arabic:"طَالِبَةٌ",pronun:"딸리바",meaning:"학생 (여)",cat:"인물"},
+  // 대명사
+  {arabic:"أَنَا",pronun:"아나",meaning:"나 (는) — 1인칭",cat:"대명사"},
+  {arabic:"أَنْتَ",pronun:"안타",meaning:"당신 (은) — 2인칭 남",cat:"대명사"},
+  {arabic:"أَنْتِ",pronun:"안티",meaning:"당신 (은) — 2인칭 여",cat:"대명사"},
+  {arabic:"هُوَ",pronun:"후와",meaning:"그 (는) — 3인칭 남",cat:"대명사"},
+  {arabic:"هِيَ",pronun:"히야",meaning:"그녀 (는) — 3인칭 여",cat:"대명사"},
+  // 인사
+  {arabic:"مَرْحَبًا",pronun:"마르하반",meaning:"반갑습니다",cat:"인사"},
+  {arabic:"مَرْحَبًا بِكَ",pronun:"마르하반 비카",meaning:"반갑습니다 (대답)",cat:"인사"},
+  {arabic:"أَهْلًا وَسَهْلًا",pronun:"아흘란 와 싸흘란",meaning:"환영합니다",cat:"인사"},
+  {arabic:"أَهْلًا بِكَ",pronun:"아흘란 비카",meaning:"환영합니다 (대답)",cat:"인사"},
+  {arabic:"اَلسَّلَامُ عَلَيْكُمْ",pronun:"앗쌀라무 알라이쿰",meaning:"안녕하십니까",cat:"인사"},
+  {arabic:"وَعَلَيْكُمُ السَّلَامُ",pronun:"와알라이쿰 앗쌀람",meaning:"안녕하십니까 (대답)",cat:"인사"},
+  {arabic:"مَعَ السَّلَامَةِ",pronun:"마아 쌀라마",meaning:"안녕히 가세요",cat:"인사"},
+  {arabic:"إِلَى اللِّقَاءِ",pronun:"일랄 리까으",meaning:"내일 만나요",cat:"인사"},
+  {arabic:"صَبَاحُ الْخَيْرِ",pronun:"싸바훌 하이르",meaning:"좋은 아침입니다",cat:"인사"},
+  {arabic:"صَبَاحُ النُّورِ",pronun:"싸바훈 누르",meaning:"좋은 아침 (대답)",cat:"인사"},
+  {arabic:"مَسَاءُ الْخَيْرِ",pronun:"마싸울 하이르",meaning:"좋은 오후입니다",cat:"인사"},
+  {arabic:"مَسَاءُ النُّورِ",pronun:"마싸운 누르",meaning:"좋은 오후 (대답)",cat:"인사"},
+  {arabic:"مَبْرُوكٌ",pronun:"마브루크",meaning:"축하합니다",cat:"인사"},
+  {arabic:"تَشَرَّفْنَا",pronun:"타샤라프나",meaning:"만나서 영광입니다",cat:"인사"},
+  {arabic:"بَارَكَ اللَّهُ فِيكَ",pronun:"바라칼라후 피카",meaning:"축하합니다 (대답)",cat:"인사"},
+  // 자기소개
+  {arabic:"اِسْمٌ",pronun:"이스문",meaning:"이름 / 명사",cat:"자기소개"},
+  {arabic:"اِسْمِي",pronun:"이스미",meaning:"나의 이름은",cat:"자기소개"},
+];
+
+const CATS = [...new Set(WORDS.map(w => w.cat))];
+let mode = 'ar-ko';
+let selCats = new Set(CATS);
+let deck = [];
+let curWord = null;
+let knowCount = 0, wrongCount = 0;
+let firstWrong = new Set();
+let initCount = 0;
+
+// ── Init ──
+function init() {
+  document.getElementById('total-badge').textContent = `총 ${WORDS.length}개 단어`;
+  renderChips();
+  updateInfo();
+}
+
+function renderChips() {
+  const el = document.getElementById('chips');
+  el.innerHTML = '';
+  const all = document.createElement('button');
+  all.id = 'chip-all';
+  all.className = 'chip on';
+  all.textContent = `전체 ${WORDS.length}`;
+  all.onclick = toggleAll;
+  el.appendChild(all);
+  CATS.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.id = `chip-${cat}`;
+    btn.className = 'chip on';
+    btn.textContent = `${cat} ${WORDS.filter(w=>w.cat===cat).length}`;
+    btn.onclick = () => toggleCat(cat);
+    el.appendChild(btn);
+  });
+}
+
+function toggleAll() {
+  if (selCats.size === CATS.length) selCats.clear();
+  else selCats = new Set(CATS);
+  syncChips(); updateInfo();
+}
+
+function toggleCat(cat) {
+  if (selCats.has(cat)) selCats.delete(cat); else selCats.add(cat);
+  syncChips(); updateInfo();
+}
+
+function syncChips() {
+  document.getElementById('chip-all').className = 'chip' + (selCats.size===CATS.length?' on':'');
+  CATS.forEach(cat => {
+    const el = document.getElementById(`chip-${cat}`);
+    if (el) el.className = 'chip' + (selCats.has(cat)?' on':'');
+  });
+}
+
+function getFiltered() {
+  return WORDS.filter(w => selCats.has(w.cat));
+}
+
+function updateInfo() {
+  const cnt = getFiltered().length;
+  document.getElementById('sel-info').textContent = `${cnt}개 단어 선택됨`;
+  document.getElementById('btn-start').disabled = cnt === 0;
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('mode-ar').className = 'tog-btn' + (m==='ar-ko'?' on':'');
+  document.getElementById('mode-ko').className = 'tog-btn' + (m==='ko-ar'?' on':'');
+}
+
+// ── Shuffle ──
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+// ── Study flow ──
+function startStudy(words) {
+  deck = shuffle(words || getFiltered());
+  if (!deck.length) return;
+  curWord = null;
+  knowCount = 0; wrongCount = 0;
+  firstWrong = new Set();
+  initCount = deck.length;
+  document.getElementById('mode-badge').textContent = mode==='ar-ko'?'아랍어 → 뜻':'뜻 → 아랍어';
+  showScreen('s-study');
+  renderCard();
+}
+
+function showScreen(id) {
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  ['s-home','s-study','s-complete'].forEach(s =>
+    document.getElementById(s).classList.toggle('on', s===id)
+  );
+}
+
+function goHome() { showScreen('s-home'); }
+
+function renderCard() {
+  if (deck.length === 0) { showComplete(); return; }
+
+  curWord = deck[0];
+
+  // progress
+  const pct = initCount > 0 ? Math.min(100, knowCount/initCount*100) : 0;
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('remaining').textContent = deck.length;
+  document.getElementById('s-know').textContent = knowCount;
+  document.getElementById('s-wrong').textContent = wrongCount;
+  document.getElementById('card-cat').textContent = curWord.cat;
+
+  const el = document.getElementById('card');
+  el.className = 'card card-in';
+
+  if (mode === 'ar-ko') {
+    el.innerHTML = `
+      <div class="ar">${curWord.arabic}</div>
+      <div class="pronun">${curWord.pronun}</div>
+      <button class="speak-btn" onclick="speak()">🔊 듣기</button>
+      <div id="rev" style="display:none;width:100%;text-align:center">
+        <div class="divider"></div>
+        <div class="meaning fade-up">${curWord.meaning}</div>
+      </div>`;
+    document.getElementById('btn-reveal').textContent = '뜻 보기 👀';
+  } else {
+    el.innerHTML = `
+      <div class="meaning-front">${curWord.meaning}</div>
+      <div id="rev" style="display:none;width:100%;text-align:center;margin-top:8px">
+        <div class="divider"></div>
+        <div class="ar sm fade-up">${curWord.arabic}</div>
+        <div class="pronun sm">${curWord.pronun}</div>
+        <button class="speak-btn" onclick="speak()">🔊 듣기</button>
+      </div>`;
+    document.getElementById('btn-reveal').textContent = '답 보기 👀';
+  }
+
+  document.getElementById('btn-reveal').style.display = 'block';
+  document.getElementById('ans-row').className = 'ans-row';
+}
+
+function revealAns() {
+  const rev = document.getElementById('rev');
+  if (rev) { rev.style.display = 'block'; }
+  document.getElementById('btn-reveal').style.display = 'none';
+  document.getElementById('ans-row').className = 'ans-row show';
+}
+
+function answer(ok) {
+  const word = deck.shift(); // remove from front
+  const el = document.getElementById('card');
+
+  if (ok) {
+    knowCount++;
+    el.classList.remove('card-in');
+    void el.offsetWidth;
+    el.classList.add('card-glow');
+  } else {
+    wrongCount++;
+    firstWrong.add(word.arabic);
+    el.classList.remove('card-in');
+    void el.offsetWidth;
+    el.classList.add('card-shake');
+    // Re-insert 2–4 cards later
+    const at = Math.min(2 + Math.floor(Math.random()*3), deck.length);
+    deck.splice(at, 0, word);
+  }
+
+  setTimeout(() => renderCard(), ok ? 350 : 450);
+}
+
+function speak() {
+  if (!curWord) return;
+  if (!('speechSynthesis' in window)) {
+    alert('음성 재생이 지원되지 않는 브라우저입니다.\nChrome 또는 Safari를 사용해보세요!');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(curWord.arabic);
+  u.lang = 'ar-SA';
+  u.rate = 0.75;
+  u.pitch = 1;
+  window.speechSynthesis.speak(u);
+}
+
+function showComplete() {
+  const firstOk = initCount - firstWrong.size;
+  const rate = initCount > 0 ? Math.round(firstOk/initCount*100) : 100;
+  document.getElementById('c-know').textContent = initCount;
+  document.getElementById('c-wrong').textContent = wrongCount;
+  document.getElementById('c-rate').textContent = rate+'%';
+  const emoji = rate>=90?'🏆':rate>=70?'🎉':'💪';
+  const title = rate>=90?'완벽해요!':rate>=70?'거의 다 왔어요!':'다시 도전해봐요!';
+  const sub = rate>=90
+    ? `첫 시도 정확도 ${rate}%\n목요일 시험 준비 완료!`
+    : rate>=70
+    ? `첫 시도 정확도 ${rate}%\n한 번만 더 복습하면 완벽해요!`
+    : `첫 시도 정확도 ${rate}%\n반복이 실력이에요. 화이팅!`;
+  document.getElementById('trophy').textContent = emoji;
+  document.getElementById('c-title').textContent = title;
+  document.getElementById('c-sub').textContent = sub;
+  showScreen('s-complete');
+}
+
+function retryAll() { startStudy(getFiltered()); }
+
+init();
+</script>
+</body>
+</html>
