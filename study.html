@@ -475,6 +475,11 @@ function retryAll() { startStudy(getFiltered()); }
 
 // ── Keyboard navigation ──
 document.addEventListener('keydown', e => {
+  if (e.key === ' ') {
+    e.preventDefault();
+    if (!isRevealed) revealAns();
+    return;
+  }
   if (!isRevealed) return;
   if (e.key === 'ArrowRight') { e.preventDefault(); answer(true); }
   else if (e.key === 'ArrowLeft') { e.preventDefault(); answer(false); }
