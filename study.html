@@ -84,6 +84,11 @@ body{display:flex;justify-content:center}
 .sc-num.g{color:var(--success)}.sc-num.r{color:var(--error)}.sc-num.b{color:var(--primary)}
 .btn-sec{width:100%;background:var(--surface);color:var(--text);border:none;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;padding:16px;border-radius:var(--r);margin-top:10px}
 
+/* Letter breakdown */
+.letters-row{display:flex;flex-direction:row-reverse;gap:6px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+.l-chip{background:var(--surface2);border-radius:8px;min-width:38px;height:44px;padding:0 6px;display:flex;align-items:center;justify-content:center}
+.l-ar{font-family:'Noto Naskh Arabic',serif;font-size:22px;line-height:1}
+
 /* Animations */
 @keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -371,6 +376,7 @@ function renderCard() {
   if (mode === 'ar-ko') {
     el.innerHTML = `
       <div class="ar">${curWord.arabic}</div>
+      ${renderLetters(curWord.arabic)}
       <div class="pronun">${curWord.pronun}</div>
       <button class="speak-btn" onclick="speak()">🔊 듣기</button>
       <div id="rev" style="display:none;width:100%;text-align:center">
@@ -384,6 +390,7 @@ function renderCard() {
       <div id="rev" style="display:none;width:100%;text-align:center;margin-top:8px">
         <div class="divider"></div>
         <div class="ar sm fade-up">${curWord.arabic}</div>
+        ${renderLetters(curWord.arabic)}
         <div class="pronun sm">${curWord.pronun}</div>
         <button class="speak-btn" onclick="speak()">🔊 듣기</button>
       </div>`;
@@ -458,6 +465,26 @@ function showComplete() {
 }
 
 function retryAll() { startStudy(getFiltered()); }
+
+function getLetterBreakdown(arabic) {
+  // Strip diacritics (harakat)
+  const stripped = arabic.replace(/[ً-ٟؐ-ؚ]/g, '');
+  // Keep only base Arabic consonants
+  return [...stripped].filter(ch => {
+    const cp = ch.codePointAt(0);
+    return cp >= 0x0621 && cp <= 0x064A;
+  });
+}
+
+function renderLetters(arabic) {
+  const letters = getLetterBreakdown(arabic);
+  if (!letters.length) return '';
+  // Each letter in its own span → isolated form
+  const chips = letters.map(l =>
+    `<span class="l-chip"><span class="l-ar">${l}</span></span>`
+  ).join('');
+  return `<div class="letters-row">${chips}</div>`;
+}
 
 init();
 </script>
