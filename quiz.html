@@ -53,6 +53,9 @@ body{display:flex;justify-content:center}
 .q-meaning{font-size:28px;font-weight:700;line-height:1.45;text-align:center;margin-bottom:8px}
 .q-sub{font-size:13px;color:var(--dim);font-weight:700;text-align:center}
 .pronun{font-size:14px;color:var(--accent);font-weight:700;text-align:center;margin-top:4px}
+.speak-btn{display:flex;align-items:center;gap:6px;background:var(--surface2);border:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;border-radius:20px;margin-top:12px;transition:background .2s}
+.speak-btn:active{background:var(--primary)}
+.speak-btn:disabled{opacity:.45;cursor:not-allowed}
 .letters-row{display:flex;flex-direction:row-reverse;gap:6px;margin-top:12px;flex-wrap:wrap;justify-content:center}
 .l-chip{background:var(--surface2);border-radius:8px;min-width:36px;height:42px;padding:0 6px;display:flex;align-items:center;justify-content:center}
 .l-ar{font-family:'Noto Naskh Arabic',serif;font-size:22px;line-height:1}
@@ -142,6 +145,7 @@ body{display:flex;justify-content:center}
       <div class="q-meaning" id="q-meaning"></div>
       <div class="q-sub" id="q-sub"></div>
       <div class="pronun" id="q-pronun"></div>
+      <button class="speak-btn" id="q-speak" onclick="speak()" type="button">🔊 듣기</button>
       <div class="letters-row" id="q-letters"></div>
     </div>
     <div class="choices" id="choices"></div>
@@ -282,6 +286,7 @@ function shuffle(arr) {
 }
 
 function showScreen(id) {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
   ['s-home','s-quiz','s-complete'].forEach(s => $(s).classList.toggle('on', s === id));
 }
 
@@ -320,6 +325,8 @@ function renderQuestion() {
   $('q-meaning').style.display = mode === 'ko-ar' ? 'block' : 'none';
   $('q-ar').textContent = current.arabic;
   $('q-meaning').textContent = current.meaning;
+  $('q-speak').style.display = mode === 'ar-ko' ? 'flex' : 'none';
+  $('q-speak').disabled = false;
   if (mode === 'ar-ko') {
     showAnswerDetails();
   } else {
@@ -368,6 +375,8 @@ function answer(id) {
     ? `정답이에요. ${current.pronun}`
     : `정답은 ${mode === 'ar-ko' ? current.meaning : current.arabic} 입니다.`;
   showAnswerDetails();
+  $('q-speak').style.display = 'flex';
+  $('q-speak').disabled = false;
   $('s-correct').textContent = score.correct;
   $('s-wrong').textContent = score.wrong;
   $('btn-next').disabled = false;
@@ -402,6 +411,20 @@ function showAnswerDetails() {
   $('q-sub').textContent = current.transliteration;
   $('q-pronun').textContent = current.pronun ? `한국어 발음: ${current.pronun}` : '';
   $('q-letters').innerHTML = renderLetters(current.arabic);
+}
+
+function speak() {
+  if (!current) return;
+  if (!('speechSynthesis' in window)) {
+    alert('음성 재생이 지원되지 않는 브라우저입니다.\nChrome 또는 Safari를 사용해보세요!');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(current.arabic);
+  utterance.lang = 'ar-SA';
+  utterance.rate = 0.75;
+  utterance.pitch = 1;
+  window.speechSynthesis.speak(utterance);
 }
 
 function getLetterBreakdown(arabic) {
