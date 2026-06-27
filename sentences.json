@@ -1,0 +1,182 @@
+[
+  {
+    "id": "s001",
+    "arabic": "أَنَا طَالِبٌ.",
+    "transliteration": "a-naa taa-li-bun",
+    "pronunciation_ko": "아나 탈리분",
+    "meaning_ko": "나는 남학생입니다.",
+    "category": "자기소개",
+    "word_ids": ["pr001", "v001"]
+  },
+  {
+    "id": "s002",
+    "arabic": "أَنَا طَالِبَةٌ.",
+    "transliteration": "a-naa taa-li-ba-tun",
+    "pronunciation_ko": "아나 탈리바툰",
+    "meaning_ko": "나는 여학생입니다.",
+    "category": "자기소개",
+    "word_ids": ["pr001", "v002"]
+  },
+  {
+    "id": "s003",
+    "arabic": "هُوَ حَسَنٌ.",
+    "transliteration": "hu-wa ha-sa-nun",
+    "pronunciation_ko": "후와 하산",
+    "meaning_ko": "그는 하산입니다.",
+    "category": "인물",
+    "word_ids": ["pr004", "n001"]
+  },
+  {
+    "id": "s004",
+    "arabic": "هِيَ سَمِيرَةُ.",
+    "transliteration": "hi-ya sa-mii-ra-tu",
+    "pronunciation_ko": "히야 사미라",
+    "meaning_ko": "그녀는 사미라입니다.",
+    "category": "인물",
+    "word_ids": ["pr005", "n002"]
+  },
+  {
+    "id": "s005",
+    "arabic": "أَنَا مِنْ كُورْيَا.",
+    "transliteration": "a-naa min kuu-ri-yaa",
+    "pronunciation_ko": "아나 민 쿠리야",
+    "meaning_ko": "나는 한국에서 왔습니다.",
+    "category": "자기소개",
+    "word_ids": ["pr001", "v006", "n008"]
+  },
+  {
+    "id": "s006",
+    "arabic": "أَنَا بِخَيْرٍ.",
+    "transliteration": "a-naa bi-khay-rin",
+    "pronunciation_ko": "아나 비카이린",
+    "meaning_ko": "나는 잘 지냅니다.",
+    "category": "일상",
+    "word_ids": ["pr001", "dv001"]
+  },
+  {
+    "id": "s007",
+    "arabic": "كَيْفَ الْحَالُ؟",
+    "transliteration": "kay-fa al-haa-lu",
+    "pronunciation_ko": "카이파 알 할루",
+    "meaning_ko": "상태가 어떻습니까?",
+    "category": "일상",
+    "word_ids": ["v007", "dv003"]
+  },
+  {
+    "id": "s008",
+    "arabic": "الْجَوُّ لَطِيفٌ.",
+    "transliteration": "al-jaw-wu la-tii-fun",
+    "pronunciation_ko": "알 자우우 라티푼",
+    "meaning_ko": "날씨가 좋습니다.",
+    "category": "일상",
+    "word_ids": ["dv002", "dv005"]
+  },
+  {
+    "id": "s009",
+    "arabic": "أَيْنَ الْكِتَابُ؟",
+    "transliteration": "ay-na al-ki-taa-bu",
+    "pronunciation_ko": "아이나 알 키타부",
+    "meaning_ko": "책은 어디에 있습니까?",
+    "category": "위치",
+    "word_ids": ["v005", "b007"]
+  },
+  {
+    "id": "s010",
+    "arabic": "الْكِتَابُ عَلَى الْمَكْتَبِ.",
+    "transliteration": "al-ki-taa-bu a-laa al-mak-ta-bi",
+    "pronunciation_ko": "알 키타부 알라 알 막타비",
+    "meaning_ko": "책은 책상 위에 있습니다.",
+    "category": "위치",
+    "word_ids": ["b007", "pp005", "o004"]
+  },
+  {
+    "id": "s011",
+    "arabic": "الْقَلَمُ فَوْقَ الْكِتَابِ.",
+    "transliteration": "al-qa-la-mu faw-qa al-ki-taa-bi",
+    "pronunciation_ko": "알 칼라무 파우카 알 키타비",
+    "meaning_ko": "펜은 책 위쪽에 있습니다.",
+    "category": "위치",
+    "word_ids": ["o002", "pp006", "b007"]
+  },
+  {
+    "id": "s012",
+    "arabic": "الْحَقِيبَةُ تَحْتَ الْمَكْتَبِ.",
+    "transliteration": "al-ha-qii-ba-tu tah-ta al-mak-ta-bi",
+    "pronunciation_ko": "알 하키바투 타흐타 알 막타비",
+    "meaning_ko": "가방은 책상 아래에 있습니다.",
+    "category": "위치",
+    "word_ids": ["o001", "pp003", "o004"]
+  },
+  {
+    "id": "s013",
+    "arabic": "الْغُرْفَةُ خَلْفَ الْمَكْتَبِ.",
+    "transliteration": "al-ghur-fa-tu khal-fa al-mak-ta-bi",
+    "pronunciation_ko": "알 구르파투 칼파 알 막타비",
+    "meaning_ko": "방은 사무실 뒤에 있습니다.",
+    "category": "위치",
+    "word_ids": ["o005", "pp004", "o004"]
+  },
+  {
+    "id": "s014",
+    "arabic": "الْبَيْتُ بِجَانِبِ السِّينَمَا.",
+    "transliteration": "al-bay-tu bi-jaa-ni-bi as-sii-na-maa",
+    "pronunciation_ko": "알 바이투 비자니비 앗 시네마",
+    "meaning_ko": "집은 영화관 옆에 있습니다.",
+    "category": "위치",
+    "word_ids": ["b006", "pp002", "o006"]
+  },
+  {
+    "id": "s015",
+    "arabic": "مَاءٌ فِي الْكُوبِ.",
+    "transliteration": "maa-un fii al-kuu-bi",
+    "pronunciation_ko": "마운 피 알 쿠비",
+    "meaning_ko": "컵 안에 물이 있습니다.",
+    "category": "사물",
+    "word_ids": ["b005", "o003"]
+  },
+  {
+    "id": "s016",
+    "arabic": "هَذَا كِتَابٌ.",
+    "transliteration": "haa-dhaa ki-taa-bun",
+    "pronunciation_ko": "하다 키타분",
+    "meaning_ko": "이것은 책입니다.",
+    "category": "사물",
+    "word_ids": ["b007"]
+  },
+  {
+    "id": "s017",
+    "arabic": "هَذِهِ حَقِيبَةٌ.",
+    "transliteration": "haa-dhi-hi ha-qii-ba-tun",
+    "pronunciation_ko": "하지히 하키바툰",
+    "meaning_ko": "이것은 가방입니다.",
+    "category": "사물",
+    "word_ids": ["o001"]
+  },
+  {
+    "id": "s018",
+    "arabic": "أَبِي فِي الْبَيْتِ.",
+    "transliteration": "a-bii fii al-bay-ti",
+    "pronunciation_ko": "아비 피 알 바이티",
+    "meaning_ko": "나의 아버지는 집에 있습니다.",
+    "category": "가족",
+    "word_ids": ["f003", "b006"]
+  },
+  {
+    "id": "s019",
+    "arabic": "أُمِّي فِي الْغُرْفَةِ.",
+    "transliteration": "um-mii fii al-ghur-fa-ti",
+    "pronunciation_ko": "움미 피 알 구르파티",
+    "meaning_ko": "나의 어머니는 방에 있습니다.",
+    "category": "가족",
+    "word_ids": ["f004", "o005"]
+  },
+  {
+    "id": "s020",
+    "arabic": "صَبَاحَ الْخَيْرِ، أَنَا بِخَيْرٍ.",
+    "transliteration": "sa-baa-ha al-khay-ri, a-naa bi-khay-rin",
+    "pronunciation_ko": "사바할 카이리, 아나 비카이린",
+    "meaning_ko": "좋은 아침입니다, 저는 잘 지냅니다.",
+    "category": "인사",
+    "word_ids": ["g005", "pr001", "dv001"]
+  }
+]

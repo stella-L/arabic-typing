@@ -121,6 +121,10 @@ body {
   background: linear-gradient(135deg, #164e63 0%, #0e7490 100%);
   cursor: pointer;
 }
+.mode-card.sentence-mode {
+  background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
+  cursor: pointer;
+}
 .mode-card.quiz-mode {
   background: linear-gradient(135deg, #8a4b13 0%, #d97706 100%);
   cursor: pointer;
@@ -130,6 +134,7 @@ body {
 .quiz-start-btn { color: #b45309; }
 .fav-start-btn { color: #9a3412; }
 .audio-start-btn { color: #0e7490; }
+.sentence-start-btn { color: #6d28d9; }
 .mode-badge {
   display: inline-block;
   background: rgba(255,255,255,.25);
@@ -157,7 +162,7 @@ body {
 .start-btn:hover { opacity: .9; }
 .mode-mini-actions {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin-top: 10px;
 }

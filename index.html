@@ -49,6 +49,7 @@
         <button type="button" onclick="event.stopPropagation(); location.href='study.html?fav=1'">암기</button>
         <button type="button" onclick="event.stopPropagation(); location.href='quiz.html?fav=1'">퀴즈</button>
         <button type="button" onclick="event.stopPropagation(); location.href='audio.html?fav=1'">듣기</button>
+        <button type="button" onclick="event.stopPropagation(); location.href='sentence.html?fav=1'">문장</button>
       </div>
     </div>
 
@@ -57,6 +58,13 @@
       <div class="mode-title">버스 듣기 복습</div>
       <div class="mode-desc">아랍어를 듣고 잠깐 떠올린 뒤<br>한국어 뜻을 들어요</div>
       <button class="start-btn audio-start-btn">음성 복습 →</button>
+    </div>
+
+    <div class="mode-card sentence-mode" onclick="location.href='sentence.html'">
+      <div class="mode-badge new-badge">SENTENCE</div>
+      <div class="mode-title">문장 듣기</div>
+      <div class="mode-desc">배운 단어를 짧은 문장으로 묶어<br>문장 전체 뜻을 들어요</div>
+      <button class="start-btn sentence-start-btn">문장 듣기 →</button>
     </div>
 
     <div class="mode-card active-mode" id="btn-start">

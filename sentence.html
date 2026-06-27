@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>문장 듣기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--primary:#7c3aed;--primary2:#5b21b6;--text:#f0f0f5;--dim:#8888aa;--accent:#f59e0b;--success:#22c55e;--r:16px;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow:hidden}
+body{display:flex;justify-content:center}
+.screen{width:100%;max-width:430px;height:100%;height:-webkit-fill-available;display:flex;flex-direction:column;overflow-y:auto}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:max(52px,calc(var(--sat) + 12px)) 20px 12px}
+.btn-ico{width:40px;height:40px;border:none;border-radius:12px;background:var(--surface2);color:var(--text);font-size:18px;display:flex;align-items:center;justify-content:center}
+.title{font-size:16px;font-weight:700;text-align:center}.sub{font-size:12px;color:var(--dim);font-weight:500;margin-top:2px}
+.stage{padding:0 20px 12px}.stage-pill{display:flex;justify-content:space-between;gap:8px;background:var(--surface);border-radius:14px;padding:10px 12px;color:var(--dim);font-size:12px;font-weight:700}.stage-pill .on{color:#c4b5fd}
+.card-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 20px 14px}
+.card{width:100%;min-height:350px;background:var(--surface);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cat{font-size:11px;font-weight:700;color:#c4b5fd;background:rgba(124,58,237,.18);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.ar{font-family:'Noto Naskh Arabic',serif;font-size:clamp(34px,10vw,48px);font-weight:700;line-height:1.55;direction:rtl;margin-bottom:10px;word-break:break-word}
+.trans{color:#c4b5fd;font-size:13px;line-height:1.5;margin-bottom:8px}
+.pronun{color:var(--accent);font-size:14px;font-weight:700;margin-bottom:16px}
+.meaning{font-size:23px;font-weight:700;line-height:1.5;min-height:36px;margin-bottom:12px}
+.muted{color:var(--dim);font-size:12px;line-height:1.6}
+.word-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px}
+.word-chip{border-radius:999px;background:var(--surface2);color:var(--dim);font-size:11px;font-weight:700;padding:5px 9px}
+.word-chip.fav{color:#fbbf24;background:rgba(245,158,11,.16)}
+.settings{padding:0 20px 14px}
+.sec-lbl{font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:9px}
+.tog{display:flex;background:var(--surface);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px}
+.tog button{flex:1;background:transparent;border:none;color:var(--dim);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:11px 8px;border-radius:9px}
+.tog button.on{background:var(--primary);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;max-height:88px;overflow-y:auto}
+.chip{background:var(--surface);border:2px solid transparent;color:var(--dim);font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;padding:7px 12px;border-radius:20px}
+.chip.on{border-color:var(--primary);color:#c4b5fd;background:rgba(124,58,237,.16)}
+.controls{padding:0 20px calc(28px + var(--sab))}
+.primary{width:100%;border:none;border-radius:16px;background:linear-gradient(135deg,var(--primary2),var(--primary));color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:800;padding:18px;margin-bottom:10px}
+.primary:disabled{opacity:.38;cursor:not-allowed}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.ctrl{border:none;border-radius:14px;background:var(--surface2);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;padding:14px 8px}
+.info{text-align:center;color:var(--dim);font-size:12px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<main class="screen">
+  <header class="hdr">
+    <button class="btn-ico" onclick="location.href='index.html'" type="button">←</button>
+    <div class="title">문장 듣기<div class="sub">단어를 문장 덩어리로 듣기</div></div>
+    <div style="width:40px"></div>
+  </header>
+
+  <section class="stage">
+    <div class="stage-pill">
+      <span id="stage-sentence" class="on">1 문장</span>
+      <span id="stage-recall">2 의미 떠올리기</span>
+      <span id="stage-ko">3 뜻</span>
+    </div>
+  </section>
+
+  <section class="card-wrap">
+    <div class="card">
+      <div class="cat" id="cat">카테고리</div>
+      <div class="ar" id="arabic" dir="rtl">...</div>
+      <div class="trans" id="trans"></div>
+      <div class="pronun" id="pronun"></div>
+      <div class="meaning" id="meaning"></div>
+      <p class="muted" id="status">문장을 불러오는 중입니다.</p>
+      <div class="word-row" id="word-row"></div>
+    </div>
+  </section>
+
+  <section class="settings">
+    <div class="sec-lbl">문장 범위</div>
+    <div class="tog">
+      <button id="scope-fav" onclick="setScope('fav')" type="button">즐겨찾기 포함</button>
+      <button id="scope-all" onclick="setScope('all')" type="button">전체 문장</button>
+    </div>
+    <div class="sec-lbl">문장 종류</div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <section class="controls">
+    <p class="info" id="info">0개 문장 선택됨</p>
+    <button class="primary" id="play" onclick="togglePlay()" type="button" disabled>문장 듣기 시작</button>
+    <div class="row">
+      <button class="ctrl" onclick="prevSentence()" type="button">이전</button>
+      <button class="ctrl" onclick="toggleMode()" type="button" id="mode">해석 듣기</button>
+      <button class="ctrl" onclick="nextSentence()" type="button">다음</button>
+    </div>
+  </section>
+</main>
+
+<script>
+const FAVORITE_KEY = 'arabtype.favoriteWordIds';
+let words = [];
+let wordMap = new Map();
+let sentences = [];
+let cats = [];
+let selectedCats = new Set();
+let favoriteIds = new Set();
+let scope = new URLSearchParams(location.search).get('fav') === '1' ? 'fav' : 'all';
+let deck = [];
+let index = 0;
+let playing = false;
+let speakMeaning = true;
+let timer = null;
+
+function $(id){ return document.getElementById(id); }
+
+function loadFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+    favoriteIds = new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    favoriteIds = new Set();
+  }
+}
+
+function normalizeWord(w) {
+  return {
+    id: w.id,
+    arabic: w.arabic,
+    meaning: w.meaning_ko || w.meaning || '',
+    cat: w.category || w.cat || '기타'
+  };
+}
+
+async function init() {
+  loadFavorites();
+  try {
+    const [wordRes, sentenceRes] = await Promise.all([fetch('words.json'), fetch('sentences.json')]);
+    if (!wordRes.ok || !sentenceRes.ok) throw new Error('load');
+    words = (await wordRes.json()).map(normalizeWord).filter(w => w.id);
+    wordMap = new Map(words.map(w => [w.id, w]));
+    sentences = (await sentenceRes.json()).filter(s => s.id && s.arabic && s.meaning_ko);
+    cats = [...new Set(sentences.map(s => s.category || '기타'))];
+    selectedCats = new Set(cats);
+    renderChips();
+    rebuildDeck();
+  } catch {
+    $('status').textContent = '문장 데이터를 불러오지 못했어요. 로컬 서버에서 열어주세요.';
+  }
+}
+
+function renderChips() {
+  const el = $('chips');
+  el.innerHTML = '';
+  cats.forEach(cat => {
+    const count = sentences.filter(s => (s.category || '기타') === cat && passesScope(s)).length;
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (selectedCats.has(cat) ? ' on' : '');
+    btn.textContent = `${cat} ${count}`;
+    btn.onclick = () => {
+      if (selectedCats.has(cat)) selectedCats.delete(cat);
+      else selectedCats.add(cat);
+      renderChips();
+      rebuildDeck();
+    };
+    el.appendChild(btn);
+  });
+  $('scope-fav').className = scope === 'fav' ? 'on' : '';
+  $('scope-all').className = scope === 'all' ? 'on' : '';
+}
+
+function setScope(nextScope) {
+  scope = nextScope;
+  renderChips();
+  rebuildDeck();
+}
+
+function passesScope(sentence) {
+  if (scope !== 'fav') return true;
+  return (sentence.word_ids || []).some(id => favoriteIds.has(id));
+}
+
+function getFiltered() {
+  return sentences.filter(s => selectedCats.has(s.category || '기타') && passesScope(s));
+}
+
+function rebuildDeck() {
+  const currentId = deck[index]?.id;
+  deck = getFiltered();
+  index = Math.max(0, deck.findIndex(s => s.id === currentId));
+  if (index < 0) index = 0;
+  $('info').textContent = `${deck.length}개 문장 선택됨`;
+  $('play').disabled = deck.length === 0;
+  if (!deck.length) {
+    stopAudio();
+    $('cat').textContent = '문장 없음';
+    $('arabic').textContent = '즐겨찾기 단어가 들어간 문장이 없어요';
+    $('trans').textContent = '';
+    $('pronun').textContent = '';
+    $('meaning').textContent = '';
+    $('status').textContent = '즐겨찾기를 추가하거나 전체 문장으로 바꿔보세요.';
+    $('word-row').innerHTML = '';
+    return;
+  }
+  renderSentence(false);
+}
+
+function renderSentence(showMeaning) {
+  const sentence = deck[index];
+  $('cat').textContent = sentence.category || '기타';
+  $('arabic').textContent = sentence.arabic;
+  $('trans').textContent = sentence.transliteration || '';
+  $('pronun').textContent = sentence.pronunciation_ko ? `한국어 발음: ${sentence.pronunciation_ko}` : '';
+  $('meaning').textContent = showMeaning ? sentence.meaning_ko : '';
+  $('status').textContent = `${index + 1} / ${deck.length}`;
+  $('word-row').innerHTML = (sentence.word_ids || []).map(id => {
+    const word = wordMap.get(id);
+    const label = word ? word.meaning : id;
+    const fav = favoriteIds.has(id) ? ' fav' : '';
+    return `<span class="word-chip${fav}">${escapeHtml(label)}</span>`;
+  }).join('');
+}
+
+function setStage(stage) {
+  ['sentence','recall','ko'].forEach(name => $('stage-' + name).className = name === stage ? 'on' : '');
+}
+
+function speak(text, lang, next) {
+  if (!('speechSynthesis' in window)) {
+    $('status').textContent = '음성 재생이 지원되지 않는 브라우저입니다.';
+    playing = false;
+    $('play').textContent = '문장 듣기 시작';
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = lang === 'ar-SA' ? 0.78 : 0.9;
+  u.pitch = 1;
+  u.onend = next;
+  window.speechSynthesis.speak(u);
+}
+
+function playCurrent() {
+  if (!playing || !deck.length) return;
+  const sentence = deck[index];
+  renderSentence(false);
+  setStage('sentence');
+  $('status').textContent = '문장을 듣고 전체 의미를 떠올려보세요.';
+  speak(sentence.arabic, 'ar-SA', () => {
+    if (!playing) return;
+    setStage('recall');
+    $('status').textContent = '단어가 아니라 문장 전체 뜻을 떠올리는 중...';
+    timer = setTimeout(() => {
+      if (!playing) return;
+      renderSentence(true);
+      setStage('ko');
+      if (!speakMeaning) {
+        timer = setTimeout(nextSentence, 1200);
+        return;
+      }
+      speak(sentence.meaning_ko, 'ko-KR', () => {
+        if (!playing) return;
+        timer = setTimeout(nextSentence, 1100);
+      });
+    }, 2400);
+  });
+}
+
+function togglePlay() {
+  if (playing) stopAudio();
+  else {
+    playing = true;
+    $('play').textContent = '일시정지';
+    playCurrent();
+  }
+}
+
+function stopAudio() {
+  playing = false;
+  $('play').textContent = '문장 듣기 시작';
+  clearTimeout(timer);
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function nextSentence() {
+  if (!deck.length) return;
+  clearTimeout(timer);
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  index = (index + 1) % deck.length;
+  renderSentence(false);
+  if (playing) playCurrent();
+}
+
+function prevSentence() {
+  if (!deck.length) return;
+  clearTimeout(timer);
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  index = (index - 1 + deck.length) % deck.length;
+  renderSentence(false);
+  if (playing) playCurrent();
+}
+
+function toggleMode() {
+  speakMeaning = !speakMeaning;
+  $('mode').textContent = speakMeaning ? '해석 듣기' : '해석 보기';
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[ch]);
+}
+
+window.addEventListener('pagehide', stopAudio);
+init();
+</script>
+</body>
+</html>
