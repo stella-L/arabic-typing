@@ -58,6 +58,8 @@ body{display:flex;justify-content:center}
 .pronun.sm{font-size:13px;margin-bottom:10px}
 .speak-btn{display:flex;align-items:center;gap:6px;background:var(--surface2);border:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:600;padding:9px 18px;border-radius:20px;transition:background .2s}
 .speak-btn:active{background:var(--primary)}
+.fav-btn{width:38px;height:38px;border:none;border-radius:12px;background:var(--surface2);color:var(--dim);font-size:22px;display:flex;align-items:center;justify-content:center}
+.fav-btn.on{color:#fbbf24;background:rgba(245,158,11,.16)}
 .divider{width:40px;height:2px;background:var(--surface2);border-radius:1px;margin:16px auto 14px}
 .meaning{font-size:26px;font-weight:700;line-height:1.4;text-align:center}
 .meaning-front{font-size:28px;font-weight:700;text-align:center;line-height:1.5}
@@ -176,7 +178,7 @@ body{display:flex;justify-content:center}
 </div>
 
 <script>
-const WORDS = [
+let WORDS = [
   // 가족
   {arabic:"أَبٌ",pronun:"아브",meaning:"아버지 / 아빠",cat:"가족"},
   {arabic:"أُمٌّ",pronun:"움므",meaning:"어머니 / 엄마",cat:"가족"},
@@ -258,7 +260,7 @@ const WORDS = [
   {arabic:"اِسْمِي",pronun:"이스미",meaning:"나의 이름은",cat:"자기소개"},
 ];
 
-const CATS = [...new Set(WORDS.map(w => w.cat))];
+let CATS = [];
 let mode = 'ar-ko';
 let selCats = new Set(CATS);
 let deck = [];
@@ -267,10 +269,65 @@ let knowCount = 0, wrongCount = 0;
 let firstWrong = new Set();
 let initCount = 0;
 let isRevealed = false;
+let favoriteIds = new Set();
+let favoriteOnly = new URLSearchParams(location.search).get('fav') === '1';
+const FAVORITE_KEY = 'arabtype.favoriteWordIds';
+
+function normalizeWord(w, index) {
+  return {
+    id: w.id || `${w.arabic}-${index}`,
+    arabic: w.arabic,
+    pronun: w.pronunciation_ko || w.pronun || '',
+    meaning: w.meaning_ko || w.meaning || '',
+    cat: w.category || w.cat || '기타'
+  };
+}
+
+function loadFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+    favoriteIds = new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    favoriteIds = new Set();
+  }
+}
+
+function saveFavorites() {
+  localStorage.setItem(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
+  syncFavoriteButton();
+  updateInfo();
+}
+
+function toggleFavorite() {
+  if (!curWord || !curWord.id) return;
+  if (favoriteIds.has(curWord.id)) favoriteIds.delete(curWord.id);
+  else favoriteIds.add(curWord.id);
+  saveFavorites();
+}
+
+function syncFavoriteButton() {
+  const btn = document.getElementById('fav-current');
+  if (!btn || !curWord) return;
+  const on = favoriteIds.has(curWord.id);
+  btn.className = 'fav-btn' + (on ? ' on' : '');
+  btn.textContent = on ? '★' : '☆';
+  btn.setAttribute('aria-pressed', String(on));
+}
 
 // ── Init ──
-function init() {
+async function init() {
+  loadFavorites();
+  try {
+    const res = await fetch('words.json');
+    if (res.ok) WORDS = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
+  } catch {
+    WORDS = WORDS.map(normalizeWord).filter(w => w.arabic && w.meaning);
+  }
+  WORDS = WORDS.map(normalizeWord).filter(w => w.arabic && w.meaning);
+  CATS = [...new Set(WORDS.map(w => w.cat))];
+  selCats = new Set(CATS);
   document.getElementById('total-badge').textContent = `총 ${WORDS.length}개 단어`;
+  if (favoriteOnly) document.getElementById('total-badge').textContent = `즐겨찾기 ${getFiltered().length}개`;
   renderChips();
   updateInfo();
 }
@@ -314,12 +371,12 @@ function syncChips() {
 }
 
 function getFiltered() {
-  return WORDS.filter(w => selCats.has(w.cat));
+  return WORDS.filter(w => selCats.has(w.cat) && (!favoriteOnly || favoriteIds.has(w.id)));
 }
 
 function updateInfo() {
   const cnt = getFiltered().length;
-  document.getElementById('sel-info').textContent = `${cnt}개 단어 선택됨`;
+  document.getElementById('sel-info').textContent = favoriteOnly ? `즐겨찾기 ${cnt}개 선택됨` : `${cnt}개 단어 선택됨`;
   document.getElementById('btn-start').disabled = cnt === 0;
 }
 
@@ -380,6 +437,7 @@ function renderCard() {
 
   if (mode === 'ar-ko') {
     el.innerHTML = `
+      <button class="fav-btn" id="fav-current" onclick="toggleFavorite()" type="button" aria-label="즐겨찾기">☆</button>
       <div class="ar">${curWord.arabic}</div>
       ${renderLetters(curWord.arabic)}
       <div class="pronun">${curWord.pronun}</div>
@@ -391,6 +449,7 @@ function renderCard() {
     document.getElementById('btn-reveal').textContent = '뜻 보기 👀';
   } else {
     el.innerHTML = `
+      <button class="fav-btn" id="fav-current" onclick="toggleFavorite()" type="button" aria-label="즐겨찾기">☆</button>
       <div class="meaning-front">${curWord.meaning}</div>
       <div id="rev" style="display:none;width:100%;text-align:center;margin-top:8px">
         <div class="divider"></div>
@@ -404,6 +463,7 @@ function renderCard() {
 
   document.getElementById('btn-reveal').style.display = 'block';
   document.getElementById('ans-row').className = 'ans-row';
+  syncFavoriteButton();
 }
 
 function revealAns() {

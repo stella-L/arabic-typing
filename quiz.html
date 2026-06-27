@@ -56,6 +56,8 @@ body{display:flex;justify-content:center}
 .speak-btn{display:flex;align-items:center;gap:6px;background:var(--surface2);border:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;border-radius:20px;margin-top:12px;transition:background .2s}
 .speak-btn:active{background:var(--primary)}
 .speak-btn:disabled{opacity:.45;cursor:not-allowed}
+.fav-btn{width:38px;height:38px;border:none;border-radius:12px;background:var(--surface2);color:var(--dim);font-size:22px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.fav-btn.on{color:#fbbf24;background:rgba(245,158,11,.16)}
 .letters-row{display:flex;flex-direction:row-reverse;gap:6px;margin-top:12px;flex-wrap:wrap;justify-content:center}
 .l-chip{background:var(--surface2);border-radius:8px;min-width:36px;height:42px;padding:0 6px;display:flex;align-items:center;justify-content:center}
 .l-ar{font-family:'Noto Naskh Arabic',serif;font-size:22px;line-height:1}
@@ -139,6 +141,7 @@ body{display:flex;justify-content:center}
   </div>
   <div class="quiz-body">
     <div class="q-card pop" id="q-card">
+      <button class="fav-btn" id="q-fav" onclick="toggleFavorite()" type="button" aria-label="즐겨찾기">☆</button>
       <div class="cat-tag" id="q-cat">카테고리</div>
       <div class="q-label" id="q-label">뜻을 고르세요</div>
       <div class="q-ar" id="q-ar" dir="rtl"></div>
@@ -182,6 +185,9 @@ let index = 0;
 let current = null;
 let score = { correct: 0, wrong: 0 };
 let answered = false;
+let favoriteIds = new Set();
+let favoriteOnly = new URLSearchParams(location.search).get('fav') === '1';
+const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 
 function $(id){ return document.getElementById(id); }
 
@@ -196,14 +202,46 @@ function normalizeWord(w) {
   };
 }
 
+function loadFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+    favoriteIds = new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    favoriteIds = new Set();
+  }
+}
+
+function saveFavorites() {
+  localStorage.setItem(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
+  syncFavoriteButton();
+  updateInfo();
+}
+
+function toggleFavorite() {
+  if (!current || !current.id) return;
+  if (favoriteIds.has(current.id)) favoriteIds.delete(current.id);
+  else favoriteIds.add(current.id);
+  saveFavorites();
+}
+
+function syncFavoriteButton() {
+  const btn = $('q-fav');
+  if (!btn || !current) return;
+  const on = favoriteIds.has(current.id);
+  btn.className = 'fav-btn' + (on ? ' on' : '');
+  btn.textContent = on ? '★' : '☆';
+  btn.setAttribute('aria-pressed', String(on));
+}
+
 async function init() {
+  loadFavorites();
   try {
     const res = await fetch('words.json');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];
     selectedCats = new Set(cats);
-    $('total-badge').textContent = `총 ${words.length}개 단어`;
+    $('total-badge').textContent = favoriteOnly ? `즐겨찾기 ${words.filter(w => favoriteIds.has(w.id)).length}개` : `총 ${words.length}개 단어`;
     renderChips();
     updateInfo();
   } catch (err) {
@@ -254,12 +292,12 @@ function syncChips() {
 }
 
 function getFiltered() {
-  return words.filter(w => selectedCats.has(w.cat));
+  return words.filter(w => selectedCats.has(w.cat) && (!favoriteOnly || favoriteIds.has(w.id)));
 }
 
 function updateInfo() {
   const cnt = getFiltered().length;
-  $('sel-info').textContent = `${cnt}개 단어 선택됨`;
+  $('sel-info').textContent = favoriteOnly ? `즐겨찾기 ${cnt}개 선택됨` : `${cnt}개 단어 선택됨`;
   $('btn-start').disabled = cnt < 2;
 }
 
@@ -327,6 +365,7 @@ function renderQuestion() {
   $('q-meaning').textContent = current.meaning;
   $('q-speak').style.display = mode === 'ar-ko' ? 'flex' : 'none';
   $('q-speak').disabled = false;
+  syncFavoriteButton();
   if (mode === 'ar-ko') {
     showAnswerDetails();
   } else {

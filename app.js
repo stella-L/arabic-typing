@@ -7,12 +7,68 @@ let streak = 0;
 let todayCount = 0;
 let answered = false;
 let selectedCategories = new Set();
+let favoriteIds = new Set();
 
 const $ = id => document.getElementById(id);
+const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 
 function show(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(screenId).classList.add('active');
+}
+
+function loadFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+    favoriteIds = new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    favoriteIds = new Set();
+  }
+}
+
+function saveFavorites() {
+  localStorage.setItem(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
+  updateFavoriteCount();
+}
+
+function isFavorite(word) {
+  return word && favoriteIds.has(word.id);
+}
+
+function toggleFavorite(word) {
+  if (!word || !word.id) return;
+  if (favoriteIds.has(word.id)) favoriteIds.delete(word.id);
+  else favoriteIds.add(word.id);
+  saveFavorites();
+  syncFavoriteButtons(word);
+}
+
+function syncFavoriteButtons(word) {
+  ['btn-fav-card', 'btn-fav-wrong'].forEach(id => {
+    const btn = $(id);
+    if (!btn) return;
+    const on = isFavorite(word);
+    btn.classList.toggle('on', on);
+    btn.textContent = on ? '★' : '☆';
+    btn.setAttribute('aria-pressed', String(on));
+  });
+}
+
+function getFavoriteWords() {
+  return allWords.filter(w => favoriteIds.has(w.id));
+}
+
+function updateFavoriteCount() {
+  const count = getFavoriteWords().length;
+  const label = $('favorite-count');
+  const card = $('btn-favorites');
+  const start = $('btn-favorites-start');
+  if (label) label.textContent = count;
+  if (card) card.classList.toggle('empty', count === 0);
+  if (start) {
+    start.textContent = count ? '즐겨찾기 연습 →' : '먼저 별표를 눌러주세요';
+    start.disabled = count === 0;
+  }
 }
 
 function normalize(str) {
@@ -43,6 +99,7 @@ function loadWord() {
   $('score-label').textContent = `정답 ${correctCount} / 오답 ${wrongCount}`;
 
   $('streak-badge').textContent = `⚡ ${streak}연속`;
+  syncFavoriteButtons(w);
   $('arabic-input').focus();
 }
 
@@ -82,6 +139,7 @@ function showWrongScreen(myInput, w) {
   $('correct-answer').textContent = w.arabic;
   $('streak-badge-wrong').textContent = `⚡ ${streak}연속`;
   $('compare-note').textContent = `ⓘ 이런 부분이 달랐어요\n입력값과 정답의 모음 부호나 장단음이 다를 수 있어요.`;
+  syncFavoriteButtons(w);
   show('screen-wrong');
 }
 
@@ -163,6 +221,16 @@ $('btn-start').addEventListener('click', () => {
   show('screen-category');
 });
 
+$('btn-favorites').addEventListener('click', e => {
+  e.preventDefault();
+  const favWords = getFavoriteWords();
+  if (!favWords.length) return;
+  words = favWords;
+  current = 0; correctCount = 0; wrongCount = 0; streak = 0;
+  show('screen-practice');
+  loadWord();
+});
+
 $('btn-back-cat').addEventListener('click', () => show('screen-home'));
 
 $('btn-cat-all').addEventListener('click', () => {
@@ -232,6 +300,8 @@ $('btn-retry').addEventListener('click', () => {
 $('btn-next-wrong').addEventListener('click', nextWord);
 $('btn-back-wrong').addEventListener('click', () => show('screen-home'));
 $('btn-home').addEventListener('click', () => show('screen-home'));
+$('btn-fav-card').addEventListener('click', () => toggleFavorite(words[current]));
+$('btn-fav-wrong').addEventListener('click', () => toggleFavorite(words[current]));
 
 // ── TIP SHEET ──
 const tipKeyboard = [
@@ -315,14 +385,18 @@ const FALLBACK = [
   { id:'b005', arabic:'مَاء', transliteration:"maa'", pronunciation_ko:'마', meaning_ko:'물', category:'기초 단어', hint_len:3, hint_start:'م' },
 ];
 
+loadFavorites();
+
 // 즉시 fallback으로 화면 구성 (fetch 완료 전에도 카테고리 화면이 동작하도록)
 allWords = FALLBACK;
 buildCategoryScreen();
+updateFavoriteCount();
 
 fetch('words.json')
   .then(r => r.json())
   .then(data => {
     allWords = data;
     buildCategoryScreen();
+    updateFavoriteCount();
   })
   .catch(() => { /* fallback 유지 */ });

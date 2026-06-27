@@ -40,6 +40,25 @@
 
     <h2 class="section-title">학습 모드 선택</h2>
 
+    <div class="mode-card fav-mode" id="btn-favorites">
+      <div class="mode-badge new-badge">MY</div>
+      <div class="mode-title">즐겨찾기 단어장</div>
+      <div class="mode-desc"><span id="favorite-count">0</span>개 단어만 모아서<br>타이핑으로 다시 연습해요</div>
+      <button class="start-btn fav-start-btn" id="btn-favorites-start">즐겨찾기 연습 →</button>
+      <div class="mode-mini-actions">
+        <button type="button" onclick="event.stopPropagation(); location.href='study.html?fav=1'">암기</button>
+        <button type="button" onclick="event.stopPropagation(); location.href='quiz.html?fav=1'">퀴즈</button>
+        <button type="button" onclick="event.stopPropagation(); location.href='audio.html?fav=1'">듣기</button>
+      </div>
+    </div>
+
+    <div class="mode-card audio-mode" onclick="location.href='audio.html'">
+      <div class="mode-badge new-badge">BUS</div>
+      <div class="mode-title">버스 듣기 복습</div>
+      <div class="mode-desc">아랍어를 듣고 잠깐 떠올린 뒤<br>한국어 뜻을 들어요</div>
+      <button class="start-btn audio-start-btn">음성 복습 →</button>
+    </div>
+
     <div class="mode-card active-mode" id="btn-start">
       <div class="mode-badge">추천</div>
       <div class="mode-title">단어 타이핑</div>
@@ -125,7 +144,10 @@
     <div class="word-card" id="word-card">
       <div class="card-top">
         <div class="category-tag" id="card-category">기초 단어</div>
-        <div class="card-num" id="card-num">01</div>
+        <div class="card-tools">
+          <button class="fav-btn" id="btn-fav-card" type="button" aria-label="즐겨찾기">☆</button>
+          <div class="card-num" id="card-num">01</div>
+        </div>
       </div>
       <div class="arabic-word" id="arabic-word" dir="rtl">مَرْحَبًا</div>
       <div class="transliteration" id="transliteration">mar·ha·ban</div>
@@ -187,7 +209,10 @@
     <div class="word-card wrong-card">
       <div class="card-top">
         <div class="category-tag" id="wrong-category">기초 단어</div>
-        <div class="wrong-x">✕</div>
+        <div class="card-tools">
+          <button class="fav-btn" id="btn-fav-wrong" type="button" aria-label="즐겨찾기">☆</button>
+          <div class="wrong-x">✕</div>
+        </div>
       </div>
       <div class="arabic-word" id="wrong-arabic" dir="rtl">شُكْرًا</div>
       <div class="transliteration" id="wrong-trans">shuk·ran</div>
