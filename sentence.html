@@ -73,6 +73,11 @@ body{display:flex;justify-content:center}
   </section>
 
   <section class="settings">
+    <div class="sec-lbl">학습 방향</div>
+    <div class="tog">
+      <button id="dir-ar-ko" onclick="setDirection('ar-ko')" type="button">아랍어 → 한국어</button>
+      <button id="dir-ko-ar" onclick="setDirection('ko-ar')" type="button">한국어 → 아랍어</button>
+    </div>
     <div class="sec-lbl">문장 범위</div>
     <div class="tog">
       <button id="scope-fav" onclick="setScope('fav')" type="button">즐겨찾기 포함</button>
@@ -106,6 +111,7 @@ let deck = [];
 let index = 0;
 let playing = false;
 let speakMeaning = true;
+let direction = 'ar-ko';
 let timer = null;
 
 function $(id){ return document.getElementById(id); }
@@ -166,6 +172,34 @@ function renderChips() {
   });
   $('scope-fav').className = scope === 'fav' ? 'on' : '';
   $('scope-all').className = scope === 'all' ? 'on' : '';
+  syncDirectionButtons();
+}
+
+function setDirection(nextDirection) {
+  direction = nextDirection;
+  stopAudio();
+  syncDirectionButtons();
+  updateStageLabels();
+  if (deck.length) renderSentence(false);
+}
+
+function syncDirectionButtons() {
+  $('dir-ar-ko').className = direction === 'ar-ko' ? 'on' : '';
+  $('dir-ko-ar').className = direction === 'ko-ar' ? 'on' : '';
+}
+
+function updateStageLabels() {
+  if (direction === 'ko-ar') {
+    $('stage-sentence').textContent = '1 뜻';
+    $('stage-recall').textContent = '2 아랍어 떠올리기';
+    $('stage-ko').textContent = '3 문장';
+    $('play').textContent = playing ? '일시정지' : '아랍어 떠올리기 시작';
+    return;
+  }
+  $('stage-sentence').textContent = '1 문장';
+  $('stage-recall').textContent = '2 의미 떠올리기';
+  $('stage-ko').textContent = '3 뜻';
+  $('play').textContent = playing ? '일시정지' : '문장 듣기 시작';
 }
 
 function setScope(nextScope) {
@@ -190,6 +224,7 @@ function rebuildDeck() {
   if (index < 0) index = 0;
   $('info').textContent = `${deck.length}개 문장 선택됨`;
   $('play').disabled = deck.length === 0;
+  updateStageLabels();
   if (!deck.length) {
     stopAudio();
     $('cat').textContent = '문장 없음';
@@ -207,17 +242,25 @@ function rebuildDeck() {
 function renderSentence(showMeaning) {
   const sentence = deck[index];
   $('cat').textContent = sentence.category || '기타';
-  $('arabic').textContent = sentence.arabic;
-  $('trans').textContent = sentence.transliteration || '';
-  $('pronun').textContent = sentence.pronunciation_ko ? `한국어 발음: ${sentence.pronunciation_ko}` : '';
-  $('meaning').textContent = showMeaning ? sentence.meaning_ko : '';
+  if (direction === 'ko-ar') {
+    $('arabic').textContent = showMeaning ? sentence.arabic : '';
+    $('trans').textContent = showMeaning ? sentence.transliteration || '' : '';
+    $('pronun').textContent = showMeaning && sentence.pronunciation_ko ? `한국어 발음: ${sentence.pronunciation_ko}` : '';
+    $('meaning').textContent = sentence.meaning_ko;
+  } else {
+    $('arabic').textContent = sentence.arabic;
+    $('trans').textContent = sentence.transliteration || '';
+    $('pronun').textContent = sentence.pronunciation_ko ? `한국어 발음: ${sentence.pronunciation_ko}` : '';
+    $('meaning').textContent = showMeaning ? sentence.meaning_ko : '';
+  }
   $('status').textContent = `${index + 1} / ${deck.length}`;
-  $('word-row').innerHTML = (sentence.word_ids || []).map(id => {
+  const showWords = direction === 'ar-ko' || showMeaning;
+  $('word-row').innerHTML = showWords ? (sentence.word_ids || []).map(id => {
     const word = wordMap.get(id);
     const label = word ? word.meaning : id;
     const fav = favoriteIds.has(id) ? ' fav' : '';
     return `<span class="word-chip${fav}">${escapeHtml(label)}</span>`;
-  }).join('');
+  }).join('') : '';
 }
 
 function setStage(stage) {
@@ -228,7 +271,7 @@ function speak(text, lang, next) {
   if (!('speechSynthesis' in window)) {
     $('status').textContent = '음성 재생이 지원되지 않는 브라우저입니다.';
     playing = false;
-    $('play').textContent = '문장 듣기 시작';
+    updateStageLabels();
     return;
   }
   window.speechSynthesis.cancel();
@@ -245,6 +288,24 @@ function playCurrent() {
   const sentence = deck[index];
   renderSentence(false);
   setStage('sentence');
+  if (direction === 'ko-ar') {
+    $('status').textContent = '한국어 뜻을 보고 아랍어 문장을 떠올려보세요.';
+    timer = setTimeout(() => {
+      if (!playing) return;
+      setStage('recall');
+      $('status').textContent = '아랍어 어순과 소리를 떠올리는 중...';
+      timer = setTimeout(() => {
+        if (!playing) return;
+        renderSentence(true);
+        setStage('ko');
+        speak(sentence.arabic, 'ar-SA', () => {
+          if (!playing) return;
+          timer = setTimeout(nextSentence, 1300);
+        });
+      }, 2600);
+    }, 1800);
+    return;
+  }
   $('status').textContent = '문장을 듣고 전체 의미를 떠올려보세요.';
   speak(sentence.arabic, 'ar-SA', () => {
     if (!playing) return;
@@ -277,7 +338,7 @@ function togglePlay() {
 
 function stopAudio() {
   playing = false;
-  $('play').textContent = '문장 듣기 시작';
+  updateStageLabels();
   clearTimeout(timer);
   if (window.speechSynthesis) window.speechSynthesis.cancel();
 }
