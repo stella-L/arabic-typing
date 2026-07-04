@@ -178,5 +178,41 @@
     "meaning_ko": "좋은 아침입니다, 저는 잘 지냅니다.",
     "category": "인사",
     "word_ids": ["g005", "pr001", "dv001"]
+  },
+  {
+    "id": "s021",
+    "arabic": "اَلْجَوُّ دَافِئٌ فِي الرَّبِيعِ.",
+    "transliteration": "al-jaw-wu daa-fi-un fi ar-ra-bii-i",
+    "pronunciation_ko": "알자우우 다아피운 피르 라비이으",
+    "meaning_ko": "봄에는 날씨가 따뜻하다.",
+    "category": "날씨",
+    "word_ids": ["dv002", "sw008", "sw001"]
+  },
+  {
+    "id": "s022",
+    "arabic": "اَلْجَوُّ حَارٌّ فِي الصَّيْفِ.",
+    "transliteration": "al-jaw-wu haa-run fi as-say-fi",
+    "pronunciation_ko": "알자우우 하아르룬 피스 사이프",
+    "meaning_ko": "여름에는 날씨가 덥다.",
+    "category": "날씨",
+    "word_ids": ["dv002", "sw006", "sw002"]
+  },
+  {
+    "id": "s023",
+    "arabic": "اَلْجَوُّ لَطِيفٌ فِي الْخَرِيفِ.",
+    "transliteration": "al-jaw-wu la-tii-fun fi al-kha-rii-fi",
+    "pronunciation_ko": "알자우우 라티이푼 필 하리이프",
+    "meaning_ko": "가을에는 날씨가 화창하다/좋다.",
+    "category": "날씨",
+    "word_ids": ["dv002", "sw007", "sw003"]
+  },
+  {
+    "id": "s024",
+    "arabic": "اَلْجَوُّ بَارِدٌ فِي الشِّتَاءِ.",
+    "transliteration": "al-jaw-wu baa-ri-dun fi ash-shi-taa-i",
+    "pronunciation_ko": "알자우우 바아리둔 피스 시타아",
+    "meaning_ko": "겨울에는 날씨가 춥다.",
+    "category": "날씨",
+    "word_ids": ["dv002", "sw005", "sw004"]
   }
 ]
