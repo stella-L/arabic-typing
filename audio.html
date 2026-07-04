@@ -154,7 +154,7 @@ function syncFavoriteButton() {
 async function init() {
   loadFavorites();
   try {
-    const res = await fetch('words.json');
+    const res = await fetch('words.json?v=20260704-2');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.id && w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];

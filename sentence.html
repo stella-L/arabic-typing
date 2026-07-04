@@ -131,7 +131,10 @@ function normalizeWord(w) {
 async function init() {
   loadFavorites();
   try {
-    const [wordRes, sentenceRes] = await Promise.all([fetch('words.json'), fetch('sentences.json')]);
+    const [wordRes, sentenceRes] = await Promise.all([
+      fetch('words.json?v=20260704-2'),
+      fetch('sentences.json?v=20260704-2')
+    ]);
     if (!wordRes.ok || !sentenceRes.ok) throw new Error('load');
     words = (await wordRes.json()).map(normalizeWord).filter(w => w.id);
     wordMap = new Map(words.map(w => [w.id, w]));
