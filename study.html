@@ -52,6 +52,7 @@ body{display:flex;justify-content:center}
 .card-sec{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px 12px}
 .cat-tag{font-size:11px;font-weight:700;color:var(--dim);background:var(--surface2);padding:4px 12px;border-radius:20px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.05em}
 .card{width:100%;background:var(--surface);border-radius:24px;padding:32px 24px 28px;display:flex;flex-direction:column;align-items:center;min-height:220px;justify-content:center}
+.visual{width:112px;height:92px;object-fit:contain;margin:0 auto 12px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.24))}
 .ar{font-family:'Noto Naskh Arabic',serif;font-size:52px;direction:rtl;text-align:center;line-height:1.4;margin-bottom:8px}
 .ar.sm{font-size:36px;margin-bottom:6px}
 .pronun{font-size:15px;color:var(--accent);font-weight:700;margin-bottom:14px;text-align:center}
@@ -177,6 +178,7 @@ body{display:flex;justify-content:center}
   </div>
 </div>
 
+<script src="visuals.js"></script>
 <script>
 let WORDS = [
   // 가족
@@ -274,12 +276,15 @@ let favoriteOnly = new URLSearchParams(location.search).get('fav') === '1';
 const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 
 function normalizeWord(w, index) {
+  const visual = window.ARABIC_VISUALS?.words?.[w.id] || null;
   return {
     id: w.id || `${w.arabic}-${index}`,
     arabic: w.arabic,
     pronun: w.pronunciation_ko || w.pronun || '',
     meaning: w.meaning_ko || w.meaning || '',
-    cat: w.category || w.cat || '기타'
+    cat: w.category || w.cat || '기타',
+    image: w.image || visual?.src || '',
+    imageAlt: w.image_alt || visual?.alt || ''
   };
 }
 
@@ -438,6 +443,7 @@ function renderCard() {
   if (mode === 'ar-ko') {
     el.innerHTML = `
       <button class="fav-btn" id="fav-current" onclick="toggleFavorite()" type="button" aria-label="즐겨찾기">☆</button>
+      ${renderVisual(curWord)}
       <div class="ar">${curWord.arabic}</div>
       ${renderLetters(curWord.arabic)}
       <div class="pronun">${curWord.pronun}</div>
@@ -450,6 +456,7 @@ function renderCard() {
   } else {
     el.innerHTML = `
       <button class="fav-btn" id="fav-current" onclick="toggleFavorite()" type="button" aria-label="즐겨찾기">☆</button>
+      ${renderVisual(curWord)}
       <div class="meaning-front">${curWord.meaning}</div>
       <div id="rev" style="display:none;width:100%;text-align:center;margin-top:8px">
         <div class="divider"></div>
@@ -510,6 +517,11 @@ function speak() {
   u.rate = 0.75;
   u.pitch = 1;
   window.speechSynthesis.speak(u);
+}
+
+function renderVisual(word) {
+  if (!word || !word.image) return '';
+  return `<img class="visual" src="${escapeHtml(word.image)}" alt="${escapeHtml(word.imageAlt || word.meaning)}" loading="lazy">`;
 }
 
 function showComplete() {
@@ -589,9 +601,15 @@ function renderLetters(arabic) {
   if (!letters.length) return '';
   // Each letter in its own span → isolated form
   const chips = letters.map(l =>
-    `<span class="l-chip"><span class="l-ar">${l}</span></span>`
+    `<span class="l-chip"><span class="l-ar">${escapeHtml(l)}</span></span>`
   ).join('');
   return `<div class="letters-row">${chips}</div>`;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[ch]);
 }
 
 init();

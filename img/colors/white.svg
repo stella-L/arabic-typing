@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="white color card">
+  <rect width="240" height="180" rx="22" fill="#f8fafc"/>
+  <circle cx="120" cy="82" r="56" fill="#fff" stroke="#cbd5e1" stroke-width="8"/>
+  <text x="120" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#475569">흰색</text>
+</svg>

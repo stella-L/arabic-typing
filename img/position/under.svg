@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="under position diagram">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <ellipse cx="120" cy="140" rx="76" ry="16" fill="#d9d2c0"/>
+  <rect x="70" y="54" width="100" height="18" rx="6" fill="#7c8aa5"/>
+  <rect x="82" y="72" width="12" height="58" rx="4" fill="#7c8aa5"/>
+  <rect x="146" y="72" width="12" height="58" rx="4" fill="#7c8aa5"/>
+  <circle cx="120" cy="120" r="22" fill="#ef6f6c"/>
+  <path d="M120 38v-24" stroke="#413f5d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M104 26l16-16 16 16" fill="none" stroke="#413f5d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

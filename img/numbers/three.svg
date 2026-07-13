@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="number three card">
+  <rect width="240" height="180" rx="22" fill="#fff7ed"/>
+  <circle cx="120" cy="88" r="58" fill="#f59e0b"/>
+  <text x="120" y="111" text-anchor="middle" font-family="Arial, sans-serif" font-size="82" font-weight="700" fill="#fff">3</text>
+  <text x="120" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#92400e">셋</text>
+</svg>

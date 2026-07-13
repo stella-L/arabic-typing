@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="beside position diagram">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <ellipse cx="120" cy="132" rx="82" ry="18" fill="#d9d2c0"/>
+  <rect x="78" y="62" width="76" height="54" rx="10" fill="#7c8aa5"/>
+  <rect x="88" y="76" width="56" height="25" rx="6" fill="#aab5cc"/>
+  <circle cx="180" cy="92" r="22" fill="#ef6f6c"/>
+  <path d="M42 90h26" stroke="#413f5d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M56 74L40 90l16 16" fill="none" stroke="#413f5d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M198 90h-26" stroke="#413f5d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M184 74l16 16-16 16" fill="none" stroke="#413f5d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

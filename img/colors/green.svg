@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="green color card">
+  <rect width="240" height="180" rx="22" fill="#f0fdf4"/>
+  <circle cx="120" cy="82" r="56" fill="#22c55e"/>
+  <text x="120" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#166534">초록색</text>
+</svg>

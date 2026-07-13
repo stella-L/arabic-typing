@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp -R *.html *.js *.css words.json sentences.json img dist/"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "lucide-react": "latest"
+  },
+  "devDependencies": {}
+}

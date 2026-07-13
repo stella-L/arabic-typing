@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="grandmother card">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <path d="M82 78c0-42 76-42 76 0v34H82z" fill="#d8d8d8"/>
+  <circle cx="120" cy="66" r="30" fill="#f2c9a5"/>
+  <path d="M72 150c5-40 91-40 96 0z" fill="#a063c7"/>
+  <rect x="103" y="94" width="34" height="24" rx="10" fill="#f2c9a5"/>
+  <path d="M97 72h18M125 72h18" stroke="#413f5d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M108 84c8 7 16 7 24 0" fill="none" stroke="#b94b4b" stroke-width="4" stroke-linecap="round"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#413f5d">할머니</text>
+</svg>

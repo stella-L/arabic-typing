@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="yes card">
+  <rect width="240" height="180" rx="22" fill="#eef8f1"/>
+  <circle cx="120" cy="78" r="46" fill="#22c55e"/>
+  <path d="M96 78l17 17 34-39" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="120" y="146" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#166534">네 / 예</text>
+</svg>

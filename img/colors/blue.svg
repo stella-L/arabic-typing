@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="blue color card">
+  <rect width="240" height="180" rx="22" fill="#eff6ff"/>
+  <circle cx="120" cy="82" r="56" fill="#3b82f6"/>
+  <text x="120" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#1d4ed8">파란색</text>
+</svg>

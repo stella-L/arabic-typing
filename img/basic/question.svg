@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="question card">
+  <rect width="240" height="180" rx="22" fill="#f4f0ff"/>
+  <circle cx="120" cy="82" r="54" fill="#7c3aed"/>
+  <text x="120" y="103" text-anchor="middle" font-family="Arial, sans-serif" font-size="78" font-weight="700" fill="#fff">?</text>
+  <text x="120" y="154" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#4c1d95">질문</text>
+</svg>

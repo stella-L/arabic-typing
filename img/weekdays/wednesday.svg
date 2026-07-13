@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="Wednesday calendar card">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <rect x="46" y="34" width="148" height="118" rx="16" fill="#ffffff" stroke="#d9d2c0" stroke-width="6"/>
+  <rect x="46" y="34" width="148" height="34" rx="16" fill="#35a86b"/>
+  <rect x="46" y="54" width="148" height="20" fill="#35a86b"/>
+  <text x="120" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">WED</text>
+  <text x="120" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#413f5d">수요일</text>
+  <text x="120" y="138" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#8888aa">الأَرْبِعاء</text>
+</svg>

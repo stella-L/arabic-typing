@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="mother card">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <path d="M82 78c0-42 76-42 76 0v32H82z" fill="#5b4036"/>
+  <circle cx="120" cy="66" r="30" fill="#f2c9a5"/>
+  <path d="M72 150c5-42 91-42 96 0z" fill="#ef6f9a"/>
+  <rect x="103" y="94" width="34" height="24" rx="10" fill="#f2c9a5"/>
+  <circle cx="101" cy="64" r="4" fill="#413f5d"/>
+  <circle cx="139" cy="64" r="4" fill="#413f5d"/>
+  <path d="M108 78c8 8 16 8 24 0" fill="none" stroke="#b94b4b" stroke-width="4" stroke-linecap="round"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#413f5d">어머니</text>
+</svg>

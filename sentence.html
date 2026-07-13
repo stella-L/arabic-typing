@@ -20,6 +20,7 @@ body{display:flex;justify-content:center}
 .card-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 20px 14px}
 .card{width:100%;min-height:350px;background:var(--surface);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .cat{font-size:11px;font-weight:700;color:#c4b5fd;background:rgba(124,58,237,.18);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.visual{width:120px;height:92px;object-fit:contain;margin:0 auto 12px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.24))}
 .ar{font-family:'Noto Naskh Arabic',serif;font-size:clamp(34px,10vw,48px);font-weight:700;line-height:1.55;direction:rtl;margin-bottom:10px;word-break:break-word}
 .trans{color:#c4b5fd;font-size:13px;line-height:1.5;margin-bottom:8px}
 .pronun{color:var(--accent);font-size:14px;font-weight:700;margin-bottom:16px}
@@ -63,6 +64,7 @@ body{display:flex;justify-content:center}
   <section class="card-wrap">
     <div class="card">
       <div class="cat" id="cat">카테고리</div>
+      <img class="visual" id="visual" alt="" loading="lazy">
       <div class="ar" id="arabic" dir="rtl">...</div>
       <div class="trans" id="trans"></div>
       <div class="pronun" id="pronun"></div>
@@ -98,6 +100,7 @@ body{display:flex;justify-content:center}
   </section>
 </main>
 
+<script src="visuals.js"></script>
 <script>
 const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 let words = [];
@@ -126,11 +129,23 @@ function loadFavorites() {
 }
 
 function normalizeWord(w) {
+  const visual = window.ARABIC_VISUALS?.words?.[w.id] || null;
   return {
     id: w.id,
     arabic: w.arabic,
     meaning: w.meaning_ko || w.meaning || '',
-    cat: w.category || w.cat || '기타'
+    cat: w.category || w.cat || '기타',
+    image: w.image || visual?.src || '',
+    imageAlt: w.image_alt || visual?.alt || ''
+  };
+}
+
+function normalizeSentence(sentence) {
+  const visual = window.ARABIC_VISUALS?.sentences?.[sentence.id] || null;
+  return {
+    ...sentence,
+    image: sentence.image || visual?.src || '',
+    imageAlt: sentence.image_alt || visual?.alt || ''
   };
 }
 
@@ -144,7 +159,7 @@ async function init() {
     if (!wordRes.ok || !sentenceRes.ok) throw new Error('load');
     words = (await wordRes.json()).map(normalizeWord).filter(w => w.id);
     wordMap = new Map(words.map(w => [w.id, w]));
-    sentences = (await sentenceRes.json()).filter(s => s.id && s.arabic && s.meaning_ko);
+    sentences = (await sentenceRes.json()).map(normalizeSentence).filter(s => s.id && s.arabic && s.meaning_ko);
     cats = [...new Set(sentences.map(s => s.category || '기타'))];
     selectedCats = new Set(cats);
     renderChips();
@@ -234,6 +249,7 @@ function rebuildDeck() {
     $('meaning').textContent = '';
     $('status').textContent = '즐겨찾기를 추가하거나 전체 문장으로 바꿔보세요.';
     $('word-row').innerHTML = '';
+    renderVisual(null);
     return;
   }
   renderSentence(false);
@@ -242,6 +258,7 @@ function rebuildDeck() {
 function renderSentence(showMeaning) {
   const sentence = deck[index];
   $('cat').textContent = sentence.category || '기타';
+  renderVisual(sentence);
   if (direction === 'ko-ar') {
     $('arabic').textContent = showMeaning ? sentence.arabic : '';
     $('trans').textContent = showMeaning ? sentence.transliteration || '' : '';
@@ -261,6 +278,27 @@ function renderSentence(showMeaning) {
     const fav = favoriteIds.has(id) ? ' fav' : '';
     return `<span class="word-chip${fav}">${escapeHtml(label)}</span>`;
   }).join('') : '';
+}
+
+function getSentenceVisual(sentence) {
+  if (sentence?.image) return { src: sentence.image, alt: sentence.imageAlt || sentence.meaning_ko };
+  const word = (sentence?.word_ids || []).map(id => wordMap.get(id)).find(w => w?.image);
+  return word ? { src: word.image, alt: word.imageAlt || word.meaning } : null;
+}
+
+function renderVisual(sentence) {
+  const img = $('visual');
+  if (!img) return;
+  const visual = getSentenceVisual(sentence);
+  if (!visual) {
+    img.style.display = 'none';
+    img.removeAttribute('src');
+    img.alt = '';
+    return;
+  }
+  img.style.display = 'block';
+  img.src = visual.src;
+  img.alt = visual.alt;
 }
 
 function setStage(stage) {

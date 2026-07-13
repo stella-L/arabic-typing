@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="front position diagram">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <ellipse cx="120" cy="132" rx="70" ry="18" fill="#d9d2c0"/>
+  <rect x="82" y="54" width="76" height="54" rx="10" fill="#7c8aa5"/>
+  <rect x="92" y="68" width="56" height="25" rx="6" fill="#aab5cc"/>
+  <circle cx="120" cy="123" r="22" fill="#ef6f6c"/>
+  <path d="M120 42v-25" stroke="#413f5d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M104 30l16-16 16 16" fill="none" stroke="#413f5d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="father card">
+  <rect width="240" height="180" rx="22" fill="#f7f4ea"/>
+  <circle cx="120" cy="62" r="30" fill="#f2c9a5"/>
+  <path d="M89 58c8-32 54-32 62 0-17-10-45-10-62 0z" fill="#4b3a34"/>
+  <path d="M71 150c5-42 93-42 98 0z" fill="#4f9fdf"/>
+  <rect x="103" y="92" width="34" height="26" rx="10" fill="#f2c9a5"/>
+  <path d="M100 121l20 18 20-18" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#413f5d">아버지</text>
+</svg>

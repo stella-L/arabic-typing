@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="number one card">
+  <rect width="240" height="180" rx="22" fill="#eef8ff"/>
+  <circle cx="120" cy="88" r="58" fill="#4f9fdf"/>
+  <text x="120" y="111" text-anchor="middle" font-family="Arial, sans-serif" font-size="82" font-weight="700" fill="#fff">1</text>
+  <text x="120" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#1e3a8a">하나</text>
+</svg>

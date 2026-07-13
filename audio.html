@@ -20,6 +20,7 @@ body{display:flex;justify-content:center}
 .card-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 20px 14px}
 .card{width:100%;min-height:300px;background:var(--surface);border-radius:22px;padding:24px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .cat{font-size:11px;font-weight:700;color:#67e8f9;background:rgba(14,116,144,.18);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.visual{width:116px;height:90px;object-fit:contain;margin:0 auto 12px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.24))}
 .fav-btn{width:40px;height:40px;border:none;border-radius:12px;background:var(--surface2);color:var(--dim);font-size:23px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
 .fav-btn.on{color:#fbbf24;background:rgba(245,158,11,.16)}
 .ar{font-family:'Noto Naskh Arabic',serif;font-size:clamp(42px,13vw,58px);font-weight:700;line-height:1.35;direction:rtl;margin-bottom:8px;word-break:break-word}
@@ -61,8 +62,9 @@ body{display:flex;justify-content:center}
   </section>
 
   <section class="card-wrap">
-    <div class="card">
+      <div class="card">
       <div class="cat" id="cat">카테고리</div>
+      <img class="visual" id="visual" alt="" loading="lazy">
       <div class="ar" id="arabic" dir="rtl">...</div>
       <div class="trans" id="trans"></div>
       <div class="pronun" id="pronun"></div>
@@ -92,6 +94,7 @@ body{display:flex;justify-content:center}
   </section>
 </main>
 
+<script src="visuals.js"></script>
 <script>
 const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 let words = [];
@@ -108,13 +111,16 @@ let timer = null;
 function $(id){ return document.getElementById(id); }
 
 function normalizeWord(w) {
+  const visual = window.ARABIC_VISUALS?.words?.[w.id] || null;
   return {
     id: w.id,
     arabic: w.arabic,
     transliteration: w.transliteration || '',
     pronun: w.pronunciation_ko || w.pronun || '',
     meaning: w.meaning_ko || w.meaning || '',
-    cat: w.category || w.cat || '기타'
+    cat: w.category || w.cat || '기타',
+    image: w.image || visual?.src || '',
+    imageAlt: w.image_alt || visual?.alt || ''
   };
 }
 
@@ -210,6 +216,7 @@ function rebuildDeck() {
     $('pronun').textContent = '';
     $('meaning').textContent = '';
     $('cat').textContent = '단어 없음';
+    renderVisual(null);
     $('status').textContent = '단어 카드에서 별표를 누르거나 전체 재생으로 바꿔보세요.';
     syncFavoriteButton();
     return;
@@ -220,12 +227,27 @@ function rebuildDeck() {
 function renderWord(showMeaning) {
   const word = deck[index];
   $('cat').textContent = word.cat;
+  renderVisual(word);
   $('arabic').textContent = word.arabic;
   $('trans').textContent = word.transliteration;
   $('pronun').textContent = word.pronun ? `한국어 발음: ${word.pronun}` : '';
   $('meaning').textContent = showMeaning ? word.meaning : '';
   $('status').textContent = `${index + 1} / ${deck.length}`;
   syncFavoriteButton();
+}
+
+function renderVisual(word) {
+  const img = $('visual');
+  if (!img) return;
+  if (!word || !word.image) {
+    img.style.display = 'none';
+    img.removeAttribute('src');
+    img.alt = '';
+    return;
+  }
+  img.style.display = 'block';
+  img.src = word.image;
+  img.alt = word.imageAlt || word.meaning;
 }
 
 function setStage(stage) {
