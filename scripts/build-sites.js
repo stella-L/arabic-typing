@@ -26,9 +26,7 @@ for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
 copy(path.join(root, 'img'), path.join(dist, 'img'));
 copy(path.join(root, '.openai'), path.join(dist, '.openai'));
 const distHostingPath = path.join(dist, '.openai', 'hosting.json');
-const hostingConfig = JSON.parse(fs.readFileSync(distHostingPath, 'utf8'));
-delete hostingConfig.project_id;
-fs.writeFileSync(distHostingPath, `${JSON.stringify(hostingConfig, null, 2)}\n`);
+fs.writeFileSync(distHostingPath, '{}\n');
 
 ensureDir(path.join(dist, 'server'));
 fs.writeFileSync(path.join(dist, 'server', 'index.js'), `
