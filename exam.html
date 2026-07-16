@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>A1 아랍어 단어 시험 대비</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+button,input{font:inherit}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+:root{
+  --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--surface3:#2b3046;
+  --primary:#d97706;--primary-soft:rgba(217,119,6,.16);
+  --success:#22c55e;--error:#ef4444;--text:#f0f0f5;--dim:#9292ad;
+  --accent:#f59e0b;--r:16px;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow:hidden}
+body{display:flex;justify-content:center}
+.screen{display:none;flex-direction:column;width:100%;max-width:430px;height:100%;height:-webkit-fill-available;overflow-y:auto}
+.screen.on{display:flex}
+.hero{padding:max(54px,calc(var(--sat) + 18px)) 20px 18px;text-align:center}
+.hero h1{font-size:23px;font-weight:800;margin-bottom:6px;letter-spacing:0}
+.hero p{color:var(--dim);font-size:13px;line-height:1.6}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:#fff;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-top:10px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 20px 18px}
+.stat{background:var(--surface);border-radius:12px;padding:13px 8px;text-align:center}
+.stat-num{font-size:23px;font-weight:800}.stat-num.warn{color:var(--accent)}.stat-num.bad{color:var(--error)}
+.stat-lbl{font-size:10px;color:var(--dim);font-weight:800;margin-top:3px;letter-spacing:.04em}
+.sec{padding:0 20px 18px}.sec-lbl{font-size:11px;font-weight:800;color:var(--dim);letter-spacing:.08em;margin-bottom:10px;text-transform:uppercase}
+.tog{display:flex;background:var(--surface);border-radius:12px;padding:4px;gap:4px}
+.tog-btn{flex:1;background:transparent;border:none;color:var(--dim);font-size:13px;font-weight:800;padding:11px 8px;border-radius:9px}
+.tog-btn.on{background:var(--primary);color:#fff}
+.range-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.range-btn{background:var(--surface);border:2px solid var(--surface2);color:var(--text);font-size:13px;font-weight:800;padding:12px 10px;border-radius:12px}
+.range-btn.on{border-color:var(--primary);background:var(--primary-soft);color:#fbbf24}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--surface);border:2px solid transparent;color:var(--dim);font-size:12px;font-weight:800;padding:7px 13px;border-radius:999px}
+.chip.on{border-color:var(--primary);color:#fbbf24;background:var(--primary-soft)}
+.start-sec{padding:0 20px calc(26px + var(--sab));margin-top:auto}
+.info{text-align:center;color:var(--dim);font-size:13px;margin-bottom:10px}
+.btn-main,.btn-sec,.btn-danger{width:100%;border:none;border-radius:var(--r);font-weight:800}
+.btn-main{background:var(--primary);color:#fff;font-size:16px;padding:18px}
+.btn-main:disabled,.btn-sec:disabled{opacity:.38;cursor:not-allowed}
+.btn-sec{background:var(--surface);color:var(--text);font-size:15px;padding:16px;margin-top:10px}
+.btn-danger{background:rgba(239,68,68,.13);color:#fca5a5;font-size:14px;padding:14px;margin-top:10px}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:max(50px,calc(var(--sat) + 12px)) 20px 10px;gap:10px}
+.btn-ico{background:var(--surface2);border:none;color:var(--text);font-size:19px;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.mode-badge{background:var(--surface2);color:var(--dim);font-size:12px;font-weight:800;padding:6px 13px;border-radius:999px;text-align:center}
+.prog-sec{padding:0 20px 12px}.bar{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:8px}.fill{height:100%;width:0;background:var(--primary);border-radius:3px;transition:width .25s}
+.prog-stats{display:flex;justify-content:space-between;color:var(--dim);font-size:12px}.g{color:var(--success);font-weight:800}.r{color:var(--error);font-weight:800}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 20px 22px}
+.card{background:var(--surface);border-radius:22px;padding:22px 20px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cat{font-size:11px;font-weight:800;color:#fbbf24;background:var(--primary-soft);padding:4px 12px;border-radius:999px;margin-bottom:14px}
+.prompt-lbl{font-size:12px;color:var(--dim);font-weight:800;margin-bottom:8px}.meaning{font-size:27px;font-weight:800;line-height:1.45;text-align:center;margin-bottom:14px}.prompt-ar{font-family:'Noto Naskh Arabic',serif;font-size:clamp(42px,13vw,58px);font-weight:800;line-height:1.35;direction:rtl;text-align:center;word-break:break-word;margin-bottom:8px}
+.answer-box{display:none;width:100%;text-align:center;margin-top:10px;border-top:1px solid var(--surface3);padding-top:16px}
+.answer-box.show{display:block}.ar{font-family:'Noto Naskh Arabic',serif;font-size:42px;line-height:1.35;direction:rtl;text-align:center;font-weight:800;word-break:break-word}
+.pron{font-size:14px;color:var(--accent);font-weight:800;margin-top:4px}.sub{font-size:12px;color:var(--dim);font-weight:700;margin-top:4px}
+.input-wrap{margin-top:14px}.answer-input{width:100%;background:var(--surface);border:2px solid var(--surface2);border-radius:14px;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:20px;line-height:1.4;text-align:left;padding:15px 16px;outline:none;-webkit-appearance:none;appearance:none}
+.answer-input:focus{border-color:var(--primary)}.answer-input.ok{border-color:var(--success);background:rgba(34,197,94,.08)}.answer-input.no{border-color:var(--error);background:rgba(239,68,68,.08)}
+.feedback{min-height:42px;margin-top:11px;text-align:center;font-size:13px;font-weight:800;color:var(--dim);white-space:pre-line}.feedback.ok{color:var(--success)}.feedback.no{color:var(--error)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px calc(28px + var(--sab))}
+.actions .btn-main{grid-column:span 2}.mini{background:var(--surface);border:none;color:var(--text);border-radius:14px;font-size:14px;font-weight:800;padding:14px 10px}
+.complete{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:max(56px,calc(var(--sat) + 20px)) 20px calc(36px + var(--sab))}
+.trophy{font-size:60px;margin-bottom:16px}.title{font-size:24px;font-weight:800;margin-bottom:8px}.desc{color:var(--dim);font-size:14px;line-height:1.6;white-space:pre-line;margin-bottom:24px}
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:22px}.score{background:var(--surface);border-radius:var(--r);padding:17px 10px}.score.full{grid-column:span 2}.score-num{font-size:30px;font-weight:800}.score-lbl{font-size:11px;color:var(--dim);font-weight:800;margin-top:4px}
+.wrong-list{padding:0 20px 20px;display:grid;gap:10px}.wrong-card{background:var(--surface);border-radius:14px;padding:14px}.wrong-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.wrong-meaning{font-weight:800;font-size:15px}.wrong-count{color:#fca5a5;font-size:12px;font-weight:800;background:rgba(239,68,68,.14);border-radius:999px;padding:4px 9px;white-space:nowrap}.wrong-ar{font-family:'Noto Naskh Arabic',serif;font-size:30px;text-align:right;direction:rtl;line-height:1.25}.wrong-meta{color:var(--dim);font-size:12px;margin-top:5px;line-height:1.5}.empty{color:var(--dim);font-size:14px;line-height:1.7;text-align:center;padding:28px 20px}
+@media (max-width:360px){.meaning{font-size:24px}.ar{font-size:36px}.answer-input{font-size:18px}.actions{grid-template-columns:1fr}.actions .btn-main{grid-column:auto}}
+</style>
+</head>
+<body>
+<div id="s-home" class="screen on">
+  <div class="hero">
+    <h1>A1 단어 시험 대비</h1>
+    <p>아랍어를 보고 한국어 뜻을 입력해요<br>틀린 단어는 오답 노트에 자동 저장됩니다</p>
+    <span class="badge" id="total-badge">단어 불러오는 중</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">전체</div></div>
+    <div class="stat"><div class="stat-num warn" id="stat-selected">0</div><div class="stat-lbl">선택</div></div>
+    <div class="stat"><div class="stat-num bad" id="stat-wrong">0</div><div class="stat-lbl">오답</div></div>
+  </div>
+  <div class="sec">
+    <div class="sec-lbl">시험 범위</div>
+    <div class="range-grid">
+      <button class="range-btn on" id="range-pdf" onclick="selectPdfRange()">PDF 1~5과</button>
+      <button class="range-btn" id="range-all" onclick="selectAllRange()">전체 단어</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <p class="empty" id="load-error" style="display:none">단어장을 불러오지 못했어요. 로컬 서버에서 열어주세요.</p>
+  </div>
+  <div class="sec">
+    <div class="sec-lbl">문제 수</div>
+    <div class="tog">
+      <button class="tog-btn on" id="count-10" onclick="setCount(10)">10문제</button>
+      <button class="tog-btn" id="count-20" onclick="setCount(20)">20문제</button>
+      <button class="tog-btn" id="count-all" onclick="setCount('all')">전체</button>
+    </div>
+  </div>
+  <div class="start-sec">
+    <p class="info" id="sel-info">0개 단어 선택됨</p>
+    <button class="btn-main" id="btn-start" onclick="startExam('normal')" disabled>시험 연습 시작 →</button>
+    <button class="btn-sec" id="btn-wrong-start" onclick="startExam('wrong')" disabled>틀린 것만 다시 보기 →</button>
+    <button class="btn-sec" onclick="showWrongList()">오답 노트 보기</button>
+    <button class="btn-sec" onclick="location.href='index.html'">홈으로</button>
+  </div>
+</div>
+
+<div id="s-exam" class="screen">
+  <div class="hdr">
+    <button class="btn-ico" onclick="goHome()">←</button>
+    <span class="mode-badge" id="mode-badge">시험 연습</span>
+    <div style="width:40px"></div>
+  </div>
+  <div class="prog-sec">
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="prog-stats">
+      <span id="q-count">1 / 10</span>
+      <span><span class="g" id="s-correct">0</span> 정답 &nbsp; <span class="r" id="s-wrong">0</span> 오답</span>
+    </div>
+  </div>
+  <div class="body">
+    <div class="card">
+      <div class="cat" id="q-cat">카테고리</div>
+      <div class="prompt-lbl">뜻을 쓰세요</div>
+      <div class="prompt-ar" id="q-ar-prompt" dir="rtl"></div>
+      <div class="pron" id="q-pron-prompt"></div>
+      <div class="answer-box" id="answer-box">
+        <div class="meaning" id="q-meaning"></div>
+        <div class="sub" id="q-sub"></div>
+      </div>
+    </div>
+    <div class="input-wrap">
+      <input id="answer-input" class="answer-input" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="한국어 뜻 입력">
+    </div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+  <div class="actions">
+    <button class="mini" id="btn-hint" onclick="showHint()">힌트</button>
+    <button class="mini" id="btn-skip" onclick="skipQuestion()">모름</button>
+    <button class="btn-main" id="btn-check" onclick="checkAnswer()">정답 확인</button>
+    <button class="btn-main" id="btn-next" onclick="nextQuestion()" style="display:none">다음 문제 →</button>
+  </div>
+</div>
+
+<div id="s-complete" class="screen">
+  <div class="complete">
+    <div class="trophy" id="trophy">🎉</div>
+    <h2 class="title" id="c-title">시험 완료</h2>
+    <p class="desc" id="c-desc"></p>
+    <div class="score-grid">
+      <div class="score"><div class="score-num g" id="c-correct">0</div><div class="score-lbl">정답</div></div>
+      <div class="score"><div class="score-num r" id="c-wrong">0</div><div class="score-lbl">오답</div></div>
+      <div class="score full"><div class="score-num" id="c-rate">0%</div><div class="score-lbl">정답률</div></div>
+    </div>
+    <button class="btn-main" onclick="startExam(lastMode)">같은 설정으로 다시</button>
+    <button class="btn-sec" id="c-wrong-btn" onclick="startExam('wrong')">오답만 다시 풀기</button>
+    <button class="btn-sec" onclick="goHome()">설정으로 돌아가기</button>
+  </div>
+</div>
+
+<div id="s-wrong-list" class="screen">
+  <div class="hdr">
+    <button class="btn-ico" onclick="goHome()">←</button>
+    <span class="mode-badge">오답 노트</span>
+    <div style="width:40px"></div>
+  </div>
+  <div class="wrong-list" id="wrong-list"></div>
+  <div class="start-sec">
+    <button class="btn-main" id="list-start" onclick="startExam('wrong')" disabled>오답만 시험 보기 →</button>
+    <button class="btn-danger" id="clear-wrong" onclick="clearWrongNotes()" disabled>오답 노트 비우기</button>
+  </div>
+</div>
+
+<script>
+let words = [];
+let cats = [];
+let selectedCats = new Set();
+let wrongNotes = {};
+let questionCount = 10;
+let deck = [];
+let currentIndex = 0;
+let current = null;
+let answered = false;
+let score = { correct: 0, wrong: 0 };
+let lastMode = 'normal';
+const WRONG_KEY = 'arabtype.examWrongNotes.v1';
+const PDF_EXAM_CATS = [
+  '기초 단어',
+  '숫자',
+  '색상',
+  '고유명사',
+  '인칭대명사',
+  '핵심어휘',
+  '일상어휘',
+  '가족',
+  '사물',
+  '위치/전치사',
+  '인사표현'
+];
+
+function $(id){ return document.getElementById(id); }
+
+function normalizeWord(w, index) {
+  return {
+    id: w.id || `exam-${index}`,
+    arabic: w.arabic,
+    transliteration: w.transliteration || '',
+    pronun: w.pronunciation_ko || w.pronun || '',
+    meaning: w.meaning_ko || w.meaning || '',
+    cat: w.category || w.cat || '기타',
+    hintStart: w.hint_start || [...stripHarakat(w.arabic || '')][0] || ''
+  };
+}
+
+async function init() {
+  loadWrongNotes();
+  try {
+    const res = await fetch('words.json?v=20260716-exam');
+    if (!res.ok) throw new Error('words.json');
+    words = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
+    cats = [...new Set(words.map(w => w.cat))];
+    selectedCats = new Set(PDF_EXAM_CATS.filter(cat => cats.includes(cat)));
+    $('total-badge').textContent = `PDF 1~5과 ${getPdfWords().length}개`;
+    renderChips();
+    updateHome();
+  } catch {
+    $('total-badge').textContent = '단어장 오류';
+    $('load-error').style.display = 'block';
+  }
+}
+
+function loadWrongNotes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(WRONG_KEY) || '{}');
+    wrongNotes = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+  } catch {
+    wrongNotes = {};
+  }
+}
+
+function saveWrongNotes() {
+  localStorage.setItem(WRONG_KEY, JSON.stringify(wrongNotes));
+  updateHome();
+}
+
+function addWrong(word, input) {
+  if (!word || !word.id) return;
+  const prev = wrongNotes[word.id] || { count: 0 };
+  wrongNotes[word.id] = {
+    count: prev.count + 1,
+    lastAnswer: input || '',
+    lastAt: new Date().toISOString()
+  };
+  saveWrongNotes();
+}
+
+function removeWrong(word) {
+  if (!word || !word.id || !wrongNotes[word.id]) return;
+  delete wrongNotes[word.id];
+  saveWrongNotes();
+}
+
+function renderChips() {
+  const el = $('chips');
+  el.innerHTML = '';
+  const all = document.createElement('button');
+  all.id = 'chip-all';
+  all.className = 'chip on';
+  all.textContent = `전체 ${words.length}`;
+  all.onclick = toggleAll;
+  el.appendChild(all);
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.id = `chip-${cat}`;
+    btn.className = 'chip on';
+    btn.textContent = `${cat} ${words.filter(w => w.cat === cat).length}`;
+    btn.onclick = () => toggleCat(cat);
+    el.appendChild(btn);
+  });
+  syncChips();
+}
+
+function getPdfWords() {
+  const pdfCats = new Set(PDF_EXAM_CATS);
+  return words.filter(w => pdfCats.has(w.cat));
+}
+
+function selectPdfRange() {
+  selectedCats = new Set(PDF_EXAM_CATS.filter(cat => cats.includes(cat)));
+  syncChips();
+  updateHome();
+}
+
+function selectAllRange() {
+  selectedCats = new Set(cats);
+  syncChips();
+  updateHome();
+}
+
+function toggleAll() {
+  if (selectedCats.size === cats.length) selectedCats.clear();
+  else selectedCats = new Set(cats);
+  syncChips();
+  updateHome();
+}
+
+function toggleCat(cat) {
+  if (selectedCats.has(cat)) selectedCats.delete(cat);
+  else selectedCats.add(cat);
+  syncChips();
+  updateHome();
+}
+
+function syncChips() {
+  $('chip-all').className = 'chip' + (selectedCats.size === cats.length ? ' on' : '');
+  const isPdf = selectedCats.size === PDF_EXAM_CATS.filter(cat => cats.includes(cat)).length
+    && PDF_EXAM_CATS.filter(cat => cats.includes(cat)).every(cat => selectedCats.has(cat));
+  $('range-pdf').className = 'range-btn' + (isPdf ? ' on' : '');
+  $('range-all').className = 'range-btn' + (selectedCats.size === cats.length ? ' on' : '');
+  cats.forEach(cat => {
+    const el = $(`chip-${cat}`);
+    if (el) el.className = 'chip' + (selectedCats.has(cat) ? ' on' : '');
+  });
+}
+
+function getSelectedWords() {
+  return words.filter(w => selectedCats.has(w.cat));
+}
+
+function getWrongWords() {
+  const ids = new Set(Object.keys(wrongNotes));
+  return words.filter(w => ids.has(w.id) && selectedCats.has(w.cat));
+}
+
+function updateHome() {
+  const selected = getSelectedWords().length;
+  const wrong = getWrongWords().length;
+  $('stat-total').textContent = words.length;
+  $('stat-selected').textContent = selected;
+  $('stat-wrong').textContent = wrong;
+  $('sel-info').textContent = `${selected}개 선택됨 · 오답 ${wrong}개`;
+  $('btn-start').disabled = selected === 0;
+  $('btn-wrong-start').disabled = wrong === 0;
+}
+
+function setCount(count) {
+  questionCount = count;
+  ['10','20','all'].forEach(v => {
+    $(`count-${v}`).className = 'tog-btn' + (String(count) === v ? ' on' : '');
+  });
+}
+
+function startExam(mode) {
+  const source = mode === 'wrong' ? getWrongWords() : getSelectedWords();
+  if (!source.length) return;
+  const limit = questionCount === 'all' ? source.length : Math.min(questionCount, source.length);
+  deck = shuffle(source).slice(0, limit);
+  currentIndex = 0;
+  score = { correct: 0, wrong: 0 };
+  lastMode = mode;
+  $('mode-badge').textContent = mode === 'wrong' ? '오답 재시험' : '시험 연습';
+  showScreen('s-exam');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (currentIndex >= deck.length) {
+    showComplete();
+    return;
+  }
+  current = deck[currentIndex];
+  answered = false;
+  const pct = Math.round((currentIndex / deck.length) * 100);
+  $('fill').style.width = `${pct}%`;
+  $('q-count').textContent = `${currentIndex + 1} / ${deck.length}`;
+  $('s-correct').textContent = score.correct;
+  $('s-wrong').textContent = score.wrong;
+  $('q-cat').textContent = current.cat;
+  $('q-ar-prompt').textContent = current.arabic;
+  $('q-pron-prompt').textContent = current.pronun ? `발음: ${current.pronun}` : '';
+  $('q-meaning').textContent = current.meaning;
+  $('q-sub').textContent = current.transliteration;
+  $('answer-box').className = 'answer-box';
+  $('answer-input').value = '';
+  $('answer-input').className = 'answer-input';
+  $('feedback').className = 'feedback';
+  $('feedback').textContent = '';
+  $('btn-check').style.display = 'block';
+  $('btn-next').style.display = 'none';
+  $('btn-next').textContent = currentIndex === deck.length - 1 ? '결과 보기 →' : '다음 문제 →';
+  $('btn-hint').disabled = false;
+  $('btn-skip').disabled = false;
+  setTimeout(() => $('answer-input').focus(), 60);
+}
+
+function checkAnswer() {
+  if (answered) return;
+  const input = $('answer-input').value.trim();
+  if (!input) {
+    $('feedback').className = 'feedback no';
+    $('feedback').textContent = '답을 입력하거나 모름을 눌러주세요.';
+    return;
+  }
+  const exact = normalizeMeaning(input) === normalizeMeaning(current.meaning);
+  const loose = isMeaningMatch(input, current.meaning);
+  answered = true;
+  $('answer-box').className = 'answer-box show';
+  $('btn-check').style.display = 'none';
+  $('btn-next').style.display = 'block';
+  $('btn-hint').disabled = true;
+  $('btn-skip').disabled = true;
+  if (exact || loose) {
+    score.correct++;
+    removeWrong(current);
+    $('answer-input').classList.add('ok');
+    $('feedback').className = 'feedback ok';
+    $('feedback').textContent = exact ? '정답이에요.' : '정답이에요. 대표 뜻도 같이 확인하세요.';
+  } else {
+    score.wrong++;
+    addWrong(current, input);
+    $('answer-input').classList.add('no');
+    $('feedback').className = 'feedback no';
+    $('feedback').textContent = `틀렸어요. 정답을 오답 노트에 저장했어요.`;
+  }
+  $('s-correct').textContent = score.correct;
+  $('s-wrong').textContent = score.wrong;
+}
+
+function skipQuestion() {
+  if (answered) return;
+  answered = true;
+  score.wrong++;
+  addWrong(current, '');
+  $('answer-box').className = 'answer-box show';
+  $('answer-input').classList.add('no');
+  $('feedback').className = 'feedback no';
+  $('feedback').textContent = '오답 노트에 저장했어요.';
+  $('btn-check').style.display = 'none';
+  $('btn-next').style.display = 'block';
+  $('btn-hint').disabled = true;
+  $('btn-skip').disabled = true;
+  $('s-wrong').textContent = score.wrong;
+}
+
+function showHint() {
+  if (!current || answered) return;
+  $('feedback').className = 'feedback';
+  const firstMeaning = current.meaning.split(/[\/,،(—-]/)[0].trim();
+  $('feedback').textContent = `힌트: ${firstMeaning.slice(0, 1)} 로 시작`;
+}
+
+function nextQuestion() {
+  if (!answered) return;
+  currentIndex++;
+  renderQuestion();
+}
+
+function showComplete() {
+  $('fill').style.width = '100%';
+  const total = deck.length || 1;
+  const rate = Math.round((score.correct / total) * 100);
+  $('c-correct').textContent = score.correct;
+  $('c-wrong').textContent = score.wrong;
+  $('c-rate').textContent = `${rate}%`;
+  $('trophy').textContent = rate >= 90 ? '🏆' : rate >= 70 ? '🎉' : '💪';
+  $('c-title').textContent = rate >= 90 ? '시험 준비 완료' : rate >= 70 ? '거의 다 왔어요' : '오답 복습이 필요해요';
+  $('c-desc').textContent = `${total}문제 중 ${score.correct}문제 정답\n현재 오답 노트 ${getWrongWords().length}개`;
+  $('c-wrong-btn').disabled = getWrongWords().length === 0;
+  showScreen('s-complete');
+}
+
+function showWrongList() {
+  renderWrongList();
+  showScreen('s-wrong-list');
+}
+
+function renderWrongList() {
+  const list = $('wrong-list');
+  const wrongs = getWrongWords().sort((a, b) => (wrongNotes[b.id]?.count || 0) - (wrongNotes[a.id]?.count || 0));
+  if (!wrongs.length) {
+    list.innerHTML = '<p class="empty">아직 저장된 오답이 없어요.<br>시험 연습에서 틀린 단어가 여기에 모입니다.</p>';
+  } else {
+    list.innerHTML = wrongs.map(w => {
+      const note = wrongNotes[w.id] || {};
+      const last = note.lastAnswer ? `<br>최근 내 답: <span dir="rtl">${escapeHtml(note.lastAnswer)}</span>` : '';
+      return `<div class="wrong-card">
+        <div class="wrong-top"><div class="wrong-meaning">${escapeHtml(w.meaning)}</div><div class="wrong-count">${note.count || 1}회</div></div>
+        <div class="wrong-ar" dir="rtl">${escapeHtml(w.arabic)}</div>
+        <div class="wrong-meta">${escapeHtml(w.cat)} · ${escapeHtml(w.pronun || w.transliteration)}${last}</div>
+      </div>`;
+    }).join('');
+  }
+  const hasWrong = wrongs.length > 0;
+  $('list-start').disabled = !hasWrong;
+  $('clear-wrong').disabled = !hasWrong;
+}
+
+function clearWrongNotes() {
+  if (!confirm('오답 노트를 모두 비울까요?')) return;
+  wrongNotes = {};
+  saveWrongNotes();
+  renderWrongList();
+}
+
+function showScreen(id) {
+  ['s-home','s-exam','s-complete','s-wrong-list'].forEach(s => $(s).classList.toggle('on', s === id));
+}
+
+function goHome() {
+  showScreen('s-home');
+  updateHome();
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalizeArabic(value) {
+  return String(value)
+    .normalize('NFC')
+    .replace(/[ـ\s]/g, '')
+    .replace(/[إأٱآا]/g, 'ا')
+    .replace(/[ىي]/g, 'ي')
+    .replace(/ؤ/g, 'و')
+    .replace(/ئ/g, 'ي')
+    .trim();
+}
+
+function stripHarakat(value) {
+  return normalizeArabic(value).replace(/[ً-ٟؐ-ؚ]/g, '');
+}
+
+function normalizeMeaning(value) {
+  return String(value || '')
+    .normalize('NFC')
+    .toLowerCase()
+    .replace(/[()\[\]{}]/g, ' ')
+    .replace(/[\/,،·—-]/g, ' ')
+    .replace(/\s+/g, '')
+    .trim();
+}
+
+function getMeaningTokens(value) {
+  return String(value || '')
+    .normalize('NFC')
+    .toLowerCase()
+    .replace(/[()\[\]{}]/g, ' ')
+    .split(/[\/,،·—-\s]+/)
+    .map(v => v.trim())
+    .filter(v => v && !['은','는','이','가','을','를','의','및'].includes(v));
+}
+
+function isMeaningMatch(input, answer) {
+  const user = normalizeMeaning(input);
+  if (!user) return false;
+  return getMeaningTokens(answer).some(token => {
+    const normalized = normalizeMeaning(token);
+    return normalized && (user === normalized || user.includes(normalized) || normalized.includes(user));
+  });
+}
+
+function escapeHtml(value) {
+  return String(value || '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[ch]);
+}
+
+$('answer-input').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  if (answered) nextQuestion();
+  else checkAnswer();
+});
+
+init();
+</script>
+</body>
+</html>
