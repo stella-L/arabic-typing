@@ -217,7 +217,7 @@ function normalizeWord(w, index) {
 async function init() {
   loadWrongNotes();
   try {
-    const res = await fetch('words.json?v=20260716-exam');
+    const res = await fetch('words.json?v=20260717-data');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];

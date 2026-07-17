@@ -153,8 +153,8 @@ async function init() {
   loadFavorites();
   try {
     const [wordRes, sentenceRes] = await Promise.all([
-      fetch('words.json?v=20260704-2'),
-      fetch('sentences.json?v=20260704-2')
+      fetch('words.json?v=20260717-data'),
+      fetch('sentences.json?v=20260717-data')
     ]);
     if (!wordRes.ok || !sentenceRes.ok) throw new Error('load');
     words = (await wordRes.json()).map(normalizeWord).filter(w => w.id);
