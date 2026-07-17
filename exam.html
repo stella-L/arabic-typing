@@ -202,6 +202,27 @@ const PDF_EXAM_CATS = [
 
 function $(id){ return document.getElementById(id); }
 
+function readSavedValue(key, fallback) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (saved !== null) return saved;
+  } catch (err) {
+    console.warn('Local storage could not be read on this device.', err);
+  }
+  const encodedKey = encodeURIComponent(key) + '=';
+  const cookie = document.cookie.split('; ').find(row => row.startsWith(encodedKey));
+  return cookie ? decodeURIComponent(cookie.slice(encodedKey.length)) : fallback;
+}
+
+function writeSavedValue(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (err) {
+    console.warn('Local storage could not be saved on this device.', err);
+  }
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; max-age=31536000; path=/; SameSite=Lax`;
+}
+
 function normalizeWord(w, index) {
   return {
     id: w.id || `exam-${index}`,
@@ -217,7 +238,7 @@ function normalizeWord(w, index) {
 async function init() {
   loadWrongNotes();
   try {
-    const res = await fetch('words.json?v=20260717-data');
+    const res = await fetch('words.json?v=20260717-storage');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];
@@ -233,7 +254,7 @@ async function init() {
 
 function loadWrongNotes() {
   try {
-    const saved = JSON.parse(localStorage.getItem(WRONG_KEY) || '{}');
+    const saved = JSON.parse(readSavedValue(WRONG_KEY, '{}'));
     wrongNotes = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
   } catch {
     wrongNotes = {};
@@ -241,7 +262,7 @@ function loadWrongNotes() {
 }
 
 function saveWrongNotes() {
-  localStorage.setItem(WRONG_KEY, JSON.stringify(wrongNotes));
+  writeSavedValue(WRONG_KEY, JSON.stringify(wrongNotes));
   updateHome();
 }
 

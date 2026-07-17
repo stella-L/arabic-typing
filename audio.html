@@ -110,6 +110,27 @@ let timer = null;
 
 function $(id){ return document.getElementById(id); }
 
+function readSavedValue(key, fallback) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (saved !== null) return saved;
+  } catch (err) {
+    console.warn('Local storage could not be read on this device.', err);
+  }
+  const encodedKey = encodeURIComponent(key) + '=';
+  const cookie = document.cookie.split('; ').find(row => row.startsWith(encodedKey));
+  return cookie ? decodeURIComponent(cookie.slice(encodedKey.length)) : fallback;
+}
+
+function writeSavedValue(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (err) {
+    console.warn('Local storage could not be saved on this device.', err);
+  }
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; max-age=31536000; path=/; SameSite=Lax`;
+}
+
 function normalizeWord(w) {
   const visual = window.ARABIC_VISUALS?.words?.[w.id] || null;
   return {
@@ -126,7 +147,7 @@ function normalizeWord(w) {
 
 function loadFavorites() {
   try {
-    const saved = JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+    const saved = JSON.parse(readSavedValue(FAVORITE_KEY, '[]'));
     favoriteIds = new Set(Array.isArray(saved) ? saved : []);
   } catch {
     favoriteIds = new Set();
@@ -134,7 +155,7 @@ function loadFavorites() {
 }
 
 function saveFavorites() {
-  localStorage.setItem(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
+  writeSavedValue(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
   syncFavoriteButton();
   renderChips();
   rebuildDeck();
@@ -160,7 +181,7 @@ function syncFavoriteButton() {
 async function init() {
   loadFavorites();
   try {
-    const res = await fetch('words.json?v=20260717-data');
+    const res = await fetch('words.json?v=20260717-storage');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.id && w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];

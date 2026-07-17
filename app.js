@@ -12,6 +12,27 @@ let favoriteIds = new Set();
 const $ = id => document.getElementById(id);
 const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 
+function readSavedValue(key, fallback) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (saved !== null) return saved;
+  } catch (err) {
+    console.warn('Local storage could not be read on this device.', err);
+  }
+  const encodedKey = encodeURIComponent(key) + '=';
+  const cookie = document.cookie.split('; ').find(row => row.startsWith(encodedKey));
+  return cookie ? decodeURIComponent(cookie.slice(encodedKey.length)) : fallback;
+}
+
+function writeSavedValue(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (err) {
+    console.warn('Local storage could not be saved on this device.', err);
+  }
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; max-age=31536000; path=/; SameSite=Lax`;
+}
+
 function show(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(screenId).classList.add('active');
@@ -19,7 +40,7 @@ function show(screenId) {
 
 function loadFavorites() {
   try {
-    const saved = JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+    const saved = JSON.parse(readSavedValue(FAVORITE_KEY, '[]'));
     favoriteIds = new Set(Array.isArray(saved) ? saved : []);
   } catch {
     favoriteIds = new Set();
@@ -27,7 +48,7 @@ function loadFavorites() {
 }
 
 function saveFavorites() {
-  localStorage.setItem(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
+  writeSavedValue(FAVORITE_KEY, JSON.stringify([...favoriteIds]));
   updateFavoriteCount();
 }
 
@@ -392,7 +413,7 @@ allWords = FALLBACK;
 buildCategoryScreen();
 updateFavoriteCount();
 
-fetch('words.json?v=20260717-data')
+fetch('words.json?v=20260717-storage')
   .then(r => r.json())
   .then(data => {
     allWords = data;
