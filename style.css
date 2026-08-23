@@ -133,6 +133,10 @@ body {
   background: linear-gradient(135deg, #14532d 0%, #16a34a 100%);
   cursor: pointer;
 }
+.mode-card.verb-mode {
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%);
+  cursor: pointer;
+}
 .new-badge { background: rgba(255,255,255,.25); }
 .keyboard-start-btn { color: #1a8a6a; }
 .quiz-start-btn { color: #b45309; }
@@ -140,6 +144,7 @@ body {
 .fav-start-btn { color: #9a3412; }
 .audio-start-btn { color: #0e7490; }
 .sentence-start-btn { color: #6d28d9; }
+.verb-start-btn { color: #4338ca; }
 .mode-badge {
   display: inline-block;
   background: rgba(255,255,255,.25);

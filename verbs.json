@@ -1,0 +1,140 @@
+{
+  "verbs": [
+    {
+      "id": "v_kaana",
+      "root": "ك-و-ن",
+      "meaning_ko": "~이다 / ~였다",
+      "pattern": "Form I (불규칙)",
+      "base_perfective":   { "arabic": "كَانَ",  "translit": "kaa·na",  "pron_ko": "카아나" },
+      "base_imperfective": { "arabic": "يَكُونُ", "translit": "ya·kuu·nu", "pron_ko": "야쿠우누" },
+      "conjugations": {
+        "perfective": {
+          "1s":  { "arabic": "كُنْتُ",   "translit": "kun·tu",  "pron_ko": "쿤투",   "meaning_ko": "나는 ~였다",     "affix": "ْتُ",  "affix_role": "suffix" },
+          "2sm": { "arabic": "كُنْتَ",   "translit": "kun·ta",  "pron_ko": "쿤타",   "meaning_ko": "너(남)는 ~였다", "affix": "ْتَ",  "affix_role": "suffix" },
+          "2sf": { "arabic": "كُنْتِ",   "translit": "kun·ti",  "pron_ko": "쿤티",   "meaning_ko": "너(여)는 ~였다", "affix": "ْتِ",  "affix_role": "suffix" },
+          "3sm": { "arabic": "كَانَ",   "translit": "kaa·na",  "pron_ko": "카아나", "meaning_ko": "그는 ~였다",     "affix": "",     "affix_role": "base" },
+          "3sf": { "arabic": "كَانَتْ", "translit": "kaa·nat", "pron_ko": "카아낫", "meaning_ko": "그녀는 ~였다",   "affix": "َتْ",  "affix_role": "suffix" }
+        },
+        "imperfective": {
+          "1s":  { "arabic": "أَكُونُ",    "translit": "a·kuu·nu",     "pron_ko": "아쿠우누",   "meaning_ko": "나는 ~이다",     "affix": "أَ", "affix_role": "prefix" },
+          "2sm": { "arabic": "تَكُونُ",    "translit": "ta·kuu·nu",    "pron_ko": "타쿠우누",   "meaning_ko": "너(남)는 ~이다", "affix": "تَ", "affix_role": "prefix" },
+          "2sf": { "arabic": "تَكُونِينَ", "translit": "ta·kuu·nii·na","pron_ko": "타쿠우니이나","meaning_ko": "너(여)는 ~이다", "affix": "تَ + ِينَ", "affix_role": "circumfix" },
+          "3sm": { "arabic": "يَكُونُ",    "translit": "ya·kuu·nu",    "pron_ko": "야쿠우누",   "meaning_ko": "그는 ~이다",     "affix": "يَ", "affix_role": "base" },
+          "3sf": { "arabic": "تَكُونُ",    "translit": "ta·kuu·nu",    "pron_ko": "타쿠우누",   "meaning_ko": "그녀는 ~이다",   "affix": "تَ", "affix_role": "prefix" }
+        }
+      }
+    },
+    {
+      "id": "v_kataba",
+      "root": "ك-ت-ب",
+      "meaning_ko": "쓰다",
+      "pattern": "Form I 규칙",
+      "base_perfective":   { "arabic": "كَتَبَ",   "translit": "ka·ta·ba",  "pron_ko": "카타바" },
+      "base_imperfective": { "arabic": "يَكْتُبُ", "translit": "yak·tu·bu", "pron_ko": "야크투부" },
+      "conjugations": {
+        "perfective": {
+          "1s":  { "arabic": "كَتَبْتُ",  "translit": "ka·tab·tu", "pron_ko": "카탑투", "meaning_ko": "나는 썼다",     "affix": "ْتُ",  "affix_role": "suffix" },
+          "2sm": { "arabic": "كَتَبْتَ",  "translit": "ka·tab·ta", "pron_ko": "카탑타", "meaning_ko": "너(남)는 썼다", "affix": "ْتَ",  "affix_role": "suffix" },
+          "2sf": { "arabic": "كَتَبْتِ",  "translit": "ka·tab·ti", "pron_ko": "카탑티", "meaning_ko": "너(여)는 썼다", "affix": "ْتِ",  "affix_role": "suffix" },
+          "3sm": { "arabic": "كَتَبَ",    "translit": "ka·ta·ba",  "pron_ko": "카타바", "meaning_ko": "그는 썼다",     "affix": "",     "affix_role": "base" },
+          "3sf": { "arabic": "كَتَبَتْ",  "translit": "ka·ta·bat", "pron_ko": "카타밧", "meaning_ko": "그녀는 썼다",   "affix": "َتْ",  "affix_role": "suffix" }
+        },
+        "imperfective": {
+          "1s":  { "arabic": "أَكْتُبُ",    "translit": "ak·tu·bu",     "pron_ko": "아크투부",   "meaning_ko": "나는 쓴다",     "affix": "أَ", "affix_role": "prefix" },
+          "2sm": { "arabic": "تَكْتُبُ",    "translit": "tak·tu·bu",    "pron_ko": "타크투부",   "meaning_ko": "너(남)는 쓴다", "affix": "تَ", "affix_role": "prefix" },
+          "2sf": { "arabic": "تَكْتُبِينَ", "translit": "tak·tu·bii·na","pron_ko": "타크투비이나","meaning_ko": "너(여)는 쓴다", "affix": "تَ + ِينَ", "affix_role": "circumfix" },
+          "3sm": { "arabic": "يَكْتُبُ",    "translit": "yak·tu·bu",    "pron_ko": "야크투부",   "meaning_ko": "그는 쓴다",     "affix": "يَ", "affix_role": "base" },
+          "3sf": { "arabic": "تَكْتُبُ",    "translit": "tak·tu·bu",    "pron_ko": "타크투부",   "meaning_ko": "그녀는 쓴다",   "affix": "تَ", "affix_role": "prefix" }
+        }
+      }
+    },
+    {
+      "id": "v_qaraa",
+      "root": "ق-ر-أ",
+      "meaning_ko": "읽다",
+      "pattern": "Form I 규칙 (마지막 자음 함자)",
+      "base_perfective":   { "arabic": "قَرَأَ",   "translit": "qa·ra·’a",  "pron_ko": "카라아" },
+      "base_imperfective": { "arabic": "يَقْرَأُ", "translit": "yaq·ra·’u", "pron_ko": "야크라우" },
+      "conjugations": {
+        "perfective": {
+          "1s":  { "arabic": "قَرَأْتُ",  "translit": "qa·ra’·tu", "pron_ko": "카라아투", "meaning_ko": "나는 읽었다",     "affix": "ْتُ",  "affix_role": "suffix" },
+          "2sm": { "arabic": "قَرَأْتَ",  "translit": "qa·ra’·ta", "pron_ko": "카라아타", "meaning_ko": "너(남)는 읽었다", "affix": "ْتَ",  "affix_role": "suffix" },
+          "2sf": { "arabic": "قَرَأْتِ",  "translit": "qa·ra’·ti", "pron_ko": "카라아티", "meaning_ko": "너(여)는 읽었다", "affix": "ْتِ",  "affix_role": "suffix" },
+          "3sm": { "arabic": "قَرَأَ",    "translit": "qa·ra·’a",  "pron_ko": "카라아",   "meaning_ko": "그는 읽었다",     "affix": "",     "affix_role": "base" },
+          "3sf": { "arabic": "قَرَأَتْ",  "translit": "qa·ra·’at", "pron_ko": "카라앗",   "meaning_ko": "그녀는 읽었다",   "affix": "َتْ",  "affix_role": "suffix" }
+        },
+        "imperfective": {
+          "1s":  { "arabic": "أَقْرَأُ",    "translit": "aq·ra·’u",     "pron_ko": "아크라우",   "meaning_ko": "나는 읽는다",     "affix": "أَ", "affix_role": "prefix" },
+          "2sm": { "arabic": "تَقْرَأُ",    "translit": "taq·ra·’u",    "pron_ko": "타크라우",   "meaning_ko": "너(남)는 읽는다", "affix": "تَ", "affix_role": "prefix" },
+          "2sf": { "arabic": "تَقْرَئِينَ", "translit": "taq·ra·’ii·na","pron_ko": "타크라이이나","meaning_ko": "너(여)는 읽는다", "affix": "تَ + ِينَ", "affix_role": "circumfix" },
+          "3sm": { "arabic": "يَقْرَأُ",    "translit": "yaq·ra·’u",    "pron_ko": "야크라우",   "meaning_ko": "그는 읽는다",     "affix": "يَ", "affix_role": "base" },
+          "3sf": { "arabic": "تَقْرَأُ",    "translit": "taq·ra·’u",    "pron_ko": "타크라우",   "meaning_ko": "그녀는 읽는다",   "affix": "تَ", "affix_role": "prefix" }
+        }
+      }
+    },
+    {
+      "id": "v_darasa",
+      "root": "د-ر-س",
+      "meaning_ko": "공부하다",
+      "pattern": "Form I 규칙",
+      "base_perfective":   { "arabic": "دَرَسَ",   "translit": "da·ra·sa",  "pron_ko": "다라사" },
+      "base_imperfective": { "arabic": "يَدْرُسُ", "translit": "yad·ru·su", "pron_ko": "야드루수" },
+      "conjugations": {
+        "perfective": {
+          "1s":  { "arabic": "دَرَسْتُ",  "translit": "da·ras·tu", "pron_ko": "다라스투", "meaning_ko": "나는 공부했다",     "affix": "ْتُ",  "affix_role": "suffix" },
+          "2sm": { "arabic": "دَرَسْتَ",  "translit": "da·ras·ta", "pron_ko": "다라스타", "meaning_ko": "너(남)는 공부했다", "affix": "ْتَ",  "affix_role": "suffix" },
+          "2sf": { "arabic": "دَرَسْتِ",  "translit": "da·ras·ti", "pron_ko": "다라스티", "meaning_ko": "너(여)는 공부했다", "affix": "ْتِ",  "affix_role": "suffix" },
+          "3sm": { "arabic": "دَرَسَ",    "translit": "da·ra·sa",  "pron_ko": "다라사",   "meaning_ko": "그는 공부했다",     "affix": "",     "affix_role": "base" },
+          "3sf": { "arabic": "دَرَسَتْ",  "translit": "da·ra·sat", "pron_ko": "다라삿",   "meaning_ko": "그녀는 공부했다",   "affix": "َتْ",  "affix_role": "suffix" }
+        },
+        "imperfective": {
+          "1s":  { "arabic": "أَدْرُسُ",    "translit": "ad·ru·su",     "pron_ko": "아드루수",   "meaning_ko": "나는 공부한다",     "affix": "أَ", "affix_role": "prefix" },
+          "2sm": { "arabic": "تَدْرُسُ",    "translit": "tad·ru·su",    "pron_ko": "타드루수",   "meaning_ko": "너(남)는 공부한다", "affix": "تَ", "affix_role": "prefix" },
+          "2sf": { "arabic": "تَدْرُسِينَ", "translit": "tad·ru·sii·na","pron_ko": "타드루시이나","meaning_ko": "너(여)는 공부한다", "affix": "تَ + ِينَ", "affix_role": "circumfix" },
+          "3sm": { "arabic": "يَدْرُسُ",    "translit": "yad·ru·su",    "pron_ko": "야드루수",   "meaning_ko": "그는 공부한다",     "affix": "يَ", "affix_role": "base" },
+          "3sf": { "arabic": "تَدْرُسُ",    "translit": "tad·ru·su",    "pron_ko": "타드루수",   "meaning_ko": "그녀는 공부한다",   "affix": "تَ", "affix_role": "prefix" }
+        }
+      }
+    },
+    {
+      "id": "v_dhahaba",
+      "root": "ذ-ه-ب",
+      "meaning_ko": "가다",
+      "pattern": "Form I 규칙",
+      "base_perfective":   { "arabic": "ذَهَبَ",   "translit": "dha·ha·ba", "pron_ko": "다하바" },
+      "base_imperfective": { "arabic": "يَذْهَبُ", "translit": "yadh·ha·bu","pron_ko": "야드하부" },
+      "conjugations": {
+        "perfective": {
+          "1s":  { "arabic": "ذَهَبْتُ",  "translit": "dha·hab·tu", "pron_ko": "다합투", "meaning_ko": "나는 갔다",     "affix": "ْتُ",  "affix_role": "suffix" },
+          "2sm": { "arabic": "ذَهَبْتَ",  "translit": "dha·hab·ta", "pron_ko": "다합타", "meaning_ko": "너(남)는 갔다", "affix": "ْتَ",  "affix_role": "suffix" },
+          "2sf": { "arabic": "ذَهَبْتِ",  "translit": "dha·hab·ti", "pron_ko": "다합티", "meaning_ko": "너(여)는 갔다", "affix": "ْتِ",  "affix_role": "suffix" },
+          "3sm": { "arabic": "ذَهَبَ",    "translit": "dha·ha·ba",  "pron_ko": "다하바", "meaning_ko": "그는 갔다",     "affix": "",     "affix_role": "base" },
+          "3sf": { "arabic": "ذَهَبَتْ",  "translit": "dha·ha·bat", "pron_ko": "다하밧", "meaning_ko": "그녀는 갔다",   "affix": "َتْ",  "affix_role": "suffix" }
+        },
+        "imperfective": {
+          "1s":  { "arabic": "أَذْهَبُ",    "translit": "adh·ha·bu",     "pron_ko": "아드하부",   "meaning_ko": "나는 간다",     "affix": "أَ", "affix_role": "prefix" },
+          "2sm": { "arabic": "تَذْهَبُ",    "translit": "tadh·ha·bu",    "pron_ko": "타드하부",   "meaning_ko": "너(남)는 간다", "affix": "تَ", "affix_role": "prefix" },
+          "2sf": { "arabic": "تَذْهَبِينَ", "translit": "tadh·ha·bii·na","pron_ko": "타드하비이나","meaning_ko": "너(여)는 간다", "affix": "تَ + ِينَ", "affix_role": "circumfix" },
+          "3sm": { "arabic": "يَذْهَبُ",    "translit": "yadh·ha·bu",    "pron_ko": "야드하부",   "meaning_ko": "그는 간다",     "affix": "يَ", "affix_role": "base" },
+          "3sf": { "arabic": "تَذْهَبُ",    "translit": "tadh·ha·bu",    "pron_ko": "타드하부",   "meaning_ko": "그녀는 간다",   "affix": "تَ", "affix_role": "prefix" }
+        }
+      }
+    }
+  ],
+  "affix_reference": {
+    "perfective_suffixes": [
+      { "person": "1s",  "label": "나",         "affix": "ْتُ",  "translit": "-tu",  "example": "كَتَبْتُ" },
+      { "person": "2sm", "label": "너(남)",      "affix": "ْتَ",  "translit": "-ta",  "example": "كَتَبْتَ" },
+      { "person": "2sf", "label": "너(여)",      "affix": "ْتِ",  "translit": "-ti",  "example": "كَتَبْتِ" },
+      { "person": "3sm", "label": "그 (기본형)", "affix": "َ",     "translit": "-a",   "example": "كَتَبَ" },
+      { "person": "3sf", "label": "그녀",        "affix": "َتْ",  "translit": "-at",  "example": "كَتَبَتْ" }
+    ],
+    "imperfective_prefixes": [
+      { "person": "1s",  "label": "나",         "affix": "أَ",         "translit": "a-",       "example": "أَكْتُبُ" },
+      { "person": "2sm", "label": "너(남)",      "affix": "تَ",         "translit": "ta-",      "example": "تَكْتُبُ" },
+      { "person": "2sf", "label": "너(여)",      "affix": "تَ … ِينَ", "translit": "ta-…-īna", "example": "تَكْتُبِينَ", "note": "접두사 + 접미사 결합" },
+      { "person": "3sm", "label": "그 (기본형)", "affix": "يَ",         "translit": "ya-",      "example": "يَكْتُبُ" },
+      { "person": "3sf", "label": "그녀",        "affix": "تَ",         "translit": "ta-",      "example": "تَكْتُبُ" }
+    ]
+  }
+}

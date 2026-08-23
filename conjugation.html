@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>동사 활용 연습</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer;font-family:inherit}
+:root{
+  --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;
+  --primary:#7c3aed;--primary-soft:rgba(124,58,237,.16);
+  --success:#22c55e;--error:#ef4444;
+  --text:#f0f0f5;--dim:#8888aa;--accent:#f59e0b;
+  --r:16px;
+  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow:hidden}
+body{display:flex;justify-content:center}
+
+.screen{display:none;flex-direction:column;width:100%;max-width:430px;height:100%;height:-webkit-fill-available;overflow-y:auto;position:relative}
+.screen.on{display:flex}
+
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:max(52px,calc(var(--sat) + 12px)) 20px 10px;flex-shrink:0}
+.btn-ico{background:var(--surface2);border:none;color:var(--text);font-size:18px;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.hdr-title{font-size:15px;font-weight:700}
+.hdr-title .sub{display:block;font-size:11px;color:var(--dim);font-weight:500;margin-top:2px;text-align:center}
+
+/* HOME / SELECT */
+.home-hero{padding:max(28px,calc(var(--sat) + 4px)) 20px 16px;text-align:center}
+.home-hero h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.home-hero p{color:var(--dim);font-size:13px;line-height:1.6}
+.badge{display:inline-block;background:var(--primary);color:#fff;font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-top:10px}
+
+.sec{padding:0 20px 18px}
+.sec-lbl{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+
+.tog{display:flex;background:var(--surface);border-radius:12px;padding:4px;gap:4px}
+.tog-btn{flex:1;background:transparent;border:none;color:var(--dim);font-size:13px;font-weight:700;padding:11px 6px;border-radius:9px;transition:all .2s}
+.tog-btn.on{background:var(--primary);color:#fff}
+
+.tog.wrap{flex-wrap:wrap}
+.tog.wrap .tog-btn{flex:1 1 45%;font-size:12px;padding:10px 4px}
+
+.verb-list{display:flex;flex-direction:column;gap:10px}
+.verb-card{background:var(--surface);border:2px solid transparent;border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;text-align:left;color:var(--text);width:100%;transition:all .2s}
+.verb-card.on{border-color:var(--primary);background:var(--primary-soft)}
+.verb-card .v-info{display:flex;flex-direction:column;gap:3px}
+.verb-card .v-ar{font-family:'Noto Naskh Arabic',serif;font-size:26px;direction:rtl;font-weight:700;line-height:1.2}
+.verb-card .v-meta{font-size:12px;color:var(--dim);font-weight:600}
+.verb-card .v-ko{font-size:14px;font-weight:700;color:var(--text)}
+.verb-card.on .v-ko{color:var(--primary)}
+
+.start-sec{padding:14px 20px calc(28px + var(--sab));margin-top:auto}
+.sel-info{text-align:center;color:var(--dim);font-size:12px;margin-bottom:10px}
+.btn-main{width:100%;background:var(--primary);color:#fff;border:none;font-size:16px;font-weight:700;padding:18px;border-radius:var(--r);transition:opacity .2s}
+.btn-main:active{opacity:.8}
+.btn-main:disabled{opacity:.35;cursor:not-allowed}
+.btn-sec{width:100%;background:var(--surface);color:var(--text);border:none;font-size:15px;font-weight:700;padding:16px;border-radius:var(--r);margin-top:10px}
+
+/* INTRO */
+.intro-body{flex:1;display:flex;flex-direction:column;padding:0 20px 20px;justify-content:center;gap:16px}
+.intro-title{font-size:14px;color:var(--dim);text-align:center;font-weight:700}
+.intro-root{text-align:center;font-family:'Noto Naskh Arabic',serif;font-size:22px;color:var(--accent);letter-spacing:.4em;direction:rtl}
+.intro-base{background:var(--surface);border-radius:18px;padding:22px 18px;text-align:center}
+.intro-base .lbl{font-size:11px;color:var(--dim);font-weight:700;margin-bottom:6px;letter-spacing:.05em}
+.intro-base .ar{font-family:'Noto Naskh Arabic',serif;font-size:44px;direction:rtl;line-height:1.3;font-weight:700}
+.intro-base .pron{color:var(--accent);font-size:13px;font-weight:700;margin-top:6px}
+.intro-base .ko{font-size:14px;color:var(--dim);margin-top:4px}
+.intro-hint{background:var(--primary-soft);border-radius:12px;padding:14px 16px;color:var(--text);font-size:13px;line-height:1.6}
+.intro-hint b{color:var(--primary)}
+
+/* PROG */
+.prog-sec{padding:0 20px 12px}
+.prog-bar{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s ease}
+.prog-stats{display:flex;justify-content:space-between;font-size:12px;color:var(--dim)}
+.g{color:var(--success);font-weight:700}.r{color:var(--error);font-weight:700}
+
+.ref-btn{position:absolute;top:calc(var(--sat) + 12px);right:20px;background:var(--surface2);border:none;color:var(--text);font-size:13px;font-weight:700;padding:8px 12px;border-radius:20px;display:flex;align-items:center;gap:5px;z-index:5}
+.ref-btn:active{background:var(--primary);color:#fff}
+
+/* PRACTICE / QUIZ shared card */
+.card-body{flex:1;display:flex;flex-direction:column;padding:0 20px 20px;gap:14px}
+.prompt-card{background:var(--surface);border-radius:20px;padding:22px 20px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:170px;justify-content:center}
+.p-label{font-size:12px;color:var(--dim);font-weight:700;background:var(--surface2);padding:4px 12px;border-radius:20px}
+.p-prompt{font-size:26px;font-weight:700;line-height:1.4}
+.p-hint{font-size:13px;color:var(--dim)}
+.p-hint b{color:var(--accent);font-family:'Noto Naskh Arabic',serif;font-size:18px}
+.p-ar-big{font-family:'Noto Naskh Arabic',serif;font-size:44px;direction:rtl;line-height:1.4;font-weight:700}
+.p-pron{color:var(--accent);font-size:14px;font-weight:700;margin-top:4px}
+
+/* INPUT ROW (typing / affix-fill) */
+.input-wrap{display:flex;flex-direction:column;gap:10px}
+.tpl-row{background:var(--surface);border-radius:14px;padding:12px 14px;font-family:'Noto Naskh Arabic',serif;font-size:32px;direction:rtl;text-align:center;line-height:1.4;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap-reverse;min-height:56px}
+.tpl-stem{color:var(--dim)}
+.tpl-blank{color:var(--primary);border-bottom:2px dashed var(--primary);padding:0 8px;min-width:44px;font-weight:700}
+input.ar-input{width:100%;background:var(--surface);border:2px solid var(--surface2);color:var(--text);font-family:'Noto Naskh Arabic',serif;font-size:32px;direction:rtl;text-align:center;padding:14px 12px;border-radius:14px;outline:none;transition:border-color .2s}
+input.ar-input:focus{border-color:var(--primary)}
+input.ar-input.correct{border-color:var(--success);color:#86efac}
+input.ar-input.wrong{border-color:var(--error);color:#fca5a5}
+
+.act-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.act-btn{background:var(--surface2);color:var(--text);border:none;font-size:13px;font-weight:700;padding:12px 6px;border-radius:12px;transition:background .2s}
+.act-btn.primary{background:var(--primary);color:#fff}
+.act-btn.primary:active{opacity:.85}
+.act-btn:active{background:var(--primary)}
+
+.feedback{min-height:38px;padding:8px 4px;text-align:center;font-size:13px;font-weight:700;color:var(--dim);white-space:pre-line}
+.feedback.ok{color:var(--success)}.feedback.no{color:var(--error)}
+
+/* QUIZ choices */
+.choices{display:grid;grid-template-columns:1fr;gap:10px}
+.choice{width:100%;border:2px solid var(--surface2);background:var(--surface);color:var(--text);border-radius:14px;padding:14px;font-size:15px;font-weight:700;line-height:1.4;text-align:center;transition:all .15s}
+.choice .ar{font-family:'Noto Naskh Arabic',serif;font-size:26px;direction:rtl;text-align:center;display:block;line-height:1.2}
+.choice.correct{border-color:var(--success);background:rgba(34,197,94,.16);color:#86efac}
+.choice.wrong{border-color:var(--error);background:rgba(239,68,68,.14);color:#fca5a5}
+.choice:disabled{cursor:default}
+
+.speak-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:none;color:var(--text);font-size:13px;font-weight:600;padding:8px 14px;border-radius:20px}
+.speak-btn:active{background:var(--primary)}
+
+/* LISTEN */
+.listen-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px 20px;gap:16px}
+.stage-pill{display:flex;justify-content:space-between;gap:8px;background:var(--surface);border-radius:12px;padding:10px 12px;color:var(--dim);font-size:12px;font-weight:700;width:100%}
+.stage-pill span.on{color:var(--primary)}
+.listen-card{width:100%;min-height:280px;background:var(--surface);border-radius:22px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
+.listen-card .lbl{font-size:11px;color:var(--dim);font-weight:700}
+.listen-card .ar{font-family:'Noto Naskh Arabic',serif;font-size:52px;direction:rtl;line-height:1.35;font-weight:700;word-break:break-word}
+.listen-card .pron{color:var(--accent);font-size:15px;font-weight:700;margin-top:6px}
+.listen-card .ko{font-size:24px;font-weight:700;margin-top:10px;min-height:34px;transition:opacity .3s}
+.listen-card .ko.hide{opacity:.15}
+
+.controls{padding:0 20px calc(28px + var(--sab));width:100%}
+.ctrl-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.ctrl{background:var(--surface2);color:var(--text);border:none;font-size:13px;font-weight:700;padding:12px 6px;border-radius:12px}
+
+/* REFERENCE overlay */
+.ref-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.ref-overlay.on{display:flex}
+.ref-panel{background:var(--bg);width:100%;max-width:430px;max-height:92vh;border-radius:22px 22px 0 0;overflow-y:auto;padding:14px 18px calc(28px + var(--sab));display:flex;flex-direction:column;gap:16px}
+.ref-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--surface2)}
+.ref-hdr h3{font-size:16px;font-weight:700}
+.ref-close{background:var(--surface2);border:none;color:var(--text);width:34px;height:34px;border-radius:10px;font-size:16px}
+.ref-section h4{font-size:13px;color:var(--dim);font-weight:700;margin-bottom:8px;letter-spacing:.04em}
+.ref-table{width:100%;background:var(--surface);border-radius:12px;overflow:hidden;font-size:13px}
+.ref-table .row{display:grid;grid-template-columns:64px 1fr 1fr;padding:9px 10px;border-bottom:1px solid var(--surface2);align-items:center;gap:8px}
+.ref-table .row:last-child{border-bottom:none}
+.ref-table .row.head{background:var(--surface2);color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.04em}
+.ref-table .ar{font-family:'Noto Naskh Arabic',serif;font-size:20px;direction:rtl;text-align:right;line-height:1.3}
+.ref-table .ar.affix{color:var(--accent);font-weight:700}
+.ref-table .ko{font-size:12px;color:var(--dim);font-weight:600}
+.ref-table .row.base{background:rgba(124,58,237,.08)}
+
+.ref-conj{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ref-conj-col h5{font-size:12px;color:var(--primary);font-weight:700;margin-bottom:6px;text-align:center}
+.mini-table{background:var(--surface);border-radius:12px;overflow:hidden;font-size:12px}
+.mini-table .row{display:grid;grid-template-columns:44px 1fr;padding:7px 8px;border-bottom:1px solid var(--surface2);align-items:center;gap:4px}
+.mini-table .row:last-child{border-bottom:none}
+.mini-table .row.base{background:rgba(124,58,237,.10)}
+.mini-table .ko{font-size:11px;color:var(--dim);font-weight:600}
+.mini-table .ar{font-family:'Noto Naskh Arabic',serif;font-size:16px;direction:rtl;text-align:right;line-height:1.3}
+.mini-table .aff{color:var(--accent)}
+
+/* COMPLETE */
+.comp-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:max(56px,calc(var(--sat) + 20px)) 20px calc(40px + var(--sab));text-align:center}
+.trophy{font-size:62px;margin-bottom:18px}
+.comp-title{font-size:24px;font-weight:700;margin-bottom:8px}
+.comp-sub{color:var(--dim);font-size:14px;line-height:1.6;margin-bottom:26px}
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:26px}
+.sc{background:var(--surface);border-radius:var(--r);padding:18px 12px;text-align:center}
+.sc.full{grid-column:span 2}
+.sc-num{font-size:30px;font-weight:700;margin-bottom:4px;color:var(--primary)}
+.sc-lbl{font-size:11px;color:var(--dim);font-weight:700;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<!-- ===== SELECT ===== -->
+<main id="screen-select" class="screen on">
+  <header class="hdr">
+    <button class="btn-ico" type="button" onclick="location.href='index.html'">←</button>
+    <div class="hdr-title">동사 활용 연습<span class="sub">완료·미완료 · 단수 5인칭</span></div>
+    <div style="width:40px"></div>
+  </header>
+
+  <section class="home-hero">
+    <p>어근과 접사를 익히며 활용을 배워요.<br>참고표는 연습 중에 언제든 볼 수 있어요.</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-lbl">동사 선택</div>
+    <div class="verb-list" id="verb-list"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-lbl">시상 (Aspect)</div>
+    <div class="tog">
+      <button class="tog-btn on" data-aspect="perfective" type="button">완료형 (과거)</button>
+      <button class="tog-btn" data-aspect="imperfective" type="button">미완료형 (현재/미래)</button>
+      <button class="tog-btn" data-aspect="both" type="button">둘 다</button>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-lbl">연습 모드</div>
+    <div class="tog wrap">
+      <button class="tog-btn on" data-mode="type" type="button">✍️ 전체 타이핑</button>
+      <button class="tog-btn" data-mode="affix" type="button">🧩 접사 채우기</button>
+      <button class="tog-btn" data-mode="quiz" type="button">❓ 활용 퀴즈</button>
+      <button class="tog-btn" data-mode="listen" type="button">🎧 듣기 반복</button>
+    </div>
+  </section>
+
+  <section class="start-sec">
+    <p class="sel-info" id="sel-info">동사를 골라주세요</p>
+    <button class="btn-main" id="start-btn" type="button" disabled onclick="startPractice()">시작하기 →</button>
+  </section>
+</main>
+
+<!-- ===== INTRO ===== -->
+<main id="screen-intro" class="screen">
+  <header class="hdr">
+    <button class="btn-ico" type="button" onclick="showScreen('select')">←</button>
+    <div class="hdr-title" id="intro-hdr">활용 규칙 훑어보기</div>
+    <div style="width:40px"></div>
+  </header>
+  <section class="intro-body">
+    <div class="intro-title">기본형 (3인칭 남성 단수)</div>
+    <div class="intro-root" id="intro-root">ك - ت - ب</div>
+    <div class="intro-base">
+      <div class="lbl" id="intro-aspect-lbl">완료형</div>
+      <div class="ar" id="intro-ar" dir="rtl">كَتَبَ</div>
+      <div class="pron" id="intro-pron">카타바</div>
+      <div class="ko" id="intro-ko">그는 썼다</div>
+    </div>
+    <div class="intro-hint">
+      💡 이 기본형에 <b>접미사</b>(완료형) 또는 <b>접두사</b>(미완료형)를 붙여 인칭·성을 표시해요.
+      막히면 오른쪽 위 <b>📖 참고표</b> 버튼을 눌러 언제든 활용표를 열 수 있어요.
+    </div>
+  </section>
+  <section class="start-sec">
+    <button class="btn-main" type="button" onclick="beginRound()">연습 시작 →</button>
+  </section>
+</main>
+
+<!-- ===== PRACTICE (typing / affix-fill) ===== -->
+<main id="screen-practice" class="screen">
+  <header class="hdr">
+    <button class="btn-ico" type="button" onclick="quitToSelect()">←</button>
+    <div class="hdr-title" id="prac-hdr">전체 타이핑</div>
+    <div style="width:40px"></div>
+  </header>
+  <button class="ref-btn" type="button" onclick="openReference()">📖 참고표</button>
+
+  <section class="prog-sec">
+    <div class="prog-bar"><div class="prog-fill" id="prac-prog"></div></div>
+    <div class="prog-stats">
+      <span id="prac-count">1 / 10</span>
+      <span><span class="g" id="prac-good">0</span> · <span class="r" id="prac-bad">0</span></span>
+    </div>
+  </section>
+
+  <section class="card-body">
+    <div class="prompt-card">
+      <div class="p-label" id="prac-aspect">완료형</div>
+      <div class="p-prompt" id="prac-prompt">너(여)는 썼다</div>
+      <div class="p-hint" id="prac-basehint">기본형: <span dir="rtl" style="font-family:'Noto Naskh Arabic',serif;font-size:22px">كَتَبَ</span></div>
+    </div>
+
+    <div class="input-wrap">
+      <div id="tpl-row" class="tpl-row" style="display:none"></div>
+      <input id="ar-input" class="ar-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="여기에 아랍어 입력">
+      <div class="act-row">
+        <button class="act-btn" type="button" onclick="showHint()">💡 힌트</button>
+        <button class="act-btn" type="button" onclick="skipQuestion()">✕ 넘기기</button>
+        <button class="act-btn primary" type="button" onclick="checkAnswer()">✓ 채점</button>
+      </div>
+      <div class="feedback" id="prac-feedback"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== QUIZ ===== -->
+<main id="screen-quiz" class="screen">
+  <header class="hdr">
+    <button class="btn-ico" type="button" onclick="quitToSelect()">←</button>
+    <div class="hdr-title">활용 퀴즈</div>
+    <div style="width:40px"></div>
+  </header>
+  <button class="ref-btn" type="button" onclick="openReference()">📖 참고표</button>
+
+  <section class="prog-sec">
+    <div class="prog-bar"><div class="prog-fill" id="quiz-prog"></div></div>
+    <div class="prog-stats">
+      <span id="quiz-count">1 / 10</span>
+      <span><span class="g" id="quiz-good">0</span> · <span class="r" id="quiz-bad">0</span></span>
+    </div>
+  </section>
+
+  <section class="card-body">
+    <div class="prompt-card" id="quiz-prompt-card">
+      <div class="p-label" id="quiz-dir-label">아랍어 → 뜻</div>
+      <div id="quiz-ar" class="p-ar-big" dir="rtl"></div>
+      <div id="quiz-pron" class="p-pron"></div>
+      <div id="quiz-ko-prompt" class="p-prompt" style="display:none"></div>
+      <button class="speak-btn" id="quiz-speak" type="button" onclick="speakCurrentQuiz()">🔊 발음</button>
+    </div>
+    <div class="choices" id="quiz-choices"></div>
+    <div class="feedback" id="quiz-feedback"></div>
+  </section>
+</main>
+
+<!-- ===== LISTEN ===== -->
+<main id="screen-listen" class="screen">
+  <header class="hdr">
+    <button class="btn-ico" type="button" onclick="quitToSelect()">←</button>
+    <div class="hdr-title">듣기 무한반복<span class="sub" id="listen-sub"></span></div>
+    <div style="width:40px"></div>
+  </header>
+  <button class="ref-btn" type="button" onclick="openReference()">📖 참고표</button>
+
+  <section class="listen-body">
+    <div class="stage-pill">
+      <span id="stg-ar" class="on">1 아랍어</span>
+      <span id="stg-pause">2 잠깐</span>
+      <span id="stg-ko">3 뜻</span>
+    </div>
+    <div class="listen-card">
+      <div class="lbl" id="listen-label">완료형 · 3인칭 남성</div>
+      <div class="ar" id="listen-ar" dir="rtl">...</div>
+      <div class="pron" id="listen-pron"></div>
+      <div class="ko hide" id="listen-ko"></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <p class="sel-info" id="listen-info">0 / 0</p>
+    <button class="btn-main" id="listen-play" type="button" onclick="toggleListen()">▶️ 재생 시작</button>
+    <div class="ctrl-row" style="margin-top:10px">
+      <button class="ctrl" type="button" onclick="listenPrev()">⏮ 이전</button>
+      <button class="ctrl" type="button" onclick="toggleRate()" id="listen-rate">0.75x</button>
+      <button class="ctrl" type="button" onclick="listenNext()">⏭ 다음</button>
+    </div>
+    <div class="ctrl-row">
+      <button class="ctrl" type="button" onclick="toggleShuffle()" id="listen-shuffle">🔀 순차</button>
+      <button class="ctrl" type="button" onclick="toggleLoop()" id="listen-loop">🔁 반복 ON</button>
+      <button class="ctrl" type="button" onclick="quitToSelect()">🏠 홈</button>
+    </div>
+  </section>
+</main>
+
+<!-- ===== COMPLETE ===== -->
+<main id="screen-complete" class="screen">
+  <div class="comp-body">
+    <div class="trophy">🎉</div>
+    <div class="comp-title" id="comp-title">완료!</div>
+    <div class="comp-sub" id="comp-sub"></div>
+    <div class="score-grid">
+      <div class="sc"><div class="sc-num" id="comp-good">0</div><div class="sc-lbl">맞춘 개수</div></div>
+      <div class="sc"><div class="sc-num" id="comp-rate">0%</div><div class="sc-lbl">정답률</div></div>
+      <div class="sc full"><div class="sc-num" id="comp-time">0초</div><div class="sc-lbl">소요 시간</div></div>
+    </div>
+    <button class="btn-main" type="button" onclick="showScreen('select')">다시 선택 →</button>
+    <button class="btn-sec" type="button" onclick="location.href='index.html'">홈으로</button>
+  </div>
+</main>
+
+<!-- ===== REFERENCE OVERLAY ===== -->
+<div id="ref-overlay" class="ref-overlay" onclick="if(event.target===this)closeReference()">
+  <div class="ref-panel">
+    <div class="ref-hdr">
+      <h3 id="ref-title">활용 참고표</h3>
+      <button class="ref-close" type="button" onclick="closeReference()">✕</button>
+    </div>
+
+    <div class="ref-section">
+      <h4>현재 동사 활용표</h4>
+      <div class="ref-conj">
+        <div class="ref-conj-col">
+          <h5>완료형 (과거)</h5>
+          <div class="mini-table" id="ref-conj-perf"></div>
+        </div>
+        <div class="ref-conj-col">
+          <h5>미완료형 (현재)</h5>
+          <div class="mini-table" id="ref-conj-imperf"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-section">
+      <h4>완료형 접미사 (기본형 뒤에 붙음)</h4>
+      <div class="ref-table" id="ref-perf-suf"></div>
+    </div>
+
+    <div class="ref-section">
+      <h4>미완료형 접두사 (기본형 앞에 붙음)</h4>
+      <div class="ref-table" id="ref-imperf-pre"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- STORAGE (app.js pattern) ---------- */
+function readSavedValue(key, fallback){
+  try{ const v=localStorage.getItem(key); if(v!==null) return v; }catch(e){}
+  const k=encodeURIComponent(key)+'=';
+  const c=document.cookie.split('; ').find(r=>r.startsWith(k));
+  return c ? decodeURIComponent(c.slice(k.length)) : fallback;
+}
+function writeSavedValue(key,value){
+  try{ localStorage.setItem(key,value); }catch(e){}
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; max-age=31536000; path=/; SameSite=Lax`;
+}
+const KEY_SETTINGS='arabtype.verbSettings';
+const KEY_PROGRESS='arabtype.verbProgress';
+
+/* ---------- STATE ---------- */
+const PERSON_ORDER=['3sm','3sf','2sm','2sf','1s'];
+const PERSON_LABEL={ '1s':'나', '2sm':'너(남)', '2sf':'너(여)', '3sm':'그', '3sf':'그녀' };
+const ASPECT_LABEL={ perfective:'완료형', imperfective:'미완료형' };
+
+let VERBS=[], AFFIXES=null;
+let sel = { verbId:null, aspect:'perfective', mode:'type' };
+let round = null;   // active practice/quiz round
+let listen = { playing:false, rate:0.75, shuffle:false, loop:true, index:0, deck:[], timer:null, stage:'ar' };
+
+function $(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffleArr(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; }
+function currentVerb(){ return VERBS.find(v=>v.id===sel.verbId); }
+
+/* ---------- INIT ---------- */
+async function init(){
+  try{
+    const res = await fetch('verbs.json?v=1');
+    if(!res.ok) throw new Error('load');
+    const data = await res.json();
+    VERBS = data.verbs || [];
+    AFFIXES = data.affix_reference || null;
+  }catch(e){
+    document.body.innerHTML = '<div style="padding:40px;color:#fff;text-align:center;font-family:sans-serif">동사 데이터를 불러오지 못했어요.<br>로컬 서버에서 열어주세요.</div>';
+    return;
+  }
+  loadSettings();
+  renderVerbList();
+  renderSubmodeTogs();
+  renderAspectTogs();
+  updateSelInfo();
+}
+
+function loadSettings(){
+  try{
+    const s = JSON.parse(readSavedValue(KEY_SETTINGS,'null'));
+    if(s && typeof s==='object'){
+      if(s.verbId && VERBS.some(v=>v.id===s.verbId)) sel.verbId=s.verbId;
+      if(['perfective','imperfective','both'].includes(s.aspect)) sel.aspect=s.aspect;
+      if(['type','affix','quiz','listen'].includes(s.mode)) sel.mode=s.mode;
+    }
+  }catch(e){}
+}
+function saveSettings(){ writeSavedValue(KEY_SETTINGS, JSON.stringify(sel)); }
+
+/* ---------- SELECT SCREEN ---------- */
+function renderVerbList(){
+  const wrap = $('verb-list');
+  wrap.innerHTML='';
+  VERBS.forEach(v=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='verb-card'+(sel.verbId===v.id?' on':'');
+    b.innerHTML = `
+      <div class="v-info">
+        <div class="v-ko">${v.meaning_ko}</div>
+        <div class="v-meta">${v.pattern} · 어근 ${v.root}</div>
+      </div>
+      <div class="v-ar" dir="rtl">${v.base_perfective.arabic}</div>`;
+    b.onclick = ()=>{ sel.verbId=v.id; saveSettings(); renderVerbList(); updateSelInfo(); };
+    wrap.appendChild(b);
+  });
+}
+function renderAspectTogs(){
+  document.querySelectorAll('.tog-btn[data-aspect]').forEach(btn=>{
+    btn.classList.toggle('on', btn.dataset.aspect===sel.aspect);
+    btn.onclick = ()=>{ sel.aspect=btn.dataset.aspect; saveSettings(); renderAspectTogs(); };
+  });
+}
+function renderSubmodeTogs(){
+  document.querySelectorAll('.tog-btn[data-mode]').forEach(btn=>{
+    btn.classList.toggle('on', btn.dataset.mode===sel.mode);
+    btn.onclick = ()=>{ sel.mode=btn.dataset.mode; saveSettings(); renderSubmodeTogs(); updateSelInfo(); };
+  });
+}
+function updateSelInfo(){
+  const v=currentVerb();
+  const modeName = ({type:'전체 타이핑', affix:'접사 채우기', quiz:'활용 퀴즈', listen:'듣기 반복'})[sel.mode];
+  $('sel-info').textContent = v ? `${v.meaning_ko} · ${modeName}` : '동사를 골라주세요';
+  $('start-btn').disabled = !v;
+}
+
+/* ---------- SCREEN NAV ---------- */
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  $('screen-'+name).classList.add('on');
+  if(name!=='listen') stopListen();
+}
+function quitToSelect(){ stopListen(); showScreen('select'); }
+
+/* ---------- START ROUND ---------- */
+function startPractice(){
+  if(!currentVerb()) return;
+  if(sel.mode==='listen'){ startListen(); return; }
+  fillIntroScreen();
+  showScreen('intro');
+}
+function fillIntroScreen(){
+  const v = currentVerb();
+  $('intro-root').textContent = v.root.split('-').reverse().join(' ');
+  const primaryAspect = sel.aspect==='imperfective' ? 'imperfective' : 'perfective';
+  const base = primaryAspect==='perfective' ? v.base_perfective : v.base_imperfective;
+  $('intro-aspect-lbl').textContent = ASPECT_LABEL[primaryAspect];
+  $('intro-ar').textContent = base.arabic;
+  $('intro-pron').textContent = base.pron_ko;
+  $('intro-ko').textContent = v.conjugations[primaryAspect]['3sm'].meaning_ko;
+  $('intro-hdr').textContent = `${v.meaning_ko} · 규칙 훑어보기`;
+}
+function beginRound(){
+  const v = currentVerb();
+  const aspects = sel.aspect==='both' ? ['perfective','imperfective'] : [sel.aspect];
+  const questions = [];
+  aspects.forEach(asp=>{
+    PERSON_ORDER.forEach(p=>{
+      questions.push({ aspect:asp, person:p, ...v.conjugations[asp][p] });
+    });
+  });
+  round = {
+    verbId: v.id,
+    questions: shuffleArr(questions),
+    index: 0,
+    good: 0,
+    bad: 0,
+    startedAt: Date.now(),
+    hintUsed: false,
+    answered: false
+  };
+  if(sel.mode==='quiz'){
+    showScreen('quiz');
+    renderQuizQuestion();
+  } else {
+    $('prac-hdr').textContent = sel.mode==='type' ? '전체 타이핑' : '접사 채우기';
+    showScreen('practice');
+    renderPracticeQuestion();
+  }
+}
+
+/* ---------- PRACTICE (type & affix-fill) ---------- */
+function renderPracticeQuestion(){
+  const q = round.questions[round.index];
+  const v = currentVerb();
+  const baseAr = q.aspect==='perfective' ? v.base_perfective.arabic : v.base_imperfective.arabic;
+  round.hintUsed = false;
+  round.answered = false;
+  $('prac-count').textContent = `${round.index+1} / ${round.questions.length}`;
+  $('prac-good').textContent = round.good;
+  $('prac-bad').textContent = round.bad;
+  $('prac-prog').style.width = `${(round.index/round.questions.length)*100}%`;
+  $('prac-aspect').textContent = ASPECT_LABEL[q.aspect];
+  $('prac-prompt').textContent = q.meaning_ko;
+  $('prac-basehint').innerHTML = `기본형: <span dir="rtl" style="font-family:'Noto Naskh Arabic',serif;font-size:22px">${baseAr}</span>`;
+  $('prac-feedback').textContent = '';
+  $('prac-feedback').className='feedback';
+  const input = $('ar-input');
+  input.value=''; input.className='ar-input'; input.disabled=false;
+
+  if(sel.mode==='affix'){
+    // Show template with root/stem visible, blank(s) for affix
+    const tpl = $('tpl-row');
+    tpl.style.display='flex';
+    tpl.innerHTML = buildAffixTemplate(q, baseAr);
+    input.placeholder='접사(모음기호 포함)만 입력';
+  } else {
+    $('tpl-row').style.display='none';
+    input.placeholder='활용형 전체를 아랍어로 입력';
+  }
+  setTimeout(()=>input.focus(),50);
+}
+function buildAffixTemplate(q, baseAr){
+  if(q.affix_role==='base'){
+    return `<span class="tpl-stem">기본형 그대로: </span><span dir="rtl" style="font-family:'Noto Naskh Arabic',serif;font-size:32px">${q.arabic}</span>`;
+  }
+  if(q.affix_role==='prefix'){
+    return `<span class="tpl-blank">___</span><span class="tpl-stem" dir="rtl">${stripLeadingArabic(q.arabic)}</span>`;
+  }
+  if(q.affix_role==='suffix'){
+    return `<span class="tpl-stem" dir="rtl">${stripTrailingArabic(q.arabic)}</span><span class="tpl-blank">___</span>`;
+  }
+  if(q.affix_role==='circumfix'){
+    return `<span class="tpl-blank">___</span><span class="tpl-stem" dir="rtl">${middleArabic(q.arabic)}</span><span class="tpl-blank">___</span>`;
+  }
+  return '';
+}
+// crude helpers: show a placeholder with dots for the stem portion (we don't need exact split, just visual)
+function stripLeadingArabic(full){ return '…' + full.slice(2); }
+function stripTrailingArabic(full){ return full.slice(0,-2) + '…'; }
+function middleArabic(full){ return '…' + full.slice(2,-2) + '…'; }
+
+function normalizeArabic(s){
+  return (s||'').trim().replace(/\s+/g,'').replace(/ـ/g,'');
+}
+function checkAnswer(){
+  if(!round || round.answered) return;
+  const q = round.questions[round.index];
+  const raw = $('ar-input').value;
+  const user = normalizeArabic(raw);
+  let target;
+  if(sel.mode==='affix'){
+    if(q.affix_role==='base'){
+      target = normalizeArabic(q.arabic);
+    } else {
+      target = normalizeArabic(q.affix.replace(/\s+\+\s+/g,''));
+    }
+  } else {
+    target = normalizeArabic(q.arabic);
+  }
+  const ok = user===target;
+  const fb = $('prac-feedback');
+  const input = $('ar-input');
+  round.answered=true;
+  if(ok){
+    round.good++;
+    fb.textContent = `✓ 정답! ${q.arabic}  (${q.pron_ko})`;
+    fb.className='feedback ok';
+    input.className='ar-input correct';
+  } else {
+    round.bad++;
+    fb.textContent = `✕ 정답: ${q.arabic}  (${q.pron_ko})\n힌트가 필요하면 참고표를 열어보세요.`;
+    fb.className='feedback no';
+    input.className='ar-input wrong';
+    // Wrong questions get requeued at the end
+    round.questions.push({...q});
+  }
+  input.disabled=true;
+  $('prac-good').textContent=round.good;
+  $('prac-bad').textContent=round.bad;
+  setTimeout(nextPracticeQuestion, ok?900:1600);
+}
+function nextPracticeQuestion(){
+  round.index++;
+  if(round.index >= round.questions.length){ finishRound(); return; }
+  renderPracticeQuestion();
+}
+function skipQuestion(){
+  if(!round || round.answered) return;
+  const q = round.questions[round.index];
+  round.answered=true;
+  round.bad++;
+  const fb=$('prac-feedback');
+  fb.textContent = `→ 넘겼어요. 정답: ${q.arabic}  (${q.pron_ko})`;
+  fb.className='feedback no';
+  $('ar-input').disabled=true;
+  $('prac-bad').textContent=round.bad;
+  round.questions.push({...q});
+  setTimeout(nextPracticeQuestion, 1400);
+}
+function showHint(){
+  if(!round) return;
+  const q = round.questions[round.index];
+  const fb=$('prac-feedback');
+  round.hintUsed=true;
+  if(sel.mode==='affix'){
+    fb.textContent = `💡 접사: ${q.affix || '(기본형이라 접사 없음)'}`;
+  } else {
+    // Show first char of the arabic form
+    const firstChar = q.arabic.slice(0,2);
+    fb.textContent = `💡 시작 글자: ${firstChar} …`;
+  }
+  fb.className='feedback';
+}
+
+/* ---------- QUIZ (multiple choice) ---------- */
+function renderQuizQuestion(){
+  const q = round.questions[round.index];
+  const v = currentVerb();
+  round.answered=false;
+  round.direction = Math.random() < 0.5 ? 'ar_to_ko' : 'ko_to_ar';
+  $('quiz-count').textContent = `${round.index+1} / ${round.questions.length}`;
+  $('quiz-good').textContent = round.good;
+  $('quiz-bad').textContent = round.bad;
+  $('quiz-prog').style.width = `${(round.index/round.questions.length)*100}%`;
+  $('quiz-feedback').textContent=''; $('quiz-feedback').className='feedback';
+
+  // Collect 3 distractors from other person conjugations in same aspect
+  const pool = PERSON_ORDER.filter(p=>p!==q.person).map(p=>({...v.conjugations[q.aspect][p], person:p, aspect:q.aspect}));
+  const distractors = shuffleArr(pool).slice(0,3);
+  const options = shuffleArr([{...q}, ...distractors]);
+  round.currentOptions = options;
+
+  const choicesEl = $('quiz-choices');
+  choicesEl.innerHTML='';
+
+  if(round.direction==='ar_to_ko'){
+    $('quiz-dir-label').textContent = '아랍어 → 뜻';
+    $('quiz-ar').style.display='block';
+    $('quiz-pron').style.display='block';
+    $('quiz-ko-prompt').style.display='none';
+    $('quiz-ar').textContent = q.arabic;
+    $('quiz-pron').textContent = q.pron_ko;
+    $('quiz-speak').style.display='inline-flex';
+    options.forEach((opt,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice';
+      b.innerHTML = `${i+1}. ${opt.meaning_ko}`;
+      b.onclick = ()=>handleQuizPick(b, opt.meaning_ko===q.meaning_ko);
+      choicesEl.appendChild(b);
+    });
+  } else {
+    $('quiz-dir-label').textContent = '뜻 → 아랍어';
+    $('quiz-ar').style.display='none';
+    $('quiz-pron').style.display='none';
+    $('quiz-ko-prompt').style.display='block';
+    $('quiz-ko-prompt').textContent = q.meaning_ko;
+    $('quiz-speak').style.display='none';
+    options.forEach((opt,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice';
+      b.innerHTML = `<span class="ar">${opt.arabic}</span><span style="display:block;color:var(--accent);font-size:12px;margin-top:4px">${opt.pron_ko}</span>`;
+      b.onclick = ()=>handleQuizPick(b, opt.arabic===q.arabic);
+      choicesEl.appendChild(b);
+    });
+  }
+}
+function handleQuizPick(btn, correct){
+  if(round.answered) return;
+  round.answered=true;
+  const q = round.questions[round.index];
+  const buttons = [...$('quiz-choices').querySelectorAll('button')];
+  buttons.forEach(b=>b.disabled=true);
+  if(correct){
+    btn.classList.add('correct');
+    round.good++;
+    $('quiz-feedback').textContent = `✓ 정답! ${q.arabic} = ${q.meaning_ko}`;
+    $('quiz-feedback').className='feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    round.bad++;
+    // Highlight correct answer
+    buttons.forEach(b=>{
+      const label = b.textContent.trim();
+      if(label.includes(q.meaning_ko) || label.includes(q.arabic)) b.classList.add('correct');
+    });
+    $('quiz-feedback').textContent = `✕ 정답: ${q.arabic} (${q.pron_ko}) = ${q.meaning_ko}`;
+    $('quiz-feedback').className='feedback no';
+    round.questions.push({...q}); // requeue
+  }
+  $('quiz-good').textContent=round.good;
+  $('quiz-bad').textContent=round.bad;
+  setTimeout(()=>{
+    round.index++;
+    if(round.index >= round.questions.length){ finishRound(); return; }
+    renderQuizQuestion();
+  }, correct?900:1800);
+}
+function speakCurrentQuiz(){
+  if(!round) return;
+  const q = round.questions[round.index];
+  speakOnce(q.arabic, 'ar-SA');
+}
+
+/* ---------- COMPLETE ---------- */
+function finishRound(){
+  const total = round.good + round.bad;
+  const rate = total ? Math.round((round.good/total)*100) : 0;
+  const secs = Math.round((Date.now() - round.startedAt)/1000);
+  $('comp-title').textContent = `${currentVerb().meaning_ko} 완료!`;
+  const modeName = ({type:'전체 타이핑', affix:'접사 채우기', quiz:'활용 퀴즈'})[sel.mode] || '연습';
+  $('comp-sub').textContent = `${modeName} · ${ASPECT_LABEL[sel.aspect] || '완료·미완료'}`;
+  $('comp-good').textContent = round.good;
+  $('comp-rate').textContent = rate + '%';
+  $('comp-time').textContent = secs + '초';
+  // Save progress
+  try{
+    const prog = JSON.parse(readSavedValue(KEY_PROGRESS,'{}')) || {};
+    const v = currentVerb();
+    prog[v.id] = prog[v.id] || {};
+    prog[v.id][sel.mode] = { good:round.good, bad:round.bad, rate, at:Date.now() };
+    writeSavedValue(KEY_PROGRESS, JSON.stringify(prog));
+  }catch(e){}
+  showScreen('complete');
+}
+
+/* ---------- LISTEN MODE ---------- */
+function startListen(){
+  const v = currentVerb();
+  const aspects = sel.aspect==='both' ? ['perfective','imperfective'] : [sel.aspect];
+  const items = [];
+  aspects.forEach(asp=>{
+    PERSON_ORDER.forEach(p=>{
+      items.push({ aspect:asp, person:p, ...v.conjugations[asp][p] });
+    });
+  });
+  listen.deck = items;
+  listen.index = 0;
+  listen.playing = false;
+  listen.stage = 'ar';
+  $('listen-sub').textContent = v.meaning_ko;
+  updateListenView();
+  showScreen('listen');
+}
+function updateListenView(){
+  const it = listen.deck[listen.index];
+  if(!it){ return; }
+  $('listen-label').textContent = `${ASPECT_LABEL[it.aspect]} · ${PERSON_LABEL[it.person]}`;
+  $('listen-ar').textContent = it.arabic;
+  $('listen-pron').textContent = it.pron_ko;
+  $('listen-ko').textContent = it.meaning_ko;
+  $('listen-ko').classList.add('hide');
+  $('listen-info').textContent = `${listen.index+1} / ${listen.deck.length}`;
+  setStage('ar');
+}
+function setStage(s){
+  listen.stage = s;
+  ['ar','pause','ko'].forEach(n=>$('stg-'+n).classList.toggle('on', n===s));
+  if(s==='ko') $('listen-ko').classList.remove('hide');
+}
+function toggleListen(){
+  if(listen.playing){ stopListen(); return; }
+  if(!listen.deck.length) return;
+  listen.playing = true;
+  $('listen-play').textContent = '⏸ 일시정지';
+  playListenStep();
+}
+function stopListen(){
+  listen.playing = false;
+  $('listen-play').textContent = '▶️ 재생 시작';
+  clearTimeout(listen.timer);
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+}
+function playListenStep(){
+  if(!listen.playing || !listen.deck.length) return;
+  const it = listen.deck[listen.index];
+  setStage('ar');
+  $('listen-ko').classList.add('hide');
+  speak(it.arabic, 'ar-SA', ()=>{
+    if(!listen.playing) return;
+    setStage('pause');
+    listen.timer = setTimeout(()=>{
+      if(!listen.playing) return;
+      setStage('ko');
+      $('listen-ko').classList.remove('hide');
+      speak(it.meaning_ko, 'ko-KR', ()=>{
+        if(!listen.playing) return;
+        listen.timer = setTimeout(listenAdvance, 800);
+      });
+    }, 1600);
+  });
+}
+function listenAdvance(){
+  if(listen.shuffle){
+    listen.index = Math.floor(Math.random()*listen.deck.length);
+  } else {
+    listen.index = listen.index + 1;
+    if(listen.index >= listen.deck.length){
+      if(listen.loop){ listen.index = 0; }
+      else { stopListen(); return; }
+    }
+  }
+  updateListenView();
+  if(listen.playing) playListenStep();
+}
+function listenNext(){
+  clearTimeout(listen.timer);
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  listen.index = (listen.index + 1) % listen.deck.length;
+  updateListenView();
+  if(listen.playing) playListenStep();
+}
+function listenPrev(){
+  clearTimeout(listen.timer);
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  listen.index = (listen.index - 1 + listen.deck.length) % listen.deck.length;
+  updateListenView();
+  if(listen.playing) playListenStep();
+}
+function toggleRate(){
+  const seq=[0.75,1,1.25];
+  listen.rate = seq[(seq.indexOf(listen.rate)+1)%seq.length];
+  $('listen-rate').textContent = listen.rate+'x';
+}
+function toggleShuffle(){
+  listen.shuffle = !listen.shuffle;
+  $('listen-shuffle').textContent = listen.shuffle ? '🔀 셔플' : '🔀 순차';
+}
+function toggleLoop(){
+  listen.loop = !listen.loop;
+  $('listen-loop').textContent = listen.loop ? '🔁 반복 ON' : '🔁 반복 OFF';
+}
+
+/* ---------- TTS ---------- */
+function speak(text, lang, next){
+  if(!('speechSynthesis' in window)){ if(next) setTimeout(next,600); return; }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = lang==='ar-SA' ? listen.rate : Math.min(1, listen.rate + 0.1);
+  u.onend = ()=>{ if(next) next(); };
+  u.onerror = ()=>{ if(next) setTimeout(next,600); };
+  window.speechSynthesis.speak(u);
+}
+function speakOnce(text, lang){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = lang==='ar-SA' ? 0.8 : 1;
+  window.speechSynthesis.speak(u);
+}
+
+/* ---------- REFERENCE OVERLAY ---------- */
+function openReference(){
+  buildReferenceContent();
+  $('ref-overlay').classList.add('on');
+}
+function closeReference(){ $('ref-overlay').classList.remove('on'); }
+function buildReferenceContent(){
+  const v = currentVerb();
+  if(!v || !AFFIXES) return;
+  $('ref-title').textContent = `${v.meaning_ko} 활용 참고표`;
+  $('ref-conj-perf').innerHTML = buildMiniConjTable(v.conjugations.perfective);
+  $('ref-conj-imperf').innerHTML = buildMiniConjTable(v.conjugations.imperfective);
+  $('ref-perf-suf').innerHTML = buildAffixTable(AFFIXES.perfective_suffixes);
+  $('ref-imperf-pre').innerHTML = buildAffixTable(AFFIXES.imperfective_prefixes);
+}
+function buildMiniConjTable(conj){
+  return PERSON_ORDER.map(p=>{
+    const c = conj[p];
+    const isBase = c.affix_role==='base';
+    return `<div class="row${isBase?' base':''}"><div class="ko">${PERSON_LABEL[p]}</div><div class="ar">${highlightAffix(c)}</div></div>`;
+  }).join('');
+}
+function highlightAffix(c){
+  // Wrap the affix chars in accent color if we can detect them
+  if(c.affix_role==='base' || !c.affix) return c.arabic;
+  // Best-effort visual: show whole form (affix highlighting purely visual via border in the reference is enough)
+  return c.arabic;
+}
+function buildAffixTable(rows){
+  const head = `<div class="row head"><div>인칭</div><div>접사</div><div>예시</div></div>`;
+  return head + rows.map(r=>{
+    const isBase = r.person==='3sm';
+    return `<div class="row${isBase?' base':''}"><div class="ko">${r.label}</div><div class="ar affix">${r.affix}</div><div class="ar" style="font-size:16px">${r.example}</div></div>`;
+  }).join('');
+}
+
+/* ---------- INPUT KEY HANDLERS ---------- */
+document.addEventListener('keydown', (e)=>{
+  if($('screen-practice').classList.contains('on')){
+    if(e.key==='Enter'){ e.preventDefault(); if(round && round.answered) nextPracticeQuestion(); else checkAnswer(); }
+  } else if($('screen-quiz').classList.contains('on')){
+    if(['1','2','3','4'].includes(e.key)){
+      const btns = $('quiz-choices').querySelectorAll('button:not([disabled])');
+      const idx = parseInt(e.key)-1;
+      if(btns[idx]) btns[idx].click();
+    }
+  }
+});
+
+window.addEventListener('pagehide', stopListen);
+init();
+</script>
+</body>
+</html>
