@@ -32,7 +32,7 @@ body{display:flex;justify-content:center}
 .tog{display:flex;background:var(--surface);border-radius:12px;padding:4px;gap:4px}
 .tog-btn{flex:1;background:transparent;border:none;color:var(--dim);font-size:13px;font-weight:800;padding:11px 8px;border-radius:9px}
 .tog-btn.on{background:var(--primary);color:#fff}
-.range-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.range-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .range-btn{background:var(--surface);border:2px solid var(--surface2);color:var(--text);font-size:13px;font-weight:800;padding:12px 10px;border-radius:12px}
 .range-btn.on{border-color:var(--primary);background:var(--primary-soft);color:#fbbf24}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -66,7 +66,7 @@ body{display:flex;justify-content:center}
 .trophy{font-size:60px;margin-bottom:16px}.title{font-size:24px;font-weight:800;margin-bottom:8px}.desc{color:var(--dim);font-size:14px;line-height:1.6;white-space:pre-line;margin-bottom:24px}
 .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:22px}.score{background:var(--surface);border-radius:var(--r);padding:17px 10px}.score.full{grid-column:span 2}.score-num{font-size:30px;font-weight:800}.score-lbl{font-size:11px;color:var(--dim);font-weight:800;margin-top:4px}
 .wrong-list{padding:0 20px 20px;display:grid;gap:10px}.wrong-card{background:var(--surface);border-radius:14px;padding:14px}.wrong-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.wrong-meaning{font-weight:800;font-size:15px}.wrong-count{color:#fca5a5;font-size:12px;font-weight:800;background:rgba(239,68,68,.14);border-radius:999px;padding:4px 9px;white-space:nowrap}.wrong-ar{font-family:'Noto Naskh Arabic',serif;font-size:30px;text-align:right;direction:rtl;line-height:1.25}.wrong-meta{color:var(--dim);font-size:12px;margin-top:5px;line-height:1.5}.empty{color:var(--dim);font-size:14px;line-height:1.7;text-align:center;padding:28px 20px}
-@media (max-width:360px){.meaning{font-size:24px}.ar{font-size:36px}.answer-input{font-size:18px}.actions{grid-template-columns:1fr}.actions .btn-main{grid-column:auto}}
+@media (max-width:360px){.range-grid{grid-template-columns:1fr}.meaning{font-size:24px}.ar{font-size:36px}.answer-input{font-size:18px}.actions{grid-template-columns:1fr}.actions .btn-main{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -85,6 +85,7 @@ body{display:flex;justify-content:center}
     <div class="sec-lbl">시험 범위</div>
     <div class="range-grid">
       <button class="range-btn on" id="range-pdf" onclick="selectPdfRange()">PDF 1~5과</button>
+      <button class="range-btn" id="range-l56" onclick="selectLesson56Range()">5/6과</button>
       <button class="range-btn" id="range-all" onclick="selectAllRange()">전체 단어</button>
     </div>
     <div class="chips" id="chips"></div>
@@ -199,6 +200,7 @@ const PDF_EXAM_CATS = [
   '위치/전치사',
   '인사표현'
 ];
+const LESSON_56_CAT = '5/6과';
 
 function $(id){ return document.getElementById(id); }
 
@@ -238,7 +240,7 @@ function normalizeWord(w, index) {
 async function init() {
   loadWrongNotes();
   try {
-    const res = await fetch('words.json?v=20260717-storage');
+    const res = await fetch('words.json?v=20261127-food');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];
@@ -314,6 +316,12 @@ function selectPdfRange() {
   updateHome();
 }
 
+function selectLesson56Range() {
+  selectedCats = new Set(cats.includes(LESSON_56_CAT) ? [LESSON_56_CAT] : []);
+  syncChips();
+  updateHome();
+}
+
 function selectAllRange() {
   selectedCats = new Set(cats);
   syncChips();
@@ -336,9 +344,12 @@ function toggleCat(cat) {
 
 function syncChips() {
   $('chip-all').className = 'chip' + (selectedCats.size === cats.length ? ' on' : '');
-  const isPdf = selectedCats.size === PDF_EXAM_CATS.filter(cat => cats.includes(cat)).length
-    && PDF_EXAM_CATS.filter(cat => cats.includes(cat)).every(cat => selectedCats.has(cat));
+  const pdfCats = PDF_EXAM_CATS.filter(cat => cats.includes(cat));
+  const isPdf = selectedCats.size === pdfCats.length
+    && pdfCats.every(cat => selectedCats.has(cat));
+  const isLesson56 = selectedCats.size === 1 && selectedCats.has(LESSON_56_CAT);
   $('range-pdf').className = 'range-btn' + (isPdf ? ' on' : '');
+  $('range-l56').className = 'range-btn' + (isLesson56 ? ' on' : '');
   $('range-all').className = 'range-btn' + (selectedCats.size === cats.length ? ' on' : '');
   cats.forEach(cat => {
     const el = $(`chip-${cat}`);

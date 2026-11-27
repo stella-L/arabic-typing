@@ -165,7 +165,7 @@ async function init() {
   loadFavorites();
   try {
     const [wordRes, sentenceRes] = await Promise.all([
-      fetch('words.json?v=20260717-storage'),
+      fetch('words.json?v=20261127-food'),
       fetch('sentences.json?v=20260717-storage')
     ]);
     if (!wordRes.ok || !sentenceRes.ok) throw new Error('load');
