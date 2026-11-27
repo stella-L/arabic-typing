@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="like card">
+  <rect width="240" height="180" rx="22" fill="#fdf2f8"/>
+  <path d="M120 124c-46-30-62-52-62-74a30 30 0 0 1 62-8 30 30 0 0 1 62 8c0 22-16 44-62 74z" fill="#ec4899"/>
+  <path d="M96 66c8 14 40 14 48 0" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9d174d">좋아하다</text>
+</svg>

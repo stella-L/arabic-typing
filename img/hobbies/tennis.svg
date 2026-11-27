@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="tennis card">
+  <rect width="240" height="180" rx="22" fill="#f7fee7"/>
+  <ellipse cx="96" cy="64" rx="34" ry="42" fill="none" stroke="#2563eb" stroke-width="8" transform="rotate(-30 96 64)"/>
+  <path d="M116 98l34 36" stroke="#1e3a8a" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="170" cy="56" r="20" fill="#bef264"/>
+  <path d="M152 48c10 4 14 14 10 24M188 64c-10-4-14-14-10-24" fill="none" stroke="#fff" stroke-width="3"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#3f6212">테니스</text>
+</svg>

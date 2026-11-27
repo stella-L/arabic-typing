@@ -94,7 +94,7 @@ body{display:flex;justify-content:center}
   </section>
 </main>
 
-<script src="visuals.js?v=20261127-l8910"></script>
+<script src="visuals.js?v=20261127-l8910b"></script>
 <script>
 const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 let words = [];
@@ -181,7 +181,7 @@ function syncFavoriteButton() {
 async function init() {
   loadFavorites();
   try {
-    const res = await fetch('words.json?v=20261127-l8910');
+    const res = await fetch('words.json?v=20261127-l8910b');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.id && w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];

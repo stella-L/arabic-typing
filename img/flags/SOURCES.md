@@ -17,3 +17,5 @@ Used assets:
 - `eg.svg`: Egypt flag, used for Cairo.
 
 Note: country/city vocabulary should prefer flags when the target meaning is a country, capital, or major city tied clearly to one country.
+- `kw.svg`: Kuwait flag, used for Kuwait and Kuwaiti (8/9/10과).
+- `jo.svg`: Jordan flag, used for Jordanian (8/9/10과).

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="music card">
+  <rect width="240" height="180" rx="22" fill="#fdf2f8"/>
+  <path d="M74 98a40 40 0 0 1 92 0" fill="none" stroke="#ec4899" stroke-width="10"/>
+  <rect x="58" y="88" width="24" height="40" rx="10" fill="#db2777"/>
+  <rect x="158" y="88" width="24" height="40" rx="10" fill="#db2777"/>
+  <path d="M112 40v32a9 9 0 1 1-6-8V36l24-6v34a9 9 0 1 1-6-8V40z" fill="#9d174d"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9d174d">음악 감상</text>
+</svg>

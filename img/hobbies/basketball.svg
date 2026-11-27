@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="basketball card">
+  <rect width="240" height="180" rx="22" fill="#fff7ed"/>
+  <circle cx="120" cy="76" r="52" fill="#f97316"/>
+  <path d="M68 76h104M120 24v104" stroke="#7c2d12" stroke-width="4"/>
+  <path d="M84 38c18 22 18 54 0 76M156 38c-18 22-18 54 0 76" fill="none" stroke="#7c2d12" stroke-width="4"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9a3412">농구</text>
+</svg>

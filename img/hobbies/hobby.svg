@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="hobby card">
+  <rect width="240" height="180" rx="22" fill="#fff7ed"/>
+  <path d="M120 120c-40-26-54-46-54-64a26 26 0 0 1 54-8 26 26 0 0 1 54 8c0 18-14 38-54 64z" fill="#fb923c"/>
+  <path d="M120 54l6 14h15l-12 9 5 15-14-9-14 9 5-15-12-9h15z" fill="#fff"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9a3412">취미</text>
+</svg>

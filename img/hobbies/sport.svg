@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="exercise card">
+  <rect width="240" height="180" rx="22" fill="#eff6ff"/>
+  <rect x="60" y="66" width="120" height="16" rx="6" fill="#64748b"/>
+  <rect x="44" y="44" width="22" height="60" rx="6" fill="#3b82f6"/>
+  <rect x="174" y="44" width="22" height="60" rx="6" fill="#3b82f6"/>
+  <rect x="30" y="54" width="14" height="40" rx="5" fill="#1d4ed8"/>
+  <rect x="196" y="54" width="14" height="40" rx="5" fill="#1d4ed8"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#1e40af">운동</text>
+</svg>

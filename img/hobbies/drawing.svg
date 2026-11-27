@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="drawing card">
+  <rect width="240" height="180" rx="22" fill="#fefce8"/>
+  <rect x="50" y="30" width="110" height="90" rx="6" fill="#fff" stroke="#ca8a04" stroke-width="4"/>
+  <circle cx="84" cy="60" r="12" fill="#facc15"/>
+  <path d="M58 112l34-36 22 22 16-14 26 28z" fill="#22c55e"/>
+  <path d="M196 30l-50 62" stroke="#f97316" stroke-width="12" stroke-linecap="round"/>
+  <path d="M146 92l-6 14 12-8z" fill="#413f5d"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#854d0e">그림 그리기</text>
+</svg>

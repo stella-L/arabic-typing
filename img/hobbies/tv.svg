@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="TV card">
+  <rect width="240" height="180" rx="22" fill="#f8fafc"/>
+  <rect x="48" y="40" width="144" height="88" rx="10" fill="#334155"/>
+  <rect x="58" y="50" width="124" height="68" rx="4" fill="#38bdf8"/>
+  <path d="M100 18l20 22 20-22" fill="none" stroke="#334155" stroke-width="5" stroke-linecap="round"/>
+  <path d="M110 66v26l22-13z" fill="#fff"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#334155">TV 시청</text>
+</svg>
