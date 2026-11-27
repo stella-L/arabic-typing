@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="milk card">
+  <rect width="240" height="180" rx="22" fill="#eff6ff"/>
+  <path d="M90 50l10-20h40l10 20v78H90z" fill="#fff" stroke="#93c5fd" stroke-width="3"/>
+  <rect x="90" y="72" width="60" height="36" fill="#3b82f6"/>
+  <text x="120" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#fff">MILK</text>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#1e40af">우유</text>
+</svg>

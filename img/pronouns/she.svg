@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="she card">
+  <rect width="240" height="180" rx="22" fill="#fdf2f8"/>
+  <path d="M94 56a26 26 0 0 1 52 0v26h-8V58h-36v24h-8z" fill="#7c2d12"/>
+  <circle cx="120" cy="54" r="22" fill="#fcd9b6"/>
+  <path d="M80 128a40 40 0 0 1 80 0z" fill="#f472b6"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9d174d">그녀</text>
+</svg>

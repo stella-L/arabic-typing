@@ -100,7 +100,7 @@ body{display:flex;justify-content:center}
   </section>
 </main>
 
-<script src="visuals.js"></script>
+<script src="visuals.js?v=20261127-l8910"></script>
 <script>
 const FAVORITE_KEY = 'arabtype.favoriteWordIds';
 let words = [];
@@ -165,7 +165,7 @@ async function init() {
   loadFavorites();
   try {
     const [wordRes, sentenceRes] = await Promise.all([
-      fetch('words.json?v=20261127-food'),
+      fetch('words.json?v=20261127-l8910'),
       fetch('sentences.json?v=20260717-storage')
     ]);
     if (!wordRes.ok || !sentenceRes.ok) throw new Error('load');

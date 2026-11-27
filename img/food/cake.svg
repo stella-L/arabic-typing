@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="cake card">
+  <rect width="240" height="180" rx="22" fill="#fdf2f8"/>
+  <rect x="56" y="70" width="128" height="58" rx="8" fill="#fbcfe8"/>
+  <path d="M56 86c16 10 32 10 48 0s32-10 48 0 32 10 32 0V78a8 8 0 0 0-8-8H64a8 8 0 0 0-8 8z" fill="#fff"/>
+  <rect x="114" y="40" width="12" height="30" rx="3" fill="#60a5fa"/>
+  <path d="M120 24c8 8 6 14 0 16-6-2-8-8 0-16z" fill="#f59e0b"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9d174d">케이크</text>
+</svg>

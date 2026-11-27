@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="pizza card">
+  <rect width="240" height="180" rx="22" fill="#fff7ed"/>
+  <path d="M44 40q76-22 152 0L120 136z" fill="#fde68a"/>
+  <path d="M44 40q76-22 152 0l-8 14q-68-20-136 0z" fill="#d97706"/>
+  <circle cx="98" cy="66" r="10" fill="#dc2626"/><circle cx="140" cy="68" r="10" fill="#dc2626"/><circle cx="120" cy="96" r="9" fill="#dc2626"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9a3412">피자</text>
+</svg>

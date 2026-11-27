@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="rice card">
+  <rect width="240" height="180" rx="22" fill="#e0f2fe"/>
+  <path d="M64 50c0-26 112-26 112 0z" fill="#fff" stroke="#cbd5e1" stroke-width="3"/>
+  <path d="M56 54h128a64 54 0 0 1-128 0z" fill="#60a5fa"/>
+  <path d="M70 78h100" stroke="#bfdbfe" stroke-width="5"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#334155">쌀, 밥</text>
+</svg>

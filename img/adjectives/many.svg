@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="many card">
+  <rect width="240" height="180" rx="22" fill="#fff7ed"/>
+  <circle cx="48" cy="44" r="9" fill="#f97316"/>
+  <circle cx="72" cy="44" r="9" fill="#f97316"/>
+  <circle cx="96" cy="44" r="9" fill="#f97316"/>
+  <circle cx="120" cy="44" r="9" fill="#f97316"/>
+  <circle cx="144" cy="44" r="9" fill="#f97316"/>
+  <circle cx="168" cy="44" r="9" fill="#f97316"/>
+  <circle cx="192" cy="44" r="9" fill="#f97316"/>
+  <circle cx="48" cy="68" r="9" fill="#f97316"/>
+  <circle cx="72" cy="68" r="9" fill="#f97316"/>
+  <circle cx="96" cy="68" r="9" fill="#f97316"/>
+  <circle cx="120" cy="68" r="9" fill="#f97316"/>
+  <circle cx="144" cy="68" r="9" fill="#f97316"/>
+  <circle cx="168" cy="68" r="9" fill="#f97316"/>
+  <circle cx="192" cy="68" r="9" fill="#f97316"/>
+  <circle cx="48" cy="92" r="9" fill="#f97316"/>
+  <circle cx="72" cy="92" r="9" fill="#f97316"/>
+  <circle cx="96" cy="92" r="9" fill="#f97316"/>
+  <circle cx="120" cy="92" r="9" fill="#f97316"/>
+  <circle cx="144" cy="92" r="9" fill="#f97316"/>
+  <circle cx="168" cy="92" r="9" fill="#f97316"/>
+  <circle cx="192" cy="92" r="9" fill="#f97316"/>
+  <circle cx="48" cy="116" r="9" fill="#f97316"/>
+  <circle cx="72" cy="116" r="9" fill="#f97316"/>
+  <circle cx="96" cy="116" r="9" fill="#f97316"/>
+  <circle cx="120" cy="116" r="9" fill="#f97316"/>
+  <circle cx="144" cy="116" r="9" fill="#f97316"/>
+  <circle cx="168" cy="116" r="9" fill="#f97316"/>
+  <circle cx="192" cy="116" r="9" fill="#f97316"/>
+
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9a3412">많은</text>
+</svg>

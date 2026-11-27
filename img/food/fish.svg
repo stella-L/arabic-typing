@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="fish card">
+  <rect width="240" height="180" rx="22" fill="#ecfeff"/>
+  <path d="M40 78c30-40 100-40 130 0-30 40-100 40-130 0z" fill="#22d3ee"/>
+  <path d="M166 78l36-28v56z" fill="#06b6d4"/>
+  <circle cx="70" cy="72" r="6" fill="#413f5d"/>
+  <path d="M100 58c8 12 8 28 0 40M122 56c8 14 8 30 0 44" fill="none" stroke="#0891b2" stroke-width="4"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#155e75">생선</text>
+</svg>

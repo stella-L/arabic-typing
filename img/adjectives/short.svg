@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="short card">
+  <rect width="240" height="180" rx="22" fill="#f5f3ff"/>
+  <rect x="30" y="58" width="180" height="22" rx="11" fill="#ddd6fe"/>
+  <rect x="30" y="96" width="50" height="22" rx="11" fill="#8b5cf6"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#5b21b6">짧은</text>
+</svg>

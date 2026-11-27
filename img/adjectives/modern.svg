@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="modern card">
+  <rect width="240" height="180" rx="22" fill="#ecfeff"/>
+  <rect x="54" y="34" width="46" height="94" rx="4" fill="#06b6d4"/>
+  <rect x="108" y="52" width="40" height="76" rx="4" fill="#0891b2"/>
+  <rect x="156" y="70" width="32" height="58" rx="4" fill="#67e8f9"/>
+  <g fill="#ecfeff"><rect x="64" y="46" width="10" height="10"/><rect x="80" y="46" width="10" height="10"/><rect x="64" y="66" width="10" height="10"/><rect x="80" y="66" width="10" height="10"/><rect x="64" y="86" width="10" height="10"/><rect x="80" y="86" width="10" height="10"/><rect x="118" y="64" width="8" height="8"/><rect x="132" y="64" width="8" height="8"/><rect x="118" y="82" width="8" height="8"/><rect x="132" y="82" width="8" height="8"/></g>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#155e75">현대식, 최신식</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="I card">
+  <rect width="240" height="180" rx="22" fill="#f5f3ff"/>
+  <circle cx="120" cy="54" r="22" fill="#fcd9b6"/>
+  <path d="M80 128a40 40 0 0 1 80 0z" fill="#8b5cf6"/>
+  <path d="M188 50l-26 16" stroke="#5b21b6" stroke-width="6" stroke-linecap="round"/><path d="M162 66l12-14M162 66l16 4" stroke="#5b21b6" stroke-width="6" stroke-linecap="round"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#5b21b6">나</text>
+</svg>

@@ -413,7 +413,7 @@ allWords = FALLBACK;
 buildCategoryScreen();
 updateFavoriteCount();
 
-fetch('words.json?v=20261127-food')
+fetch('words.json?v=20261127-l8910')
   .then(r => r.json())
   .then(data => {
     allWords = data;

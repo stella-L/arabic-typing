@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="big card">
+  <rect width="240" height="180" rx="22" fill="#eff6ff"/>
+  <circle cx="92" cy="76" r="54" fill="#3b82f6"/>
+  <circle cx="176" cy="112" r="14" fill="#bfdbfe"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#1e40af">큰</text>
+</svg>

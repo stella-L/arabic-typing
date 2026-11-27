@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="shawarma card">
+  <rect width="240" height="180" rx="22" fill="#fffbeb"/>
+  <path d="M70 124l40-94c16-8 40 2 44 18l-38 82z" fill="#fde68a"/>
+  <path d="M110 30c10 10 30 12 44 18l-8 18c-14-6-34-8-44-18z" fill="#16a34a"/>
+  <path d="M104 46c12 8 30 12 42 16l-6 14c-12-4-30-8-42-16z" fill="#b45309"/>
+  <path d="M80 100l60 10" stroke="#fef3c7" stroke-width="10"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#92400e">샤와르마</text>
+</svg>

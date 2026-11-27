@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="chicken card">
+  <rect width="240" height="180" rx="22" fill="#fffbeb"/>
+  <ellipse cx="104" cy="70" rx="46" ry="36" fill="#d97706" transform="rotate(-30 104 70)"/>
+  <path d="M132 92l34 26" stroke="#fef3c7" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="170" cy="114" r="9" fill="#fef3c7"/><circle cx="160" cy="124" r="9" fill="#fef3c7"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#92400e">닭고기</text>
+</svg>

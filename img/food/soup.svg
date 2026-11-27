@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="soup card">
+  <rect width="240" height="180" rx="22" fill="#fff7ed"/>
+  <path d="M48 70h144a72 50 0 0 1-144 0z" fill="#fb923c"/>
+  <ellipse cx="120" cy="70" rx="72" ry="10" fill="#fdba74"/>
+  <path d="M96 52c-8-10 8-16 0-28M120 52c-8-10 8-16 0-28M144 52c-8-10 8-16 0-28" fill="none" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9a3412">수프</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="tea card">
+  <rect width="240" height="180" rx="22" fill="#f0fdf4"/>
+  <path d="M64 70h96a48 44 0 0 1-96 0z" fill="#fff" stroke="#86efac" stroke-width="4"/>
+  <ellipse cx="112" cy="70" rx="48" ry="7" fill="#ca8a04"/>
+  <path d="M160 76h8a12 12 0 0 1 0 24h-14" fill="none" stroke="#86efac" stroke-width="6"/>
+  <path d="M150 40v30" stroke="#a8a29e" stroke-width="2"/><rect x="142" y="30" width="16" height="12" fill="#22c55e"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#166534">차</text>
+</svg>

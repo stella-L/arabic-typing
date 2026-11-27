@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="calling card">
+  <rect width="240" height="180" rx="22" fill="#f0f9ff"/>
+  <path d="M50 30h120a18 18 0 0 1 18 18v42a18 18 0 0 1-18 18h-78l-26 22 6-22h-22a18 18 0 0 1-18-18v-42a18 18 0 0 1 18-18z" fill="#38bdf8"/>
+  <text x="110" y="84" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#fff">야!</text>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#075985">~야 (부르기)</text>
+</svg>

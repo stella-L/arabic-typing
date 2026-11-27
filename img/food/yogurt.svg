@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="yogurt card">
+  <rect width="240" height="180" rx="22" fill="#f8fafc"/>
+  <path d="M76 44h88l-12 80a8 8 0 0 1-8 6H96a8 8 0 0 1-8-6z" fill="#fff" stroke="#cbd5e1" stroke-width="3"/>
+  <rect x="70" y="34" width="100" height="14" rx="5" fill="#a78bfa"/>
+  <path d="M84 76h72l-4 30H88z" fill="#ddd6fe"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#334155">요거트</text>
+</svg>

@@ -176,7 +176,7 @@ body{display:flex;justify-content:center}
   </div>
 </div>
 
-<script src="visuals.js"></script>
+<script src="visuals.js?v=20261127-l8910"></script>
 <script>
 let words = [];
 let cats = [];
@@ -263,7 +263,7 @@ function syncFavoriteButton() {
 async function init() {
   loadFavorites();
   try {
-    const res = await fetch('words.json?v=20261127-food');
+    const res = await fetch('words.json?v=20261127-l8910');
     if (!res.ok) throw new Error('words.json');
     words = (await res.json()).map(normalizeWord).filter(w => w.arabic && w.meaning);
     cats = [...new Set(words.map(w => w.cat))];

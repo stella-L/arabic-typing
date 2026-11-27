@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="dessert card">
+  <rect width="240" height="180" rx="22" fill="#fdf2f8"/>
+  <path d="M80 82h80l-10 46H90z" fill="#f472b6"/>
+  <path d="M74 84c-6-26 20-42 46-42s52 16 46 42z" fill="#fff" stroke="#fbcfe8" stroke-width="3"/>
+  <circle cx="120" cy="36" r="10" fill="#dc2626"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9d174d">디저트</text>
+</svg>

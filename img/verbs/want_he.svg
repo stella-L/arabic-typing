@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="want he card">
+  <rect width="240" height="180" rx="22" fill="#fff1f2"/>
+  <path d="M120 120c-46-30-62-52-62-74a30 30 0 0 1 62-8 30 30 0 0 1 62 8c0 22-16 44-62 74z" fill="#f43f5e"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#9f1239">그 · 원하다</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="cheese card">
+  <rect width="240" height="180" rx="22" fill="#fefce8"/>
+  <path d="M40 110V70l150-36v76z" fill="#facc15"/>
+  <path d="M40 70l150-36 10 6-150 36z" fill="#fde047"/>
+  <circle cx="80" cy="90" r="9" fill="#eab308"/><circle cx="130" cy="80" r="12" fill="#eab308"/><circle cx="166" cy="96" r="7" fill="#eab308"/>
+  <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#854d0e">치즈</text>
+</svg>
