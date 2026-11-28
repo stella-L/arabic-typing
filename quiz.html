@@ -177,6 +177,7 @@ body{display:flex;justify-content:center}
 </div>
 
 <script src="visuals.js?v=20261127-l8910b"></script>
+<script src="letters.js?v=20261128-letters"></script>
 <script>
 let words = [];
 let cats = [];
@@ -508,18 +509,9 @@ function speak() {
   window.speechSynthesis.speak(utterance);
 }
 
-function getLetterBreakdown(arabic) {
-  const stripped = arabic.replace(/[ً-ٟؐ-ؚ]/g, '');
-  return [...stripped].filter(ch => {
-    const cp = ch.codePointAt(0);
-    return cp >= 0x0621 && cp <= 0x064A;
-  });
-}
 
 function renderLetters(arabic) {
-  return getLetterBreakdown(arabic).map(letter =>
-    `<span class="l-chip"><span class="l-ar">${escapeHtml(letter)}</span></span>`
-  ).join('');
+  return window.ArabicLetters.renderChips(arabic);
 }
 
 function escapeHtml(value) {

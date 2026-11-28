@@ -179,6 +179,7 @@ body{display:flex;justify-content:center}
 </div>
 
 <script src="visuals.js?v=20261127-l8910b"></script>
+<script src="letters.js?v=20261128-letters"></script>
 <script>
 let WORDS = [
   // 가족
@@ -607,24 +608,10 @@ document.addEventListener('touchend', e => {
   answer(dx > 0);
 }, { passive: true });
 
-function getLetterBreakdown(arabic) {
-  // Strip diacritics (harakat)
-  const stripped = arabic.replace(/[ً-ٟؐ-ؚ]/g, '');
-  // Keep only base Arabic consonants
-  return [...stripped].filter(ch => {
-    const cp = ch.codePointAt(0);
-    return cp >= 0x0621 && cp <= 0x064A;
-  });
-}
 
 function renderLetters(arabic) {
-  const letters = getLetterBreakdown(arabic);
-  if (!letters.length) return '';
-  // Each letter in its own span → isolated form
-  const chips = letters.map(l =>
-    `<span class="l-chip"><span class="l-ar">${escapeHtml(l)}</span></span>`
-  ).join('');
-  return `<div class="letters-row">${chips}</div>`;
+  const chips = window.ArabicLetters.renderChips(arabic);
+  return chips ? `<div class="letters-row">${chips}</div>` : '';
 }
 
 function escapeHtml(value) {
